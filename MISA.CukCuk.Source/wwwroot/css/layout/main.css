@@ -1,0 +1,21 @@
+﻿/*---------- Main ----------*/
+
+.main {
+    width: calc(100% - 200px);
+    height: 100vh;
+    margin-left: 200px;
+}
+
+    .main .header {
+        height: 55px;
+        width: 100%;
+        background-color: #0973b9;
+        display: flex;
+        align-items: center;
+    }
+
+    .main .content {
+        height: calc(100% - 55px);
+        width: 100%;
+        background-color: #ffffff;
+    }

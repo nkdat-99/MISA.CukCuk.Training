@@ -1,0 +1,111 @@
+﻿/*---------- Header ----------*/
+
+.header .select-restaurant {
+    flex-grow: 6;
+}
+
+.header .select-language {
+    flex-grow: 5;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header select {
+    height: 30px;
+    width: 200px;
+    background-color: #005082;
+    color: #ffffff;
+    border: none;
+    padding-left: 4px;
+}
+
+/*---------- Call Support ----------*/
+
+.header .call-support {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-self: center;
+    width: 65px;
+    height: 100%;
+    background-image: url('/content/imgs/ic_support.svg');
+    background-repeat: no-repeat;
+}
+
+    .header .call-support:hover {
+        background-color: #3386c2;
+        cursor: pointer;
+    }
+
+/*---------- Notice Box ----------*/
+
+.header .notice-box {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+    .header .notice-box .icon-globe::before {
+        content: '\e802';
+        font-family: "Globe";
+        font-size: 22px;
+        color: #fff;
+    }
+    .header .notice-box .icon-globe {
+        position: relative;
+    }
+
+    .header .notice-box .number-notification {
+        position: absolute;
+        top: -4px;
+        right: -3px;
+        color: #fff;
+        padding: 0px 5px;
+        font-size: 10px;
+        font-weight: bold;
+        background-color: #ff0000;
+    }
+
+/*---------- Account ----------*/
+
+.header .account-detail {
+    position: relative;
+    display: flex;
+    align-self: center;
+    color: #fff;
+    padding: 0 16px;
+    height: 100%;
+}
+
+    .header .account-detail .account-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 14px;
+        background-color: #fff;
+        vertical-align: middle;
+        background-image: url('/content/imgs/employeeimage.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        align-self: center;
+    }
+
+    .header .account-detail .account-name {
+        align-self: center;
+        padding: 0 8px;
+    }
+
+        .header .account-detail .account-name:after {
+            content: '\e801';
+            font-family: "Globe";
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            width: 16px;
+            background-image: none;
+            padding-left: 10px;
+        }
+
+    .header .account-detail:hover {
+        background-color: #3386c2;
+        cursor: pointer;
+    }

@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISA Danh mục Khách Hàng</title>
+    <link rel="icon" type="image/png" href="/content/imgs/logo-misa.jpg" />
+    <link href="/css/layout/body.css" rel="stylesheet" />
+    <link href="/css/layout/sidebar.css" rel="stylesheet" />
+    <link href="/css/layout/main.css" rel="stylesheet" />
+    <link href="/css/layout/header.css" rel="stylesheet" />
+    <link href="/css/layout/content.css" rel="stylesheet" />
+    <link href="/css/font/globe.css" rel="stylesheet" />
+    <link href="/css/layout/gird.css" rel="stylesheet" />
+    <link href="/css/layout/dialog.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="sidebar">
+        <!--Sidebar-->
+        <div class="logo">
+            <!--Logo-->
+            <div class="icon-left-header"></div>
+            <a href="../../index.html" class="logo-text"></a>
+        </div>
+        <div class="menu">
+            <!--Menu-->
+            <a href="../../index.html" class="menu-item">
+                <div class="menu-item-icon icon-board"></div>
+                <div class="menu-item-text">Tổng quan</div>
+            </a>
+            <a href="employee.html" class="menu-item">
+                <div class="menu-item-icon icon-report"></div>
+                <div class="menu-item-text">Nhân Viên</div>
+            </a>
+            <a href="customer.html" class="menu-item">
+                <div class="menu-item-icon icon-buy"></div>
+                <div class="menu-item-text">Khách Hàng</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-stock"></div>
+                <div class="menu-item-text">Kho</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-money"></div>
+                <div class="menu-item-text">Quỹ tiền mặt</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-deposits"></div>
+                <div class="menu-item-text">Quỹ tiền gửi</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-cost"></div>
+                <div class="menu-item-text">Chi phí</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-sale"></div>
+                <div class="menu-item-text">Khuyến mại</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-menu"></div>
+                <div class="menu-item-text">Thực đơn</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-list"></div>
+                <div class="menu-item-text">Danh mục</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-cancel-bill"></div>
+                <div class="menu-item-text">Hủy hóa đơn</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-system"></div>
+                <div class="menu-item-text">Thiết lập hệ thống</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-app"></div>
+                <div class="menu-item-text">Ứng dụng</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-sell-online"></div>
+                <div class="menu-item-text">Bán hàng Online</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-5food"></div>
+                <div class="menu-item-text">5Food</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-help"></div>
+                <div class="menu-item-text">Trợ giúp</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-sms"></div>
+                <div class="menu-item-text">Thuê bao</div>
+            </a>
+        </div>
+    </div>
+    <div class="main">
+        <!--Main-->
+        <div class="header">
+            <!--Header-->
+            <div class="select-restaurant">
+                <select>
+                    <option disabled selected>--Chuỗi nhà hàng--</option>
+                    <option>Nhà Hàng Hà Nội</option>
+                    <option>Nhà Hàng Đà Nẵng</option>
+                    <option>Nhà Hàng Sài Gòn</option>
+                </select>
+            </div>
+            <div class="select-language">
+                <select>
+                    <option>Tiếng Việt (Tiếng Việt)</option>
+                    <option>English (Tiếng Anh)</option>
+                    <option>Deutsch (Tiếng Đức)</option>
+                </select>
+            </div>
+            <div class="notice-box">
+                <div class="icon-globe">
+                    <div class="number-notification">2</div>
+                </div>
+            </div>
+            <div class="call-support"></div>
+            <div class="account-detail">
+                <div class="account-avatar"></div>
+                <div class="account-name">
+                    <span>Nguyễn Kim Đạt</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!--Content-->
+            <div class="page-title">
+                <h1>Danh mục Khách Hàng</h1>
+            </div>
+            <div class="gird-content">
+                <!--Toolbar-->
+                <div class="toolbar">
+                    <button id="btnAdd"><i class="icon icon-add"></i>Thêm</button>
+                    <button id="btnDuplicate" disabled><i class="icon icon-duplicate"></i>Nhân bản</button>
+                    <button id="btnEdit"><i class="icon icon-edit"></i>Sửa</button>
+                    <button id="btnDelete"><i class="icon icon-delete"></i>Xóa</button>
+                    <button id="btnReset"><i class="icon icon-reset"></i>Nạp</button>
+                    <button id="btnImport" disabled><i class="icon icon-import"></i>Nhập khẩu</button>
+                    <button id="btnExport" disabled><i class="icon icon-export"></i>Xuất khẩu</button>
+                    <button id="btnMerge" disabled><i class="icon icon-merge"></i>Gộp khách hàng</button>
+                    <button id="btnHelp"><i class="icon icon-help-toolbar"></i>Giúp</button>
+                </div>
+                <!--Gird-->
+                <div class="gird">
+                    <table border="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <td>Mã Khách Hàng</td>
+                                <td>Tên Khách Hàng</td>
+                                <td>Tên Công Ty</td>
+                                <td>Mã Số Thuế</td>
+                                <td>Địa Chỉ</td>
+                                <td>Số Điện Thoại</td>
+                                <td>Email</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="paging">paging</div>
+            </div>
+        </div>
+
+        <!--Dialog chi tiết thông tin nhân viên-->
+        <div class="dialog-modal"></div>
+        <div class="dialog">
+            <div class="dialog-title">
+                <div class="title-text">
+                    Khách Hàng
+                </div>
+                <div id="btnClose" class="title-close-button"></div>
+            </div>
+            <div class="dialog-body">
+                <div class="title-group">Thông tin chi tiết</div>
+                <div class="group-infor">
+                    <div class="row">
+                        <label class="label-left">Mã khách hàng <label style="color: red;">(*)</label></label>
+                        <input id="txtCustomerCode" required type="text" class="input-default flex-left" />
+                        <label class="label-right">Tên khách hàng <label style="color: red;">(*)</label></label>
+                        <input id="txtCustomerName" required type="text" class="input-default flex-right" />
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Mã thẻ thành viên</label>
+                        <input id="txtCustomerMember" type="text" class="input-default flex-left" />
+                        <label class="label-right">Hạng thẻ</label>
+                        <select id="txtCustomerCard" class="input-default flex-right">
+                            <option>Normal</option>
+                            <option>Platinum</option>
+                            <option>Diamond</option>
+                            <option>Vip</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Nhóm khách hàng</label>
+                        <select id="txtCustomerGroup" class="input-default flex-left" style="width: 200px">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Số điện thoại</label>
+                        <input id="txtCustomerMobile" type="tel" class="input-default flex-left" />
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Ngày sinh</label>
+                        <input id="dtCustomerBirthday" type="date" class="input-default flex-left" />
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Tên công ty</label>
+                        <input id="txtCustomerCompany" type="text" class="input-default" />
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Mã số thuế</label>
+                        <input id="txtCustomerTax" type="text" class="input-default flex-left" />
+                        <label class="label-right">Email</label>
+                        <input id="txtCustomerEmail" type="email" class="input-default flex-right" />
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Địa chỉ</label>
+                        <input id="txtCustomerAddress" type="text" class="input-default" />
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Ghi chú</label>
+                        <!--<input id="txtCustomerNote" type="text" class="input-default" />-->
+                        <textarea id="txtCustomerNote" class="input-default"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <div class="footer-left">
+                    <button id="btnHelp">
+                        <div class="btn-icon btn-icon-help"></div>
+                        Giúp 
+                    </button>
+                </div>
+                <div class="footer-right">
+                    <button id="btnSave">
+                        <div class="btn-icon btn-icon-save"></div>
+                        Cất
+                    </button>
+                    <button id="btnSaveAdd">
+                        <div class="btn-icon btn-icon-saveadd"></div>
+                        Cất & Thêm
+                    </button>
+                    <button id="btnCancel">
+                        <div class="btn-icon btn-icon-cancel"></div>
+                        Hủy bỏ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/lib/jquery-3.5.1.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/customer.js"></script>
+</body>
+</html>

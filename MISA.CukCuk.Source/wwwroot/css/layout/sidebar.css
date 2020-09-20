@@ -1,0 +1,152 @@
+﻿/*---------- Sidebar ----------*/
+
+.sidebar {
+    float: left;
+    width: 200px;
+    height: 100vh;
+    background-color: #0973b9;
+}
+
+    .sidebar .logo {
+        display: flex;
+        height: 55px;
+        width: 100%;
+        padding-left: 10px;
+    }
+
+    .sidebar .menu {
+        width: 100%;
+        height: calc(100% - 55px);
+    }
+
+/*---------- Logo ----------*/
+
+.logo .icon-left-header {
+    width: 40px;
+    height: 100%;
+    background-image: url("/content/imgs/icon-left-header.png");
+    background-repeat: no-repeat;
+    background-position: center 18px;
+}
+
+.logo .logo-text {
+    width: 120px;
+    height: 21px;
+    background-image: url("/content/imgs/logo-text.png");
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    margin-top: 17px;
+}
+
+/*---------- Menu ----------*/
+
+.menu a {
+    text-decoration: none;
+}
+
+    .menu a:hover {
+        text-decoration: underline;
+        background-color: #ff6400
+    }
+
+.menu-item {
+    display: flex;
+    height: 40px;
+    color: #fff;
+    border-bottom: 1px solid rgba(0, 9, 86, 0.18);
+    border-top: 1px solid rgba(202, 208, 255, 0.20);
+    padding-left: 10px;
+}
+
+    .menu-item .menu-item-icon {
+        width: 35px;
+        height: 25px;
+        align-self: center;
+        background-image: url('/content/imgs/iconmenu.png');
+        background-repeat: no-repeat;
+    }
+
+    .menu-item .menu-item-text {
+        width: calc(100% - 40px);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding-left: 5px;
+    }
+
+/*---------- Position Icon ----------*/
+
+.icon-board {
+    background-position: center 0px;
+}
+
+.icon-report {
+    background-position: center -191px;
+}
+
+.icon-buy {
+    background-position: center -373px;
+}
+
+.icon-stock {
+    background-position: center -36px;
+}
+
+.icon-money {
+    background-position: center -78px;
+}
+
+.icon-deposits {
+    background-image: url('/content/imgs/icon-deposit.png') !important;
+    background-position: center;
+}
+
+.icon-cost {
+    background-image: url('/content/imgs/icon-cost.png') !important;
+    background-position: center;
+}
+
+.icon-sale {
+    background-position: center -116px;
+}
+
+.icon-menu {
+    background-image: url('/content/imgs/vector-smart-object.png') !important;
+    background-position: center;
+}
+
+.icon-list {
+    background-position: center -154px;
+}
+
+.icon-cancel-bill {
+    background-image: url('/content/imgs/cancel-invoice.png') !important;
+    background-position: center;
+}
+
+.icon-app {
+    background-position: center -497px;
+}
+
+.icon-sell-online {
+    background-position: center -374px;
+}
+
+.icon-5food {
+    background-image: url('/content/imgs/5food.png') !important;
+    background-position: center;
+}
+
+.icon-system {
+    background-position: center -232px;
+}
+
+.icon-help {
+    background-image: url('/content/imgs/iconHelp.png') !important;
+    background-position: center;
+}
+
+.icon-sms {
+    background-image: url('/content/imgs/icon-subscriber.png') !important;
+    background-position: center;
+}

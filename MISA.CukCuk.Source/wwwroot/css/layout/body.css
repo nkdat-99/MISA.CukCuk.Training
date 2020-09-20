@@ -1,0 +1,23 @@
+﻿body {
+    margin: 0;
+    font-size: 13px;
+    font-family: MISA Fonts Regular;
+    box-sizing: border-box;
+}
+
+/*---------- Font ----------*/
+
+@font-face {
+    font-family: 'MISA Fonts';
+    src: url('/content/fonts/fontello.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'MISA Fonts Regular';
+    src: url('/content/fonts/Tahoma_Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'MISA Fonts Bold';
+    src: url('/content/fonts/Tahoma_Bold.woff') format('woff');
+}
