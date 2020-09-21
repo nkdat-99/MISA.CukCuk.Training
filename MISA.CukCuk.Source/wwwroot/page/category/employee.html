@@ -10,6 +10,7 @@
     <link href="/css/layout/main.css" rel="stylesheet" />
     <link href="/css/layout/header.css" rel="stylesheet" />
     <link href="/css/layout/content.css" rel="stylesheet" />
+    <link href="/css/layout/toolbar.css" rel="stylesheet" />
     <link href="/css/font/globe.css" rel="stylesheet" />
     <link href="/css/layout/gird.css" rel="stylesheet" />
     <link href="/css/layout/dialog.css" rel="stylesheet" />
@@ -34,7 +35,7 @@
             </a>
             <a href="customer.html" class="menu-item">
                 <div class="menu-item-icon icon-buy"></div>
-                <div class="menu-item-text">Khách Hàng</div>
+                <div class="menu-item-text">nhân viên</div>
             </a>
             <a class="menu-item">
                 <div class="menu-item-icon icon-stock"></div>
@@ -45,6 +46,10 @@
                 <div class="menu-item-text">Quỹ tiền mặt</div>
             </a>
             <a class="menu-item">
+                <div class="menu-item-icon icon-deposits"></div>
+                <div class="menu-item-text">Quỹ tiền gửi</div>
+            </a>
+            <a class="menu-item">
                 <div class="menu-item-icon icon-cost"></div>
                 <div class="menu-item-text">Chi phí</div>
             </a>
@@ -53,32 +58,40 @@
                 <div class="menu-item-text">Khuyến mại</div>
             </a>
             <a class="menu-item">
+                <div class="menu-item-icon icon-menu"></div>
+                <div class="menu-item-text">Thực đơn</div>
+            </a>
+            <a class="menu-item">
                 <div class="menu-item-icon icon-list"></div>
                 <div class="menu-item-text">Danh mục</div>
             </a>
             <a class="menu-item">
-                <div class="menu-item-icon icon-cancel"></div>
+                <div class="menu-item-icon icon-cancel-bill"></div>
                 <div class="menu-item-text">Hủy hóa đơn</div>
-            </a>
-            <a class="menu-item">
-                <div class="menu-item-icon icon-sms"></div>
-                <div class="menu-item-text">SMS Marketing</div>
-            </a>
-            <a class="menu-item">
-                <div class="menu-item-icon icon-client"></div>
-                <div class="menu-item-text">Đối tác giao hàng</div>
-            </a>
-            <a class="menu-item">
-                <div class="menu-item-icon icon-bill"></div>
-                <div class="menu-item-text">Hóa đơn điện tử</div>
             </a>
             <a class="menu-item">
                 <div class="menu-item-icon icon-system"></div>
                 <div class="menu-item-text">Thiết lập hệ thống</div>
             </a>
             <a class="menu-item">
+                <div class="menu-item-icon icon-app"></div>
+                <div class="menu-item-text">Ứng dụng</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-sell-online"></div>
+                <div class="menu-item-text">Bán hàng Online</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-5food"></div>
+                <div class="menu-item-text">5Food</div>
+            </a>
+            <a class="menu-item">
                 <div class="menu-item-icon icon-help"></div>
                 <div class="menu-item-text">Trợ giúp</div>
+            </a>
+            <a class="menu-item">
+                <div class="menu-item-icon icon-sms"></div>
+                <div class="menu-item-text">Thuê bao</div>
             </a>
         </div>
     </div>
@@ -117,8 +130,18 @@
 
         <div class="content">
             <!--Content-->
-            <div class="page-title">
-                <h1>Danh mục Nhân Viên</h1>
+            <div class="title-content">
+                <div class="page-title">
+                    <h1>Danh mục</h1>
+                    <p>Nhân Viên</p>
+                </div>
+                <div class="setting">
+                    <button id="setting-reset">Quay lại thiết lập ban đầu</button>
+                    <button id="setting-feedback">
+                        <div class="icon-feedback"></div>
+                        Phản hồi
+                    </button>
+                </div>
             </div>
             <div class="gird-content">
                 <!--Toolbar-->
@@ -130,7 +153,7 @@
                     <button id="btnReset"><i class="icon icon-reset"></i>Nạp</button>
                     <button id="btnImport" disabled><i class="icon icon-import"></i>Nhập khẩu</button>
                     <button id="btnExport" disabled><i class="icon icon-export"></i>Xuất khẩu</button>
-                    <button id="btnMerge" disabled><i class="icon icon-merge"></i>Gộp khách hàng</button>
+                    <button id="btnMerge" disabled><i class="icon icon-merge"></i>Gộp nhân viên</button>
                     <button id="btnHelp"><i class="icon icon-help-toolbar"></i>Giúp</button>
                 </div>
                 <!--Gird-->
@@ -138,8 +161,8 @@
                     <table border="0" cellpadding="0">
                         <thead>
                             <tr>
-                                <td>Mã Khách Hàng</td>
-                                <td>Tên Khách Hàng</td>
+                                <td>Mã Nhân Viên</td>
+                                <td>Tên Nhân Viên</td>
                                 <td>Tên Công Ty</td>
                                 <td>Mã Số Thuế</td>
                                 <td>Địa Chỉ</td>
@@ -160,7 +183,7 @@
         <div class="dialog">
             <div class="dialog-title">
                 <div class="title-text">
-                    Khách Hàng
+                    Nhân viên
                 </div>
                 <div id="btnClose" class="title-close-button"></div>
             </div>
@@ -168,10 +191,10 @@
                 <div class="title-group">Thông tin chi tiết</div>
                 <div class="group-infor">
                     <div class="row">
-                        <label class="label-left">Mã khách hàng <label style="color: red;">(*)</label></label>
-                        <input id="txtCustomerCode" type="text" class="input-default flex-left" />
-                        <label class="label-right">Tên khách hàng <label style="color: red;">(*)</label></label>
-                        <input id="txtCustomerName" type="text" class="input-default flex-right" />
+                        <label class="label-left">Mã nhân viên <label style="color: red;">(*)</label></label>
+                        <input id="txtCustomerCode" required type="text" class="input-default flex-left" />
+                        <label class="label-right">Tên nhân viên <label style="color: red;">(*)</label></label>
+                        <input id="txtCustomerName" required type="text" class="input-default flex-right" />
                     </div>
                     <div class="row">
                         <label class="label-left">Mã thẻ thành viên</label>
@@ -185,7 +208,7 @@
                         </select>
                     </div>
                     <div class="row">
-                        <label class="label-left">Nhóm khách hàng</label>
+                        <label class="label-left">Nhóm nhân viên</label>
                         <select id="txtCustomerGroup" class="input-default flex-left" style="width: 200px">
                             <option>1</option>
                             <option>2</option>
@@ -217,7 +240,7 @@
                     </div>
                     <div class="row">
                         <label class="label-left">Ghi chú</label>
-                        <input id="txtCustomerNote" type="text" class="input-default" />
+                        <textarea id="txtCustomerNote" class="input-default"></textarea>
                     </div>
                 </div>
             </div>

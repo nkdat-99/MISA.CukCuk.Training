@@ -1,0 +1,33 @@
+﻿@media screen and (max-width: 800px) {
+    .sidebar {
+        height: 55px !important;
+    }
+
+        .sidebar .menu {
+        }
+
+    .main {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+        .main .header {
+            width: calc(100% - 200px) !important;
+        }
+
+            .main .header .select-language {
+                visibility: hidden;
+                width: 150px;
+            }
+
+            .main .header .select-restaurant {
+                flex-grow: 0;
+            }
+
+            .main .header select {
+                width: 140px !important;
+            }
+/*    #slideMenu:hover {
+        display: hidden;
+    }*/
+}

@@ -2,15 +2,9 @@
 
 .content {
     position: relative;
-    padding: 10px;
     height: calc(100vh - 70px);
     background-color: #fff;
 }
-
-    .content .page-title h1 {
-        margin: 5px 0;
-        font-size: 18px;
-    }
 
     .content .gird-content {
         position: absolute;
@@ -20,75 +14,66 @@
         bottom: 10px;
     }
 
-/*---------- Toolbar ----------*/
-
-.gird-content .toolbar {
-    width: 100%;
-    height: 25px;
-    display: flex;
-    background: #ededed;
-    border: 1px solid #ccc;
-    padding: 2px 0;
-}
-
-    .gird-content .toolbar button {
+    .content .title-content {
+        height: 50px;
         display: flex;
-        align-items: center;
-        height: 100%;
-        border-radius: unset;
-        border: 1px solid transparent;
+        padding-left: 10px;
+        justify-content: space-between;
     }
 
-        .gird-content .toolbar button:hover {
-            border-color: #1e32d0;
-            background-color: #ffffff;
-            cursor: pointer;
+        .content .title-content .page-title {
+            display: flex;
+            align-items: center;
         }
 
-        .gird-content .toolbar button:focus {
-            outline: none;
-            border: 1px solid #1e32d0;
+            .content .title-content .page-title h1 {
+                margin: 5px 0;
+                font-size: 22px;
+                font-weight: normal;
+                line-height: 50px;
+            }
+
+                .content .title-content .page-title h1:after {
+                    content: '\e804';
+                    font-family: "Globe-2";
+                    font-size: 16px;
+                    color: #0973b9;
+                    padding: 0 15px;
+                }
+
+            .content .title-content .page-title p {
+                margin: 5px 0;
+                font-size: 16px;
+                color: #0973b9;
+            }
+
+        .content .title-content .setting {
+            display: flex;
+            align-items: center;
         }
 
-    .gird-content .toolbar .icon {
-        display: block;
-        width: 15px;
-        height: 15px;
-        padding-right: 5px;
-    }
+            .content .title-content .setting button {
+                display: flex;
+                background-color: #fff;
+                border-image: initial;
+                border: 1px solid buttonface;
+                border-color: #9898989e;
+                justify-content: center;
+                align-items: center;
+                padding: 8px 15px;
+                margin: 0 8px;
+            }
 
-    .gird-content .toolbar .icon-add {
-        background: url('/content/imgs/iconsprite.png') no-repeat 0 -48px;
-    }
+                .content .title-content .setting button:hover, .content .title-content .setting button:focus {
+                    border-color: #0071c1;
+                    outline: none;
+                    background-image: -webkit-linear-gradient(top,#eff0ec00,#e4e4e4);
+                }
 
-    .gird-content .toolbar .icon-duplicate {
-        background: url('/content/imgs/iconsprite.png') no-repeat -1px -1888px;
-    }
-
-    .gird-content .toolbar .icon-edit {
-        background: url('/content/imgs/Edit16.png') no-repeat;
-    }
-
-    .gird-content .toolbar .icon-delete {
-        background: url('/content/imgs/iconsprite.png') no-repeat -1px -2048px;
-    }
-
-    .gird-content .toolbar .icon-reset {
-        background: url('/content/imgs/iconsprite.png') no-repeat 0 -2586px;
-    }
-
-    .gird-content .toolbar .icon-import {
-        background: url('/content/imgs/iconsprite.png') no-repeat 0 -1520px;
-    }
-
-    .gird-content .toolbar .icon-export {
-        background: url('/content/imgs/iconsprite.png') no-repeat 0 -1760px;
-    }
-
-    .gird-content .toolbar .icon-merge {
-        background: url('/content/imgs/iconsprite.png') no-repeat -1px -1344px;
-    }
-
-    .gird-content .toolbar .icon-help-toolbar {
-        background: url('/content/imgs/IconSprite.png') no-repeat 0 -1600px;
-    }
+            .content .title-content .setting .icon-feedback {
+                display: block;
+                width: 15px;
+                height: 15px;
+                padding-right: 10px;
+                background: url('/content/imgs/viewEmail.png') no-repeat;
+            }

@@ -17,6 +17,7 @@ class CustomerJS {
         $('#btnCancel').click(this.btnCancelOnClick.bind(this));
         $('input[required]').blur(this.checkRequired);
         $("table tbody").on("click", "tr", this.rowOnSelect);
+        $('#slideMenu').click(this.slideOnClick.bind(this));
     }
 
     loadData() {
@@ -72,6 +73,10 @@ class CustomerJS {
         $(this).siblings().removeClass('row-selected');
         $(this).addClass('row-selected');
     }
+
+    //slideOnClick() {
+    //    $('.menu').slideToggle(); 
+    //};
 }
 
 var customer = [
