@@ -1,33 +1,40 @@
 ﻿@media screen and (max-width: 800px) {
-    .sidebar {
-        height: 55px !important;
+    .navbar .header {
     }
 
-        .sidebar .menu {
+        .navbar .header .select-language {
+            display: none;
+            width: 150px;
+        }
+
+        .navbar .header .select-restaurant {
+            flex-grow: 0;
+        }
+
+        .navbar .header select {
+            width: 140px;
         }
 
     .main {
-        width: 100% !important;
-        margin-left: 0 !important;
     }
 
-        .main .header {
-            width: calc(100% - 200px) !important;
+        .main .menu {
+            width: 0px;
         }
 
-            .main .header .select-language {
-                visibility: hidden;
-                width: 150px;
-            }
+        .main .content {
+            width: 100%;
+        }
+}
 
-            .main .header .select-restaurant {
-                flex-grow: 0;
-            }
+@media screen and (max-width: 650px) {
+    .call-support, .main .content .setting, #btnMerge {
+        display: none;
+    }
+}
 
-            .main .header select {
-                width: 140px !important;
-            }
-/*    #slideMenu:hover {
-        display: hidden;
-    }*/
+@media screen and (max-width: 575px) {
+    #btnImport, #btnExport {
+        display: none;
+    }
 }

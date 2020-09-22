@@ -1,5 +1,12 @@
 ﻿$(document).ready(function () {
     var customerJS = new CustomerJS();
+    $(window).resize(function () {
+        debugger
+        if ($(window).width() > 800) {
+            var x = document.getElementById("menu-id")
+            x.className === "menu"
+        }
+    });
 })
 
 class CustomerJS {
@@ -74,9 +81,16 @@ class CustomerJS {
         $(this).addClass('row-selected');
     }
 
-    //slideOnClick() {
-    //    $('.menu').slideToggle(); 
-    //};
+    slideOnClick() {
+        var x = document.getElementById("menu-id");
+        if ($(window).width() <= 800) {
+            if (x.className === "menu") {
+                x.className = "menu-responsive";
+            } else {
+                x.className = "menu";
+            }
+        }
+    };
 }
 
 var customer = [

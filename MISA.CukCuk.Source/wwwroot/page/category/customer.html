@@ -5,26 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MISA Danh mục Khách Hàng</title>
     <link rel="icon" type="image/png" href="/content/imgs/logo-misa.jpg" />
-    <link href="/css/layout/responsive-menu.css" rel="stylesheet" />
+    <link href="/css/font/globe.css" rel="stylesheet" />
     <link href="/css/layout/body.css" rel="stylesheet" />
-    <link href="/css/layout/sidebar.css" rel="stylesheet" />
+    <link href="/css/layout/navbar.css" rel="stylesheet" />
     <link href="/css/layout/main.css" rel="stylesheet" />
+    <link href="/css/layout/menu.css" rel="stylesheet" />
     <link href="/css/layout/header.css" rel="stylesheet" />
     <link href="/css/layout/content.css" rel="stylesheet" />
     <link href="/css/layout/toolbar.css" rel="stylesheet" />
-    <link href="/css/font/globe.css" rel="stylesheet" />
     <link href="/css/layout/gird.css" rel="stylesheet" />
     <link href="/css/layout/dialog.css" rel="stylesheet" />
+    <link href="/css/layout/responsive-menu.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="sidebar">
-        <!--Sidebar-->
+    <div class="navbar">
+        <!--Navbar-->
         <div class="logo">
             <!--Logo-->
             <div id="slideMenu" class="icon-left-header"></div>
             <a href="../../index.html" class="logo-text"></a>
         </div>
-        <div class="menu">
+
+        <div class="header">
+            <!--Header-->
+            <div class="select-restaurant">
+                <select>
+                    <option disabled selected>--Chuỗi nhà hàng--</option>
+                    <option>Nhà Hàng Hà Nội</option>
+                    <option>Nhà Hàng Đà Nẵng</option>
+                    <option>Nhà Hàng Sài Gòn</option>
+                </select>
+            </div>
+            <div class="select-language">
+                <select>
+                    <option>Tiếng Việt (Tiếng Việt)</option>
+                    <option>English (Tiếng Anh)</option>
+                    <option>Deutsch (Tiếng Đức)</option>
+                </select>
+            </div>
+            <div class="notice-box">
+                <div class="icon-globe">
+                    <div class="number-notification">2</div>
+                </div>
+            </div>
+            <div class="call-support"></div>
+            <div class="account-detail">
+                <div class="account-avatar"></div>
+                <div class="account-name">
+                    <span>Nguyễn Kim Đạt</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="main">
+        <!--Main-->
+        <div class="menu" id="menu-id">
             <!--Menu-->
             <a href="../../index.html" class="menu-item">
                 <div class="menu-item-icon icon-board"></div>
@@ -94,39 +130,6 @@
                 <div class="menu-item-icon icon-sms"></div>
                 <div class="menu-item-text">Thuê bao</div>
             </a>
-        </div>
-    </div>
-    <div class="main">
-        <!--Main-->
-        <div class="header">
-            <!--Header-->
-            <div class="select-restaurant">
-                <select>
-                    <option disabled selected>--Chuỗi nhà hàng--</option>
-                    <option>Nhà Hàng Hà Nội</option>
-                    <option>Nhà Hàng Đà Nẵng</option>
-                    <option>Nhà Hàng Sài Gòn</option>
-                </select>
-            </div>
-            <div class="select-language">
-                <select>
-                    <option>Tiếng Việt (Tiếng Việt)</option>
-                    <option>English (Tiếng Anh)</option>
-                    <option>Deutsch (Tiếng Đức)</option>
-                </select>
-            </div>
-            <div class="notice-box">
-                <div class="icon-globe">
-                    <div class="number-notification">2</div>
-                </div>
-            </div>
-            <div class="call-support"></div>
-            <div class="account-detail">
-                <div class="account-avatar"></div>
-                <div class="account-name">
-                    <span>Nguyễn Kim Đạt</span>
-                </div>
-            </div>
         </div>
 
         <div class="content">
