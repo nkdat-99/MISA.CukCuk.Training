@@ -1,4 +1,15 @@
 ﻿/*---------- Menu ----------*/
+.scroll-menu {
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+}
+
+    .scroll-menu::-webkit-scrollbar {
+        width: 0px;
+        background-color: gray;
+    }
+
 .menu a {
     text-decoration: none;
 }

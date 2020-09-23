@@ -28,8 +28,9 @@
         height: 25px;
         background-color: #0973b9;
         display: flex;
-        justify-content: center;
         align-items: center;
+        padding: 0 0 3px 10px;
+        font-size: 15px;
     }
 
         .dialog .dialog-title .title-text {
@@ -50,7 +51,7 @@
         }
 
     .dialog .dialog-body {
-        padding: 10px;
+        padding: 4px 10px;
         background-color: #fff;
         height: calc(100% - 85px);
     }
@@ -89,6 +90,7 @@
                 box-shadow: none;
                 border: 1px solid #ccc;
                 width: 100%;
+                margin-left: 1px;
             }
 
                 .dialog .dialog-body .group-infor .input-default:focus {
@@ -108,7 +110,8 @@
 
             .dialog .dialog-body .group-infor textarea {
                 resize: none;
-                height: 50px !important;
+                height: 55px !important;
+                padding: 3px 4px !important;
             }
 
     .dialog .dialog-footer {
@@ -116,18 +119,24 @@
         height: 40px;
         width: 100%;
         border-top: 1px solid #ccc;
+        position: absolute;
+        bottom: 0;
     }
 
         .dialog .dialog-footer .footer-left {
             flex-grow: 1;
             display: flex;
             justify-content: flex-start;
+            padding-left: 4px;
+            order: 1;
         }
 
         .dialog .dialog-footer .footer-right {
             flex-grow: 1;
             display: flex;
             justify-content: flex-end;
+            padding-right: 5px;
+            order: 2;
         }
 
         .dialog .dialog-footer button {

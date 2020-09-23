@@ -7,6 +7,9 @@
             x.className === "menu"
         }
     });
+    //$('body').on('click', function (e) {
+    //    $('#slideMenu').click()
+    //});
 })
 
 class CustomerJS {
@@ -23,6 +26,7 @@ class CustomerJS {
         //$('#btnSave').click(this.btnSaveOnClick.bind(this));
         $('#btnCancel').click(this.btnCancelOnClick.bind(this));
         $('input[required]').blur(this.checkRequired);
+        $('#btnHelpDialog').focus(this.returnFocus);
         $("table tbody").on("click", "tr", this.rowOnSelect);
         $('#slideMenu').click(this.slideOnClick.bind(this));
     }
@@ -69,7 +73,8 @@ class CustomerJS {
         var value = this.value;
         if (!value) {
             $(this).addClass('required-error');
-            $(this).attr("title", "Bạn phải nhập thông tin này")
+            $(this).attr("title", "Bạn phải nhập thông tin này");
+            $(this).attr("placeholder", "Bạn phải nhập thông tin này");
         } else {
             $(this).removeClass('required-error');
             $(this).removeClass("title");
@@ -91,6 +96,10 @@ class CustomerJS {
             }
         }
     };
+
+    returnFocus() {
+        $('#txtCustomerCode').focus();
+    }
 }
 
 var customer = [
