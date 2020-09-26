@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     var customerJS = new CustomerJS();
+
     //$(window).resize(function () {
     //    //debugger
     //    if ($(window).width() > 800) {
@@ -21,7 +22,7 @@ class CustomerJS {
 
     initEvents() {
         $('#btnAdd').click(this.btnAddOnClick.bind(this));
-        //$('#btnEdit').click(this.btnEditOnClick.bind(this));
+        $('#btnEdit').click(this.btnEditOnClick.bind(this));
         $('#btnDelete').click(this.btnDeleteOnClick.bind(this));
         $('#btnClose').click(this.btnCloseOnClick.bind(this));
         $('#btnSave').click(this.btnSaveOnClick.bind(this));
@@ -33,6 +34,7 @@ class CustomerJS {
     }
 
     loadData() {
+        self = this;
         $.ajax({
             url: "/api/customer", // Đường dẫn địa chỉ
             method: "GET", // Phương thức
@@ -46,22 +48,26 @@ class CustomerJS {
 
             //}
         }).done(function (response) {
-            //$('.gird tbody').empty();
+            $('.gird tbody').empty();
             $.each(response, function (index, item) {
+                var checkDate = "";
+                if (self.dateToDMY(new Date(item.customerBirthday)) != "01/01/1970")
+                    checkDate = self.dateToDMY(new Date(item.customerBirthday));
                 var trHTML = $(`<tr>
-            <td>` + item.customerCode + `</td>
-            <td>` + item.customerName + `</td>
-            <td>` + item.customerCompany + `</td>
-            <td>` + item.customerTax + `</td>
-            <td>` + item.customerAddress + `</td>
-            <td>` + item.customerMobile + `</td>
-            <td>` + item.customerEmail + `</td>
-        </tr>`);
+                    <td>` + item.customerCode + `</td>
+                    <td>` + item.customerName + `</td>
+                    <td style="text-align: center;">` + checkDate + `</td>
+                    <td>` + item.customerCompany + `</td>
+                    <td>` + item.customerTax + `</td>
+                    <td style="text-align: right;">` + item.customerMoney + `</td>
+                    <td>` + item.customerAddress + `</td>
+                    <td>` + item.customerMobile + `</td>
+                    <td>` + item.customerEmail + `</td>
+                </tr>`);
                 $('.gird tbody').append(trHTML);
             })
         }).fail(function (response) {
         })
-        
     }
 
     // Hiển thị dialog chi tiết thông tin
@@ -76,7 +82,7 @@ class CustomerJS {
         //Vaildate dữ liệu nhập vào (Kiểm tra dữ liệu có đúng hay không)
         var inputRequireds = $("[required]");
         var isValid = true;
-        //var method = "POST"
+        var method = "POST"
         var self = this;
         $.each(inputRequireds, function (index, input) {
             var valid = $(input).trigger("blur");
@@ -89,70 +95,72 @@ class CustomerJS {
             var customer = {};
             customer.CustomerCode = $("#txtCustomerCode").val();
             customer.CustomerName = $("#txtCustomerName").val();
+            customer.CustomerBirthday = $("#dtCustomerBirthday").val() || new Date("");
             customer.CustomerCompany = $("#txtCustomerCompany").val();
             customer.CustomerTax = $("#txtCustomerTax").val();
             customer.CustomerAddress = $("#txtCustomerAddress").val();
             customer.CustomerMobile = $("#txtCustomerMobile").val();
             customer.CustomerEmail = $("#txtCustomerEmail").val();
 
-            // Thực hiện cất dữ liệu vào DataBase;
-            //if (self.FormMode == "edit") {
-            //    method = "PUT"
-            //}
-            //console.log(customer);
-            debugger
+             //Thực hiện cất dữ liệu vào DataBase;
+            if (self.FormMode == "edit") {
+                method = "PUT"
+            }
             $.ajax({
                 url: "/api/customer",
-                method: "POST",
+                method: method,
                 data: JSON.stringify(customer),
                 contentType: "application/json",
                 dataType: "json"
             }).done(function (res) {
-                debugger
                 //Load lại dữ liệu
                 self.loadData();
                 self.hideDialogDetail();
                 self.FormMode = null;
-                console.log("1");
             }).fail(function (res) {
-                debugger
                 console.log(res);
             });
         }
     }
 
-    //btnEditOnClick() {
-    //    this.FormMode = "edit";
-    //    // Lấy dữ liệu của nhân viên tương ứng đã chọn:
-    //    // 1. Xác định nhân viên nào được chọn:
-    //    var trSelected = $("#tbEmployees tr.row-selected");
-    //    // 2. Lấy thông tin Mã nhân viên:
-    //    if (trSelected.length > 0) {
-    //        this.showDialogDetail();
-    //        var employeeCode = $(trSelected).children()[0].textContent;
+    //Sửa dữ liệu
+    btnEditOnClick() {
+        this.FormMode = "edit";
+        // Lấy dữ liệu của nhân viên tương ứng đã chọn:
+        // 1. Xác định nhân viên nào được chọn:
+        var trSelected = $("#tblCustomers tr.row-selected");
+        var self = this;
+        // 2. Lấy thông tin Mã nhân viên:
+        if (trSelected.length > 0) {
+            this.showDialogDetail();
+            var customerCode = $(trSelected).children()[0].textContent;
+            // 3. Gọi api service để lấy dữ liệu chi tiết của nhân viên với mã tương ứng:
+            $.ajax({
+                url: "/api/customer/" + customerCode,
+                method: "GET"
+            }).done(function (customer) {
+                if (!customer) {
+                    alert("Không có nhân viên với mã tương ứng")
+                } else {
+                    var date = new Date(customer.customerBirthday);
+                    // bindding các thông tin của nhân viên lên form:
+                    $("#txtCustomerCode").val(customer.customerCode);
+                    $("#txtCustomerName").val(customer.customerName);
+                    $("#dtCustomerBirthday").val(self.dateToYMD(date));
+                    $("#txtCustomerCompany").val(customer.customerCompany);
+                    $("#txtCustomerTax").val(customer.customerTax);
+                    $("#txtCustomerAddress").val(customer.customerAddress);
+                    $("#txtCustomerMobile").val(customer.customerMobile);
+                    $("#txtCustomerEmail").val(customer.customerEmail);
+                }
+            }).fail(function () {
+            })
+        } else {
+            alert("Bạn chưa chọn nhân viên nào!")
+        }
+    }
 
-    //        // 3. Gọi api service để lấy dữ liệu chi tiết của nhân viên với mã tương ứng:
-    //        $.ajax({
-    //            url: "/employees/" + employeeCode,
-    //            method: "GET"
-    //        }).done(function (employee) {
-    //            if (!employee) {
-    //                alert("Không có nhân viên với mã tương ứng")
-    //            } else {
-    //                // bindding các thông tin của nhân viên lên form:
-    //                $("#txtEmployeeCode").val(employee["EmployeeCode"]);
-    //                $("#txtEmployeeName").val(employee["EmployeeName"]);
-    //                $("#txtEmail").val(employee["EmployeeEmail"]);
-    //                $("#txtMobile").val(employee["EmployeeMobile"]);
-    //                $("#txtEmployeeCompany").val(employee["EmployeeCompany"]);
-    //            }
-    //        }).fail(function () {
-    //        })
-    //    } else {
-    //        alert("Bạn chưa chọn nhân viên nào!")
-    //    }
-    //}
-
+    //Xóa dữ liệu
     btnDeleteOnClick() {
         var self = this;
         // Lấy mã nhân viên được chọn:
@@ -160,7 +168,7 @@ class CustomerJS {
         // Gọi API service thực hiện:
         if (trSelected.length > 0) {
             var customerCode = $(trSelected).children()[0].textContent;
-            // Gọi api service để lấy dữ liệu chi tiết của khách hàng với mã tương ứng:
+            // Gọi api service xóa dữ liệu của khách hàng với mã tương ứng:
             $.ajax({
                 url: "/api/customer/" + customerCode,
                 method: "DELETE"
@@ -178,14 +186,17 @@ class CustomerJS {
         }
     }
 
+    //Nút Cancel
     btnCancelOnClick() {
         this.hideDialogDetail();
     }
 
+    //Nút Close
     btnCloseOnClick() {
         this.hideDialogDetail();
     }
 
+    //Hiện Dialog
     showDialogDetail() {
         $('.dialog input').val(null);
         $('.dialog-modal').show();
@@ -193,11 +204,13 @@ class CustomerJS {
         $('#txtCustomerCode').focus();
     }
 
+    //Ẩn Dialog
     hideDialogDetail() {
         $('.dialog-modal').hide();
         $('.dialog').hide();
     }
 
+    //Check các thông tin bắt buộc nhập
     checkRequired() {
         var value = this.value;
         if (!value) {
@@ -210,6 +223,7 @@ class CustomerJS {
         }
     }
 
+    //Select hàng
     rowOnSelect() {
         $(this).siblings().removeClass('row-selected');
         $(this).addClass('row-selected');
@@ -225,11 +239,25 @@ class CustomerJS {
                 x.className = "menu";
             }
         }
-    };
+    }
 
     //Return nút Tab
     returnFocus() {
         $('#txtCustomerCode').focus();
+    }
+
+    dateToYMD(date) {
+        var d = date.getDate();
+        var m = date.getMonth() + 1; //Month from 0 to 11
+        var y = date.getFullYear();
+    return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+    }
+
+    dateToDMY(date) {
+        var d = date.getDate();
+        var m = date.getMonth() + 1; //Month from 0 to 11
+        var y = date.getFullYear();
+        return '' + (d <= 9 ? '0' + d : d)  + '/' + (m <= 9 ? '0' + m : m) + '/' + y ;
     }
 }
 

@@ -113,6 +113,9 @@
                 height: 55px !important;
                 padding: 3px 4px !important;
             }
+            .dialog .dialog-body .group-infor [type="date"] {
+                font: 400 13.3333px Arial;
+            }
 
     .dialog .dialog-footer {
         display: flex;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MISA.CukCuk.Training.Models;
 
 namespace MISA.CukCuk.Training.Controllers
@@ -15,7 +16,7 @@ namespace MISA.CukCuk.Training.Controllers
         [HttpGet]
         public IEnumerable<Customer> Get()
         {
-            return Customer.CustomerList;
+            return Customer.CustomerList.OrderBy(e => e.CustomerCode);
         }
 
         // GET api/Customer/5
@@ -28,17 +29,18 @@ namespace MISA.CukCuk.Training.Controllers
 
         // POST api/Customer
         [HttpPost]
-        public void Post([FromBody]Customer customer)
+        public bool Post([FromBody]Customer customer)
         {
             Customer.CustomerList.Add(customer);
+            return true;
         }
 
-        // PUT api/Customer/5
+        // PUT api/Customer
         [HttpPut]
         public bool Put([FromBody]Customer customer)
         {
             // Xác định đối tượng employee thực hiện chỉnh sửa thông tin trong List;
-            var customerEdit = Customer.CustomerList.Where(e => e.CustomerCode.Equals(customer.CustomerCode)).FirstOrDefault();
+            var customerEdit = Customer.CustomerList.Where(e => e.CustomerCode == customer.CustomerCode).FirstOrDefault();
             Customer.CustomerList.Remove(customerEdit);
             Customer.CustomerList.Add(customer);
             return true;
