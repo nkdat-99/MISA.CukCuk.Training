@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var customerJS = new CustomerJS();
+    var baseJS = new BaseJS();
 
     //#region "ABC"
     //$(window).resize(function () {
@@ -15,20 +15,16 @@
     //#endregion "ABC"
 })
 
-class CustomerJS extends BaseJS {
-    //constructor() {
-    //    try {
-    //        this.loadData();
-    //        this.initEvents();
-    //        this.FormMode = null;
-    //    } catch (e) {
-    //        console.log("error")
-    //    }  
-    //}
-
+class BaseJS {
     constructor() {
-        super();
-        this.FormMode = null;
+        try {
+            this.getData();
+            this.loadData();
+            this.initEvents();
+            this.FormMode = null;
+        } catch (e) {
+            console.log("error")
+        }  
     }
 
     initEvents() {
@@ -42,6 +38,11 @@ class CustomerJS extends BaseJS {
         $('#btnHelpDialog').focus(this.returnFocus);
         $("table tbody").on("click", "tr", this.rowOnSelect);
         $('#slideMenu').click(this.slideOnClick.bind(this));
+    }
+
+    getData() {
+        this.Data = [];
+
     }
 
     loadData() {
@@ -82,6 +83,10 @@ class CustomerJS extends BaseJS {
         })
     }
 
+    makeTrHTML() {
+        return '';
+    }
+
     // Hiển thị dialog chi tiết thông tin
     btnAddOnClick() {
         this.FormMode = "add";
@@ -114,7 +119,7 @@ class CustomerJS extends BaseJS {
             customer.CustomerMobile = $("#txtCustomerMobile").val();
             customer.CustomerEmail = $("#txtCustomerEmail").val();
 
-             //Thực hiện cất dữ liệu vào DataBase;
+            //Thực hiện cất dữ liệu vào DataBase;
             if (self.FormMode == "edit") {
                 method = "PUT"
             }
@@ -257,33 +262,3 @@ class CustomerJS extends BaseJS {
         $('#txtCustomerCode').focus();
     }
 }
-
-//var customer = [
-//    {
-//        CustomerCode: "KH0001",
-//        CustomerName: "Lại Thị Huyền",
-//        CustomerCompany: "BKAV",
-//        CustomerTax: "012345",
-//        CustomerAddress: "Hà Đông, Hà Nội",
-//        CustomerMobile: "0359434106",
-//        CustomerEmail: "huyenlai99@gmail.com"
-//    },
-//    {
-//        CustomerCode: "KH0001",
-//        CustomerName: "Lại Thị Huyền",
-//        CustomerCompany: "BKAV",
-//        CustomerTax: "012345",
-//        CustomerAddress: "Hà Đông, Hà Nội",
-//        CustomerMobile: "0359434106",
-//        CustomerEmail: "huyenlai99@gmail.com"
-//    },
-//    {
-//        CustomerCode: "KH0001",
-//        CustomerName: "Lại Thị Huyền",
-//        CustomerCompany: "BKAV",
-//        CustomerTax: "012345",
-//        CustomerAddress: "Hà Đông, Hà Nội",
-//        CustomerMobile: "0359434106",
-//        CustomerEmail: "huyenlai99@gmail.com"
-//    }
-//]
