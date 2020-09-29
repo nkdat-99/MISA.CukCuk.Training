@@ -1,9 +1,12 @@
 ﻿$(document).ready(function () {
-    try {
-        baseJS = new BaseJS();
-    } catch (e) {
-        console.log(e);
-    }
+
+    // Timeout Responsive Menu Khi 
+    var timeout;
+    $(window).resize(function () {
+        //debugger
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(menu_responsive, 250);
+    });
 })
 
 class BaseJS {
@@ -30,6 +33,7 @@ class BaseJS {
         $('#btnHelpDialog').focus(this.returnFocus);
         $("table tbody").on("click", "tr", this.rowOnSelect);
         $('#slideMenu').click(this.slideOnClick.bind(this));
+        $('.main').click(this.mainPageOnClick.bind(this));
     }
 
     getData() {
@@ -62,7 +66,7 @@ class BaseJS {
     }
 
     //Check và lưu dữ liệu
-    //btnSaveOnClick() {
+    btnSaveOnClick() {
     //    //debugger
     //    //Vaildate dữ liệu nhập vào (Kiểm tra dữ liệu có đúng hay không)
     //    var inputRequireds = $("[required]");
@@ -106,10 +110,10 @@ class BaseJS {
     //            console.log(res);
     //        });
     //    }
-    //}
+    }
 
     ////Sửa dữ liệu
-    //btnEditOnClick() {
+    btnEditOnClick() {
     //    this.FormMode = "edit";
     //    // Lấy dữ liệu của nhân viên tương ứng đã chọn:
     //    // 1. Xác định nhân viên nào được chọn:
@@ -142,10 +146,10 @@ class BaseJS {
     //    } else {
     //        alert("Bạn chưa chọn nhân viên nào!")
     //    }
-    //}
+    }
 
     ////Xóa dữ liệu
-    //btnDeleteOnClick() {
+    btnDeleteOnClick() {
     //    var self = this;
     //    // Lấy mã nhân viên được chọn:
     //    var trSelected = $("#tblCustomers tr.row-selected");
@@ -168,7 +172,7 @@ class BaseJS {
     //    } else {
     //        alert("Bạn chưa chọn nhân viên nào!")
     //    }
-    //}
+    }
 
     //Nút Cancel
     btnCancelOnClick() {
@@ -224,9 +228,28 @@ class BaseJS {
             }
         }
     }
+    //Responsive Menu Close
+    mainPageOnClick() {
+        console.log('e');
+        var x = document.getElementById("menu-id");
+        if ($(window).width() <= 800) {
+            if (x.className === "menu-responsive") {
+                x.className = "menu";
+            }
+        }
+    }
 
     //Return nút Tab
     returnFocus() {
         $('#txtCustomerCode').focus();
+    }
+}
+
+// Responesive Menu 
+function menu_responsive() {
+    console.log($(window).width());
+    if ($(window).width() > 800) {
+        var x = document.getElementById("menu-id");
+        x.className = "menu";
     }
 }

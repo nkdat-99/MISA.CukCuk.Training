@@ -1,23 +1,14 @@
 ﻿$(document).ready(function () {
-    customerJS = new CustomerJS();
-
-    //#region "ABC"
-    //$(window).resize(function () {
-    //    //debugger
-    //    if ($(window).width() > 800) {
-    //        var x = document.getElementById("menu-id")
-    //        x.className === "menu"
-    //    }
-    //});
-    //$('body').on('click', function (e) {
-    //    $('#slideMenu').click()
-    //});
-    //#endregion "ABC"
-})
+    try {
+        customerJS = new CustomerJS();
+    } catch (e) {
+        console.log(e);
+    }
+});
 
 class CustomerJS extends BaseJS {
     constructor() {
-        super();
+        super('customer');
     }
 
     getData() {
@@ -44,7 +35,7 @@ class CustomerJS extends BaseJS {
 
     makeTrHTML(item) {
         var checkDate = "";
-        if (dateToDMY(new Date(item.customerBirthday)) != "01/01/1700") //giá trị mặc định - set trong sql
+        if (dateToDMY(new Date(item.customerBirthday)) != "01/01/1700") //giá trị mặc định 
             checkDate = dateToDMY(new Date(item.customerBirthday));
         var trHTML = $(`<tr>
                     <td>` + item.customerCode + `</td>
