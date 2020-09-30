@@ -114,8 +114,13 @@
                 padding: 3px 4px !important;
                 font: 400 13.3333px Arial;
             }
+
             .dialog .dialog-body .group-infor [type="date"] {
                 font: 400 13.3333px Arial;
+            }
+
+            .dialog .dialog-body .group-infor #txtCustomerMoney {
+                text-align: right;
             }
 
     .dialog .dialog-footer {
@@ -192,6 +197,12 @@
         .dialog .dialog-footer .btn-icon-cancel {
             background-image: url('/content/imgs/disable16.png');
         }
+
+#btnReturn {
+    width: 0;
+    height: 0;
+    padding: 0;
+}
 
 .required-error {
     border: 1px solid #ff0000 !important;

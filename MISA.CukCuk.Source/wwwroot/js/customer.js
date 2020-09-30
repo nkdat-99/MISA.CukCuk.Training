@@ -1,9 +1,4 @@
-﻿/**
- * Author: NKĐạt
- * Date: 30/9/2020
- * */
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     try {
         customerJS = new CustomerJS();
     } catch (e) {
@@ -16,6 +11,11 @@ class CustomerJS extends BaseJS {
         super('customer');
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * */
+    //Lấy data từ DATABASE
     getData() {
         self = this;
         $.ajax({
@@ -32,6 +32,11 @@ class CustomerJS extends BaseJS {
         })
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * */
+    //Thêm data vào DATABASE
     postData(customer, method) {
         self = this;
         $.ajax({
@@ -50,6 +55,11 @@ class CustomerJS extends BaseJS {
         });
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * */
+    //Xóa data
     deleteData(customerCode) {
         $.ajax({
             url: "/api/customer/" + customerCode,
