@@ -1,12 +1,18 @@
-﻿@media screen and (max-width: 800px) {
-    .navbar .header {
+﻿@media screen and (max-width: 1024px) {
+    .header .notice-box {
+        justify-content: flex-end;
+        margin-right: 5px;
     }
 
-        .navbar .header .select-language {
-            display: none;
-            width: 150px;
-        }
+    .navbar .header .select-language {
+        display: none;
+    }
+}
 
+@media screen and (max-width: 768px) {
+    .navbar .header {
+    }
+   
         .navbar .header .select-restaurant {
             flex-grow: 0;
         }
@@ -25,15 +31,17 @@
         .main .content {
             width: 100%;
         }
+
+    
 }
 
-@media screen and (max-width: 650px) {
-    .call-support, .main .content .setting, #btnMerge {
+@media screen and (max-width: 660px) {
+    .main .content .setting, #btnMerge, .navbar .header .select-restaurant {
         display: none;
     }
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 540px) {
     #btnImport, #btnExport {
         display: none;
     }

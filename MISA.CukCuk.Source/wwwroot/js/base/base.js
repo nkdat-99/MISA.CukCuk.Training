@@ -1,11 +1,15 @@
-﻿$(document).ready(function () {
+﻿/**
+ * Author: NKĐạt
+ * Date: 30/9/2020
+ * */
 
-    // Timeout Responsive Menu Khi 
+$(document).ready(function () {
+    // Timeout Event Responsive Menu
     var timeout;
     $(window).resize(function () {
         //debugger
         if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(menu_responsive, 250);
+        timeout = setTimeout(menu_responsive, 50);
     });
 })
 
@@ -34,6 +38,7 @@ class BaseJS {
         $("table tbody").on("click", "tr", this.rowOnSelect);
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
+        $('.dialog-modal').click(this.closeDialogOnClick.bind(this));
     }
 
     getData() {
@@ -42,24 +47,54 @@ class BaseJS {
 
     loadData() {
         try {
+            // Đọc thông tin các cột dữ liệu:
+            var fields = $('#tblListData thead td');
             // Lấy dữ liệu:
             var data = this.Data;
             var self = this;
-            $('.gird tbody').empty();
+            $('#tblListData tbody').empty();
             $.each(data, function (index, item) {
+                var tr = $(`<tr></tr>`);
+                $.each(fields, function (index, field) {
+                    //Lấy dữ liệu từ các cột
+                    var fieldName = $(field).attr('fieldName');
+                    var value = item[fieldName];
+                    if (fieldName == "customerBirthday") {
+                        var checkDate = "";
+                        if (dateToDMY(new Date(value)) != "01/01/1700") //giá trị mặc định 
+                            checkDate = dateToDMY(new Date(value));
+                        value = checkDate;
+                        var td = $(`<td style="text-align: center;">` + value + `</td>`);
+                    } else if (fieldName == "customerMoney") {
+                        var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
+                    } else {
+                        var td = $(`<td>` + value + `</td>`);
+                    }
+                    $(tr).append(td);
+                })
                 // Binding dữ liệu lên trên UI
-                var trHTML = self.makeTrHTML(item);
-                $('.gird tbody').append(trHTML);
-            })
+                $('#tblListData tbody').append(tr);
+            });
         } catch (e) {
-            console.log("error")
+            console.log(e)
         }
     }
 
-    makeTrHTML(item) {
-    }
+    /**
+     * Author: NKĐạt
+     * @param {object} customer
+     * @param {string} method
+     */
+    postData(customer, method) { };
+
+    /**
+     * Author: NKĐạt
+     * @param {any} customerCode
+     */
+    deleteData(customerCode) { };
 
     // Hiển thị dialog chi tiết thông tin
+
     btnAddOnClick() {
         this.FormMode = "add";
         this.showDialogDetail();
@@ -67,49 +102,45 @@ class BaseJS {
 
     //Check và lưu dữ liệu
     btnSaveOnClick() {
-    //    //debugger
-    //    //Vaildate dữ liệu nhập vào (Kiểm tra dữ liệu có đúng hay không)
-    //    var inputRequireds = $("[required]");
-    //    var isValid = true;
-    //    var method = "POST"
-    //    var self = this;
-    //    $.each(inputRequireds, function (index, input) {
-    //        var valid = $(input).trigger("blur");
-    //        if (isValid && valid.hasClass("required-error")) {
-    //            isValid = false;
-    //        }
-    //    })
-    //    if (isValid) {
-    //        // Thu thập thông tin nhập trên form:
-    //        var customer = {};
-    //        customer.CustomerCode = $("#txtCustomerCode").val();
-    //        customer.CustomerName = $("#txtCustomerName").val();
-    //        customer.CustomerBirthday = $("#dtCustomerBirthday").val() || new Date('1700/01/01');
-    //        customer.CustomerCompany = $("#txtCustomerCompany").val();
-    //        customer.CustomerTax = $("#txtCustomerTax").val();
-    //        customer.CustomerAddress = $("#txtCustomerAddress").val();
-    //        customer.CustomerMobile = $("#txtCustomerMobile").val();
-    //        customer.CustomerEmail = $("#txtCustomerEmail").val();
+        try {
+            //Vaildate dữ liệu nhập vào (Kiểm tra dữ liệu có đúng hay không)
+            var inputRequireds = $("[required]");
+            var isValid = true;
+            var self = this;
+            var method = "POST";
+            $.each(inputRequireds, function (index, input) {
+                var valid = $(input).trigger("blur");
+                if (isValid && valid.hasClass("required-error")) {
+                    isValid = false;
+                }
+            })
+            if (isValid) {
+                // Đọc thông tin các cột dữ liệu:
+                //var fields = $('.dialog input, .dialog option, .dialog textarea');
+                //$.each(data, function (index, item) {
+                //    var fieldName = $(field).attr('fieldName');
+                //    var value = item[fieldName];
+                //})
+                // Thu thập thông tin nhập trên form:
+                var customer = {};
+                customer.CustomerCode = $("#txtCustomerCode").val();
+                customer.CustomerName = $("#txtCustomerName").val();
+                customer.CustomerBirthday = $("#dtCustomerBirthday").val() || new Date('1700/01/01');
+                customer.CustomerCompany = $("#txtCustomerCompany").val();
+                customer.CustomerTax = $("#txtCustomerTax").val();
+                customer.CustomerAddress = $("#txtCustomerAddress").val();
+                customer.CustomerMobile = $("#txtCustomerMobile").val();
+                customer.CustomerEmail = $("#txtCustomerEmail").val();
 
-    //        //Thực hiện cất dữ liệu vào DataBase;
-    //        if (self.FormMode == "edit") {
-    //            method = "PUT"
-    //        }
-    //        $.ajax({
-    //            url: "/api/customer",
-    //            method: method,
-    //            data: JSON.stringify(customer),
-    //            contentType: "application/json",
-    //            dataType: "json"
-    //        }).done(function (res) {
-    //            //Load lại dữ liệu
-    //            self.loadData();
-    //            self.hideDialogDetail();
-    //            self.FormMode = null;
-    //        }).fail(function (res) {
-    //            console.log(res);
-    //        });
-    //    }
+                //Thực hiện cất dữ liệu vào DataBase;
+                if (self.FormMode == "edit") {
+                    method = "PUT"
+                }
+                self.postData(customer, method);
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     ////Sửa dữ liệu
@@ -150,28 +181,21 @@ class BaseJS {
 
     ////Xóa dữ liệu
     btnDeleteOnClick() {
-    //    var self = this;
-    //    // Lấy mã nhân viên được chọn:
-    //    var trSelected = $("#tblCustomers tr.row-selected");
-    //    // Gọi API service thực hiện:
-    //    if (trSelected.length > 0) {
-    //        var customerCode = $(trSelected).children()[0].textContent;
-    //        // Gọi api service xóa dữ liệu của khách hàng với mã tương ứng:
-    //        $.ajax({
-    //            url: "/api/customer/" + customerCode,
-    //            method: "DELETE"
-    //        }).done(function (customer) {
-    //            if (customer) {
-    //                alert("Xóa thành công");
-    //            } else {
-    //                alert("Không có nhân viên với mã tương ứng");
-    //            }
-    //            self.loadData();
-    //        }).fail(function () {
-    //        })
-    //    } else {
-    //        alert("Bạn chưa chọn nhân viên nào!")
-    //    }
+        try {
+            var self = this;
+            // Lấy mã nhân viên được chọn:
+            var trSelected = $("#tblListData tr.row-selected");
+            // Gọi API service thực hiện:
+            if (trSelected.length > 0) {
+                var customerCode = $(trSelected).children()[0].textContent;
+                // Gọi api service xóa dữ liệu của khách hàng với mã tương ứng:
+                self.deleteData(customerCode);
+            } else {
+                alert("Bạn chưa chọn nhân viên nào!")
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     //Nút Cancel
@@ -184,9 +208,14 @@ class BaseJS {
         this.hideDialogDetail();
     }
 
+    //Ẩn Dialog Khi Click
+    closeDialogOnClick() {
+        this.hideDialogDetail();
+    }
+
     //Hiện Dialog
     showDialogDetail() {
-        $('.dialog input').val(null);
+        $('.dialog input, .dialog textarea, .dialog select').val(null);
         $('.dialog-modal').show();
         $('.dialog').show();
         $('#txtCustomerCode').focus();
@@ -220,7 +249,7 @@ class BaseJS {
     //Responsive Menu
     slideOnClick() {
         var x = document.getElementById("menu-id");
-        if ($(window).width() <= 800) {
+        if ($(window).width() <= 768) {
             if (x.className === "menu") {
                 x.className = "menu-responsive";
             } else {
@@ -230,9 +259,8 @@ class BaseJS {
     }
     //Responsive Menu Close
     mainPageOnClick() {
-        console.log('e');
         var x = document.getElementById("menu-id");
-        if ($(window).width() <= 800) {
+        if ($(window).width() <= 768) {
             if (x.className === "menu-responsive") {
                 x.className = "menu";
             }
@@ -247,8 +275,7 @@ class BaseJS {
 
 // Responesive Menu 
 function menu_responsive() {
-    console.log($(window).width());
-    if ($(window).width() > 800) {
+    if ($(window).width() > 768) {
         var x = document.getElementById("menu-id");
         x.className = "menu";
     }

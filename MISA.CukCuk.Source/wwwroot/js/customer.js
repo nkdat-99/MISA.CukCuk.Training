@@ -1,4 +1,9 @@
-﻿$(document).ready(function () {
+﻿/**
+ * Author: NKĐạt
+ * Date: 30/9/2020
+ * */
+
+$(document).ready(function () {
     try {
         customerJS = new CustomerJS();
     } catch (e) {
@@ -20,12 +25,6 @@ class CustomerJS extends BaseJS {
             contentType: "application/json", // Kiểu dữ liệu trả về
             dataType: "", // Kiểu dữ liệu của tham số
             async: false
-            //success: function () {
-
-            //},
-            //done: function () {
-
-            //}
         }).done(function (response) {
             self.Data = response;
         }).fail(function (res) {
@@ -33,21 +32,38 @@ class CustomerJS extends BaseJS {
         })
     }
 
-    makeTrHTML(item) {
-        var checkDate = "";
-        if (dateToDMY(new Date(item.customerBirthday)) != "01/01/1700") //giá trị mặc định 
-            checkDate = dateToDMY(new Date(item.customerBirthday));
-        var trHTML = $(`<tr>
-                    <td>` + item.customerCode + `</td>
-                    <td>` + item.customerName + `</td>
-                    <td style="text-align: center;">` + checkDate + `</td>
-                    <td>` + item.customerCompany + `</td>
-                    <td>` + item.customerTax + `</td>
-                    <td style="text-align: right;">` + item.customerMoney.formatMoney() + `</td>
-                    <td>` + item.customerAddress + `</td>
-                    <td>` + item.customerMobile + `</td>
-                    <td>` + item.customerEmail + `</td>
-                </tr>`);
-        return trHTML;
+    postData(customer, method) {
+        self = this;
+        $.ajax({
+            url: "/api/customer",
+            method: method,
+            data: JSON.stringify(customer),
+            contentType: "application/json",
+            dataType: "json"
+        }).done(function (res) {
+            //Load lại dữ liệu
+            self.getData();
+            self.loadData();
+            self.hideDialogDetail();
+        }).fail(function (res) {
+            console.log(res);
+        });
+    }
+
+    deleteData(customerCode) {
+        $.ajax({
+            url: "/api/customer/" + customerCode,
+            method: "DELETE"
+        }).done(function (res) {
+            if (res) {
+                alert("Xóa thành công");
+            } else {
+                alert("Không có nhân viên với mã tương ứng");
+            }
+            //Load lại dữ liệu
+            self.getData();
+            self.loadData();
+        }).fail(function () {
+        })
     }
 }
