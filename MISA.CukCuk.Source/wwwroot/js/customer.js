@@ -44,7 +44,6 @@ class CustomerJS extends BaseJS {
             method: method,
             data: JSON.stringify(customer),
             contentType: "application/json",
-            dataType: "json"
         }).done(function (res) {
             //Load lại dữ liệu
             self.getData();

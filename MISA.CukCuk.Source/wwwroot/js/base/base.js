@@ -37,7 +37,7 @@ class BaseJS {
         $('#btnSave').click(this.btnSaveOnClick.bind(this));
         $('#btnCancel').click(this.btnCancelOnClick.bind(this));
         $('input[required]').blur(this.checkRequired);
-        $('#btnReturn').focus(this.returnFocus);
+        $('#btnHelpDialog').blur(this.returnFocus);
         $("table tbody").on("click", "tr", this.rowOnSelect);
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
@@ -132,24 +132,27 @@ class BaseJS {
             if (isValid) {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
-                var customer = {};
+                var customer = new Object();
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
-                    var value = "#txt" + fieldName;
-                    customer[fieldName] = $(value).val();
-                    if (customer[fieldName] == null) customer[fieldName] = "";
-                    console.log(customer[fieldName]);
+                    var format = $(field).attr('format');
+                    customer[fieldName] = $(field).val();
+                    if (format == "Money") {
+                        if (customer[fieldName] == "") {
+                            customer[fieldName] = parseFloat(0);
+                        } else {
+                            customer[fieldName] = parseFloat($(field).val());
+                        }
+                    } else if (format == "Date") {
+                        if (customer[fieldName] == "") {
+                            customer[fieldName] = new Date('1700/01/01');
+                        } else {
+                            customer[fieldName] = $(field).val();
+                        }
+                    } else {
+                        if (customer[fieldName] == null) customer[fieldName] = "";
+                    }    
                 })
-                // Thu thập thông tin nhập trên form:
-                //var customer = {};
-                //customer.CustomerCode = $("#txtCustomerCode").val();
-                //customer.CustomerName = $("#txtCustomerName").val();
-                //customer.CustomerBirthday = $("#dtCustomerBirthday").val() || new Date('1700/01/01');
-                //customer.CustomerCompany = $("#txtCustomerCompany").val();
-                //customer.CustomerTax = $("#txtCustomerTax").val();
-                //customer.CustomerAddress = $("#txtCustomerAddress").val();
-                //customer.CustomerMobile = $("#txtCustomerMobile").val();
-                //customer.CustomerEmail = $("#txtCustomerEmail").val();
 
                 //Thực hiện cất dữ liệu vào DataBase;
                 if (self.FormMode == "edit") {
