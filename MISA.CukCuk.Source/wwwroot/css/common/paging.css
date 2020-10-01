@@ -1,0 +1,70 @@
+﻿.paging {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .paging .left {
+        display: flex;
+        align-items: center;
+    }
+
+    .paging .right {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+    }
+
+    /*---------- Left ----------*/
+
+    .paging .left .icon-first {
+        background: url('/content/imgs/grid/page-first.png') no-repeat;
+    }
+
+    .paging .left .icon-prev {
+        background: url('/content/imgs/grid/page-prev.png') no-repeat;
+    }
+
+    .paging .left .icon-next {
+        background: url('/content/imgs/grid/page-next.png') no-repeat;
+    }
+
+    .paging .left .icon-last {
+        background: url('/content/imgs/grid/page-last.png') no-repeat;
+    }
+
+    .paging .left .icon-refresh {
+        background: url('/content/imgs/grid/refresh.png') no-repeat;
+    }
+
+    .paging .left .icon {
+        width: 25px;
+        height: 25px;
+        background-position: center;
+    }
+
+    /* Remove the original arrow */
+    .paging select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #cccccc52 !important;
+    }
+
+    .paging select::after {
+        height: 20px;
+        width: 20px;
+        background: url('/content/imgs/grid/hd-pop.png') no-repeat;
+    }
+
+    .paging .left .select-paging {
+        padding: 0px 7px;
+        border-radius: 0;
+        height: 23px;
+        width: 35px;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+        .paging .left .select-paging:focus {
+            outline-offset: unset !important;
+            outline: none !important;
+        }
