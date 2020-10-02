@@ -185,12 +185,22 @@
                 </div>
                 <div class="paging">
                     <div class="left">
-                        <div class="icon icon-first"></div>
-                        <div class="icon icon-prev"></div>
-                        <div class="icon icon-next"></div>
-                        <div class="icon icon-last"></div>
-                        <div class="icon icon-refresh"></div>
-                        <label class="pop">
+                        <button><div class="icon icon-first"></div></button>
+                        <button><div class="icon icon-prev"></div></button>
+                        <div class="seperate"></div>
+                        <div class="input-paging">
+                            <label>Trang</label>
+                            <input />
+                            <label>trên 5</label>
+                        </div>
+                        <div class="seperate"></div>
+                        <button><div class="icon icon-next"></div></button>
+                        <button><div class="icon icon-last"></div></button>
+                        <div class="seperate"></div>
+                        <button><div class="icon icon-refresh"></div></button>
+                        <div class="seperate"></div>
+                        <div class="pop">
+                            <label>Số bản ghi</label>
                             <select class="select-paging">
                                 <option>1</option>
                                 <option>2</option>
@@ -198,7 +208,7 @@
                                 <option>4</option>
                                 <option>5</option>
                             </select>
-                        </label>
+                        </div>
                     </div>
                     <div class="right">
                         Hiển thị 1 - 5 trên 5 kết quả
@@ -299,9 +309,29 @@
             </div>
         </div>
     </div>
+    <div class="dialog-delete-confirm">
+        <div class="dialog-title">
+            <i class="icon-confirm"></i>
+            Xác nhận
+        </div>
+        <div class="dialog-body">
+            <div class="dialog-text">
+                Bạn chắc chắn muốn xóa?
+            </div>
+            <div class="confirm">
+                <button id="btnAgreeDelete" class="delete-agree">
+                    Đồng ý
+                </button>
+                <button id="btnCancelDelete" class="delete-cancel">
+                    Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="/js/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/common.js"></script>
     <script src="/js/base/base.js"></script>
+    <script src="/js/base/checkRequired.js"></script>
     <script src="/js/customer.js"></script>
 </body>
 </html>

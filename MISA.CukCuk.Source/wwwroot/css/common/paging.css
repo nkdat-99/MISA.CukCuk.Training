@@ -38,9 +38,29 @@
 
     .paging .left .icon {
         width: 25px;
-        height: 25px;
+        height: 21px;
         background-position: center;
     }
+
+    .paging .left button {
+        display: flex;
+        align-items: center;
+        border-radius: unset;
+        border: 1px solid transparent;
+        background-color: #fff;
+        margin-right: 5px;
+    }
+
+        .paging .left button:focus {
+            outline: none;
+            border: 1px solid #999999;
+        }
+
+        .paging .left button:hover {
+            background-color: #EFEFEF;
+            cursor: pointer;
+            border: 1px solid #999999;
+        }
 
     /* Remove the original arrow */
     .paging select {
@@ -49,17 +69,38 @@
         background-color: #cccccc52 !important;
     }
 
-    .paging select::after {
-        height: 20px;
-        width: 20px;
-        background: url('/content/imgs/grid/hd-pop.png') no-repeat;
+    .paging .pop {
+        position: relative;
+    }
+
+        .paging .pop:after {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            content: '\e801';
+            font-family: "Globe";
+            font-size: 14px;
+            color: #999999;
+            padding: 3px 7px;
+            background-color: #fff;
+            border-left: 1px solid #ccc;
+        }
+
+        .paging .pop label {
+            margin-right: 10px;
+        }
+
+    /*    Nhập số trang*/
+
+    .paging .input-paging label {
+        margin-right: 10px;
     }
 
     .paging .left .select-paging {
         padding: 0px 7px;
         border-radius: 0;
         height: 23px;
-        width: 35px;
+        width: 60px;
         box-shadow: none;
         border: 1px solid #ccc;
     }
@@ -68,3 +109,27 @@
             outline-offset: unset !important;
             outline: none !important;
         }
+
+    .paging .input-paging input {
+        padding: 0px 4px;
+        border-radius: 0;
+        height: 21px;
+        width: 30px;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+    }
+
+        .paging .input-paging input:focus {
+            outline-offset: unset !important;
+            outline: none !important;
+        }
+
+    /*        Thanh ngăn cách*/
+    .paging .seperate {
+        width: 1px;
+        height: 16px;
+        background-color: #999999;
+        margin-right: 10px;
+        margin-left: 5px;
+    }

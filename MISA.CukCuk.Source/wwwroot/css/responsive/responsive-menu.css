@@ -7,6 +7,10 @@
     .navbar .header .select-language {
         display: none;
     }
+
+    .paging .right {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 768px) {

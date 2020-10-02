@@ -75,4 +75,8 @@ class CustomerJS extends BaseJS {
         }).fail(function () {
         })
     }
+
+    validateCustom() {
+        return true;
+    };
 }

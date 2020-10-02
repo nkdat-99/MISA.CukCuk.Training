@@ -19,6 +19,7 @@ class BaseJS {
             this.loadData();
             this.initEvents();
             this.FormMode = null;
+            this.checkRequired = null;
         } catch (e) {
             console.log(e);
         }
@@ -33,15 +34,18 @@ class BaseJS {
         $('#btnAdd').click(this.btnAddOnClick.bind(this));
         $('#btnEdit').click(this.btnEditOnClick.bind(this));
         $('#btnDelete').click(this.btnDeleteOnClick.bind(this));
-        $('#btnClose').click(this.btnCloseOnClick.bind(this));
+        $('#btnClose').click(this.closeDialogOnClick.bind(this));
         $('#btnSave').click(this.btnSaveOnClick.bind(this));
-        $('#btnCancel').click(this.btnCancelOnClick.bind(this));
-        $('input[required]').blur(this.checkRequired);
+        $('#btnCancel').click(this.closeDialogOnClick.bind(this));
+        $('input[required]').blur(this.validateRequired.bind(this));
         $('#btnHelpDialog').blur(this.returnFocus);
         $("table tbody").on("click", "tr", this.rowOnSelect);
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
         $('.dialog-modal').click(this.closeDialogOnClick.bind(this));
+        //Btn Confirm Delete
+        $('#btnAgreeDelete').click(this.btnConfirmOnClick.bind(this));
+        $('#btnCancelDelete').click(this.closeDialogOnClick.bind(this));
     }
 
     getData() {
@@ -79,6 +83,8 @@ class BaseJS {
                         var td = $(`<td>` + value + `</td>`);
                     }
                     $(tr).append(td);
+                    //console.log(item[Object.keys(item)[0]]);
+                    //$(tr).data('key', item[Object.keys(item)[0]]);
                 })
                 // Binding dữ liệu lên trên UI
                 $('#tblListData tbody').append(tr);
@@ -124,11 +130,13 @@ class BaseJS {
             var self = this;
             var method = "POST";
             $.each(inputRequireds, function (index, input) {
-                var valid = $(input).trigger("blur");
-                if (isValid && valid.hasClass("required-error")) {
+                if (!validData.validateRequired(input)) {
                     isValid = false;
                 }
             })
+            if (isValid) {
+                isValid = self.validateCustom();
+            }
             if (isValid) {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
@@ -213,13 +221,17 @@ class BaseJS {
     btnDeleteOnClick() {
         try {
             var self = this;
+            self.checkRequired = false;
             // Lấy mã nhân viên được chọn:
             var trSelected = $("#tblListData tr.row-selected");
             // Gọi API service thực hiện:
             if (trSelected.length > 0) {
-                var selectDel = $(trSelected).children()[0].textContent;
-                // Gọi api service xóa dữ liệu của khách hàng với mã tương ứng:
-                self.deleteData(selectDel);
+                self.showDialogDeleteConfirm();
+                if (true) {
+                    var selectDel = $(trSelected).children()[0].textContent;
+                    // Gọi api service xóa dữ liệu của khách hàng với mã tương ứng:
+                    self.deleteData(selectDel);
+                }
             } else {
                 alert("Bạn chưa chọn nhân viên nào!")
             }
@@ -232,21 +244,13 @@ class BaseJS {
     * Author: NKĐạt
     * Date: 30/9/2020
     * */
-    //Nút Cancel và Close
-    btnCancelOnClick() {
-        this.hideDialogDetail();
-    }
-    btnCloseOnClick() {
-        this.hideDialogDetail();
-    }
-
-    /**
-    * Author: NKĐạt
-    * Date: 30/9/2020
-    * */
     //Ẩn Dialog Khi Click
     closeDialogOnClick() {
         this.hideDialogDetail();
+    }
+
+    btnConfirmOnClick() {
+        this.checkRequired = true;
     }
 
     /**
@@ -261,6 +265,11 @@ class BaseJS {
         $('#txtCustomerCode').focus();
     }
 
+    showDialogDeleteConfirm() {
+        $('.dialog-modal').show();
+        $('.dialog-delete-confirm').show();
+    }
+
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
@@ -268,25 +277,25 @@ class BaseJS {
     //Ẩn Dialog
     hideDialogDetail() {
         $('.dialog-modal').hide();
+        $('.dialog-delete-confirm').hide();
         $('.dialog').hide();
+        $('input').removeClass('required-error');
+        $('input').removeClass("title");
+        $('input').removeAttr("placeholder");
     }
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 2/10/2020
     * */
     //Check các thông tin bắt buộc nhập
-    checkRequired() {
-        var value = this.value;
-        if (!value) {
-            $(this).addClass('required-error');
-            $(this).attr("title", "Bạn phải nhập thông tin này");
-            $(this).attr("placeholder", "Bạn phải nhập thông tin này");
-        } else {
-            $(this).removeClass('required-error');
-            $(this).removeClass("title");
-        }
+    validateRequired(sender) {
+        validData.validateRequired(sender.currentTarget);
     }
+
+    validateCustom() {
+        return true;
+    };
 
     /**
     * Author: NKĐạt
@@ -348,3 +357,5 @@ function menu_responsive() {
         x.className = "menu";
     }
 }
+
+
