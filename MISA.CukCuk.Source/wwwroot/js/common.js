@@ -18,3 +18,7 @@ function dateToDMY(date) {
     var y = date.getFullYear();
     return '' + (d <= 9 ? '0' + d : d) + '/' + (m <= 9 ? '0' + m : m) + '/' + y;
 }
+
+function lowerCaseFirstLetter(string) { 
+    return string.charAt(0).toLowerCase() + string.slice(1);
+}

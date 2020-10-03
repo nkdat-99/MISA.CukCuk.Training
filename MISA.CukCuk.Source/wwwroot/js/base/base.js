@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 28/9/2020
     * */
     // Timeout Event Responsive Menu
     var timeout;
@@ -43,8 +43,7 @@ class BaseJS {
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
         $('.dialog-modal').click(this.closeDialogOnClick.bind(this));
-        //Btn Confirm Delete
-        $('#btnAgreeDelete').click(this.btnConfirmOnClick.bind(this));
+        $('#btnAgreeDelete').click(this.agreeOnClick.bind(this));
         $('#btnCancelDelete').click(this.closeDialogOnClick.bind(this));
     }
 
@@ -69,22 +68,22 @@ class BaseJS {
                 var tr = $(`<tr></tr>`);
                 $.each(fields, function (index, field) {
                     //Lấy dữ liệu từ các cột
-                    var fieldName = $(field).attr('fieldName');    
+                    var fieldName = $(field).attr('fieldName');
+                    var format = $(field).attr('format');
                     var value = item[fieldName];
-                    if (fieldName == "customerBirthday") {
+                    if (format == "Date") {
                         var checkDate = "";
                         if (dateToDMY(new Date(value)) != "01/01/1700") //giá trị mặc định 
                             checkDate = dateToDMY(new Date(value));
                         value = checkDate;
                         var td = $(`<td style="text-align: center;">` + value + `</td>`);
-                    } else if (fieldName == "customerMoney") {
+                    } else if (format == "Money") {
                         var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
                     } else {
                         var td = $(`<td>` + value + `</td>`);
                     }
                     $(tr).append(td);
-                    //console.log(item[Object.keys(item)[0]]);
-                    //$(tr).data('key', item[Object.keys(item)[0]]);
+                    $(tr).data('key', item[Object.keys(item)[0]]);
                 })
                 // Binding dữ liệu lên trên UI
                 $('#tblListData tbody').append(tr);
@@ -140,26 +139,26 @@ class BaseJS {
             if (isValid) {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
-                var customer = new Object();
+                var objInput = new Object();
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
-                    customer[fieldName] = $(field).val();
+                    objInput[fieldName] = $(field).val();
                     if (format == "Money") {
-                        if (customer[fieldName] == "") {
-                            customer[fieldName] = parseFloat(0);
+                        if (objInput[fieldName] == "") {
+                            objInput[fieldName] = parseFloat(0);
                         } else {
-                            customer[fieldName] = parseFloat($(field).val());
+                            objInput[fieldName] = parseFloat($(field).val());
                         }
                     } else if (format == "Date") {
-                        if (customer[fieldName] == "") {
-                            customer[fieldName] = new Date('1700/01/01');
+                        if (objInput[fieldName] == "") {
+                            objInput[fieldName] = new Date('1700/01/01');
                         } else {
-                            customer[fieldName] = $(field).val();
+                            objInput[fieldName] = $(field).val();
                         }
                     } else {
-                        if (customer[fieldName] == null) customer[fieldName] = "";
-                    }    
+                        if (objInput[fieldName] == null) objInput[fieldName] = "";
+                    }
                 })
 
                 //Thực hiện cất dữ liệu vào DataBase;
@@ -175,42 +174,48 @@ class BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 3/10/2020
     * */
-    ////Sửa dữ liệu
+    //Sửa dữ liệu
     btnEditOnClick() {
-        //    this.FormMode = "edit";
-        //    // Lấy dữ liệu của nhân viên tương ứng đã chọn:
-        //    // 1. Xác định nhân viên nào được chọn:
-        //    var trSelected = $("#tblCustomers tr.row-selected");
-        //    var self = this;
-        //    // 2. Lấy thông tin Mã nhân viên:
-        //    if (trSelected.length > 0) {
-        //        this.showDialogDetail();
-        //        var customerCode = $(trSelected).children()[0].textContent;
-        //        // 3. Gọi api service để lấy dữ liệu chi tiết của nhân viên với mã tương ứng:
-        //        $.ajax({
-        //            url: "/api/customer/" + customerCode,
-        //            method: "GET"
-        //        }).done(function (customer) {
-        //            if (!customer) {
-        //                alert("Không có nhân viên với mã tương ứng")
-        //            } else {
-        //                // bindding các thông tin của nhân viên lên form:
-        //                $("#txtCustomerCode").val(customer.customerCode);
-        //                $("#txtCustomerName").val(customer.customerName);
-        //                $("#dtCustomerBirthday").val(dateToYMD(new Date(customer.customerBirthday)));
-        //                $("#txtCustomerCompany").val(customer.customerCompany);
-        //                $("#txtCustomerTax").val(customer.customerTax);
-        //                $("#txtCustomerAddress").val(customer.customerAddress);
-        //                $("#txtCustomerMobile").val(customer.customerMobile);
-        //                $("#txtCustomerEmail").val(customer.customerEmail);
-        //            }
-        //        }).fail(function () {
-        //        })
-        //    } else {
-        //        alert("Bạn chưa chọn nhân viên nào!")
-        //    }
+        this.FormMode = "edit";
+        // Lấy dữ liệu của nhân viên tương ứng đã chọn:
+        // 1. Xác định nhân viên nào được chọn:
+        var trSelected = $("#tblListData tr.row-selected");
+        var self = this;
+        // 2. Lấy thông tin Mã nhân viên:
+        if (trSelected.length > 0) {
+            self.showDialogDetail();
+            var customerCode = $(trSelected).children()[0].textContent;
+            // 3. Gọi api service để lấy dữ liệu chi tiết của nhân viên với mã tương ứng:
+            $.ajax({
+                url: "/api/customer/" + customerCode,
+                method: "GET"
+            }).done(function (objDetail) {
+                if (!objDetail) {
+                    alert("Không có nhân viên với mã tương ứng")
+                } else {
+                    // bindding các thông tin của nhân viên lên form:
+                    var fields = $('.dialog input, .dialog select, .dialog textarea');
+                    $.each(fields, function (index, field) {
+                        var fieldName = $(field).attr('fieldName');
+                        fieldName = lowerCaseFirstLetter(fieldName);
+                        var format = $(field).attr('format');
+                        console.log(fieldName);
+                        if (format == "Money") {
+                            field.value = parseFloat($(objDetail[fieldName]).val());
+                        } else if (format == "Date") {
+                            field.value = dateToDMY(objDetail[fieldName]);
+                        } else {
+                            field.value = objDetail[fieldName];
+                        }
+                    })
+                }
+            }).fail(function () {
+            })
+        } else {
+            alert("Bạn chưa chọn nhân viên nào!")
+        }
     }
 
     /**
@@ -226,18 +231,19 @@ class BaseJS {
             var trSelected = $("#tblListData tr.row-selected");
             // Gọi API service thực hiện:
             if (trSelected.length > 0) {
+                self.selectDel = trSelected.data('key');
                 self.showDialogDeleteConfirm();
-                if (true) {
-                    var selectDel = $(trSelected).children()[0].textContent;
-                    // Gọi api service xóa dữ liệu của khách hàng với mã tương ứng:
-                    self.deleteData(selectDel);
-                }
             } else {
                 alert("Bạn chưa chọn nhân viên nào!")
             }
         } catch (e) {
             console.log(e)
         }
+    }
+
+    agreeOnClick() {
+        self.deleteData(self.selectDel);
+        self.closeDialogOnClick();
     }
 
     /**
@@ -247,10 +253,6 @@ class BaseJS {
     //Ẩn Dialog Khi Click
     closeDialogOnClick() {
         this.hideDialogDetail();
-    }
-
-    btnConfirmOnClick() {
-        this.checkRequired = true;
     }
 
     /**
@@ -299,7 +301,7 @@ class BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 25/9/2020
     * */
     //Select hàng
     rowOnSelect() {
@@ -309,7 +311,7 @@ class BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 28/9/2020
     * */
     //Responsive Menu
     slideOnClick() {
@@ -325,7 +327,7 @@ class BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 28/9/2020
     * */
     //Responsive Menu Close
     mainPageOnClick() {
@@ -339,16 +341,17 @@ class BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 29/9/2020
     * */
     //Return Key Press Tab
     returnFocus() {
         $('#txtCustomerCode').focus();
     }
 }
+
 /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 28/9/2020
     * */
 // Responesive Menu 
 function menu_responsive() {

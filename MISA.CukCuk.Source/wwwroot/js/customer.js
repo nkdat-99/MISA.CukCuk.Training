@@ -62,7 +62,8 @@ class CustomerJS extends BaseJS {
     deleteData(customerCode) {
         $.ajax({
             url: "/api/customer/" + customerCode,
-            method: "DELETE"
+            method: "DELETE",
+            async: false
         }).done(function (res) {
             if (res) {
                 alert("Xóa thành công");
