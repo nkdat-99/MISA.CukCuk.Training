@@ -2,7 +2,7 @@
     /**
     * Kiểm tra các trường dữ liệu bắt buộc nhập
     * Author: NKĐạt
-    * @param {obj} input selector
+    * @param {object} input selector
     * Date: 2/10/2020
     * */
     validateRequired: function (input) {

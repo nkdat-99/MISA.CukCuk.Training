@@ -16,6 +16,7 @@
     <link href="/css/common/gird.css" rel="stylesheet" />
     <link href="/css/common/paging.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
+    <link href="/css/common/announce.css" rel="stylesheet" />
     <link href="/css/responsive/responsive-menu.css" rel="stylesheet" />
 </head>
 <body>
@@ -168,20 +169,21 @@
                     <table id="tblListData" border="0" cellpadding="0">
                         <thead>
                             <tr>
-                                <td fieldName="customerCode">Mã Khách Hàng</td>
-                                <td fieldName="customerName">Tên Khách Hàng</td>
-                                <td fieldName="customerBirthday" format="Date">Ngày Sinh</td>
-                                <td fieldName="customerCompany">Tên Công Ty</td>
-                                <td fieldName="customerTax">Mã Số Thuế</td>
-                                <td fieldName="customerMoney" format="Money">Tiền Thuế</td>
-                                <td fieldName="customerAddress">Địa Chỉ Cư Trú</td>
-                                <td fieldName="customerMobile">Số Điện Thoại</td>
-                                <td fieldName="customerEmail">Email</td>
+                                <th fieldName="customerCode">Mã Khách Hàng</th>
+                                <th fieldName="customerName">Tên Khách Hàng</th>
+                                <th fieldName="customerBirthday" format="Date">Ngày Sinh</th>
+                                <th fieldName="customerCompany">Tên Công Ty</th>
+                                <th fieldName="customerTax">Mã Số Thuế</th>
+                                <th fieldName="customerMoney" format="Money">Tiền Thuế</th>
+                                <th fieldName="customerAddress">Địa Chỉ Cư Trú</th>
+                                <th fieldName="customerMobile">Số Điện Thoại</th>
+                                <th fieldName="customerEmail">Email</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                    <table id="header-fixed"></table>
                 </div>
                 <div class="paging">
                     <div class="left">
@@ -311,8 +313,11 @@
     </div>
     <div class="dialog-delete-confirm">
         <div class="dialog-title">
-            <i class="icon-confirm"></i>
-            Xác nhận
+            <div class="title-left">
+                <i class="icon-confirm"></i>
+                Xác nhận
+            </div>
+            <div id="btnCloseConfirm" class="confirm-close-button"></div>
         </div>
         <div class="dialog-body">
             <div class="dialog-text">
@@ -324,6 +329,25 @@
                 </button>
                 <button id="btnCancelDelete" class="delete-cancel">
                     Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="dialog-announce">
+        <div class="dialog-title">
+            <div class="title-left">
+                <i class="icon-announce"></i>
+                Thông báo
+            </div>
+            <div id="btnCloseAnnounce" class="announce-close-button"></div>
+        </div>
+        <div class="dialog-body">
+            <div class="dialog-text">
+                Xóa thành công!
+            </div>
+            <div class="confirm">
+                <button id="btnConfirmAnnounce" class="delete-agree">
+                    OK
                 </button>
             </div>
         </div>

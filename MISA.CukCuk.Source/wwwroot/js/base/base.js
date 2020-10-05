@@ -45,6 +45,11 @@ class BaseJS {
         $('.dialog-modal').click(this.closeDialogOnClick.bind(this));
         $('#btnAgreeDelete').click(this.agreeOnClick.bind(this));
         $('#btnCancelDelete').click(this.closeDialogOnClick.bind(this));
+
+        $('#btnCloseConfirm').click(this.closeDialogOnClick.bind(this));
+        $('#btnCloseAnnounce').click(this.closeDialogOnClick.bind(this));
+
+        //$('#txtCustomerMoney').change(this.changeMoney.bind(this));
     }
 
     getData() {
@@ -59,7 +64,7 @@ class BaseJS {
     loadData() {
         try {
             // Đọc thông tin các cột dữ liệu:
-            var fields = $('#tblListData thead td');
+            var fields = $('#tblListData thead th');
             // Lấy dữ liệu:
             var data = this.Data;
             var self = this;
@@ -95,10 +100,10 @@ class BaseJS {
 
     /**
      * Author: NKĐạt
-     * @param {object} customer
+     * @param {object} objInput
      * @param {string} method
      */
-    postData(customer, method) { };
+    postData(objInput, method) { };
 
     /**
      * Author: NKĐạt
@@ -165,7 +170,7 @@ class BaseJS {
                 if (self.FormMode == "edit") {
                     method = "PUT"
                 }
-                self.postData(customer, method);
+                self.postData(objInput, method);
             }
         } catch (e) {
             console.log(e)
@@ -201,11 +206,10 @@ class BaseJS {
                         var fieldName = $(field).attr('fieldName');
                         fieldName = lowerCaseFirstLetter(fieldName);
                         var format = $(field).attr('format');
-                        console.log(fieldName);
                         if (format == "Money") {
-                            field.value = parseFloat($(objDetail[fieldName]).val());
+                            field.value = objDetail[fieldName].formatMoney();
                         } else if (format == "Date") {
-                            field.value = dateToDMY(objDetail[fieldName]);
+                            field.value = dateToYMD(new Date(objDetail[fieldName]));
                         } else {
                             field.value = objDetail[fieldName];
                         }

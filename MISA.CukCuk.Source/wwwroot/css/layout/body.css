@@ -1,4 +1,10 @@
-﻿body {
+﻿/**
+    * Author: NKĐạt
+    * Date: 25/9/2020
+    * */
+
+/*---------- Reset CSS ----------*/
+body {
     margin: 0;
     font-size: 13px;
     font-family: MISA Fonts Regular;

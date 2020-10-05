@@ -1,0 +1,85 @@
+﻿.dialog-announce {
+    display: none;
+    position: absolute;
+    width: 300px;
+    height: 120px;
+    border-radius: 3px;
+    background-color: #fff;
+    top: 25%;
+    left: calc(50% - 125px);
+    right: 0;
+    bottom: 0;
+    border: 4px solid #0973b9;
+}
+
+    .dialog-announce .dialog-title {
+        height: 25px;
+        background-color: #0973b9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 5px 3px;
+    }
+
+    .dialog-announce .title-left {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        color: #fff;
+    }
+
+    .dialog-announce .announce-close-button {
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        background-image: url('/content/imgs/cancel.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+
+    .dialog-announce .dialog-body {
+        height: calc(100% - 25px);
+    }
+
+    .dialog-announce .dialog-text {
+        text-align: center;
+        line-height: 40px;
+        font-size: 15px;
+        height: 40px;
+    }
+
+    .dialog-announce .icon-announce {
+        width: 23px;
+        height: 15px;
+        background: url('/content/imgs/exclamation.png') no-repeat;
+        background-size: auto;
+    }
+
+
+    .dialog-announce .confirm {
+        display: flex;
+        justify-content: space-around;
+    }
+
+        .dialog-announce .confirm button {
+            width: 95px;
+            height: 35px;
+            padding: 2px 5px;
+            display: flex;
+            background-color: #ededed;
+            border-image: initial;
+            border: 1px solid #ccc;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3px;
+        }
+
+            .dialog-announce .confirm button:hover,
+            .dialog-announce .confirm button:focus {
+                border-color: #0071c1;
+                outline: none;
+                background-image: -webkit-linear-gradient(top,#eff0ec,#e1f2e9);
+            }

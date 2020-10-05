@@ -1,4 +1,8 @@
-﻿/*---------- Table ----------*/
+﻿/**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * */
+/*---------- Table ----------*/
 
 .gird-content .gird {
     width: 100%;
@@ -6,21 +10,23 @@
     border: 1px solid #d9d9d9;
     border-top: 0;
     display: flex;
-    overflow: auto;
+    overflow: scroll;
+    position: relative;
 }
 
     .gird-content .gird table {
-        border-collapse: collapse;
+        border-spacing: 0;
         width: 100%;
     }
 
-        .gird-content .gird table td {
-            border: 1px solid #d9d9d9;
+        .gird-content .gird table td, .gird-content .gird table th {
+            border-right: 1px solid #d9d9d9;
+            border-bottom: 1px solid #d9d9d9;
             padding: 3px 10px;
             white-space: nowrap;
         }
 
-        .gird-content .gird table tr:first-child td {
+        .gird-content .gird table tr:first-child td, .gird-content .gird table th {
             border-top: 0;
         }
 
@@ -40,7 +46,7 @@
                 background-color: #bfd1fe;
             }
 
-        .gird-content .gird table thead td {
+        .gird-content .gird table thead th {
             font-weight: normal;
             background: #ededed;
             outline: 0;
@@ -48,6 +54,8 @@
             white-space: nowrap;
             padding: 5px;
             text-align: center;
+            position: sticky;
+            top: 0;
         }
 
         .gird-content .gird table tr:nth-child(even) {

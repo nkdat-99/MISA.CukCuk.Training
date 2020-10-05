@@ -1,4 +1,10 @@
-﻿.paging {
+﻿/**
+    * Author: NKĐạt
+    * Date: 2/10/2020
+    * */
+/*---------- Phân Trang Footer ----------*/
+
+.paging {
     display: flex;
     justify-content: space-between;
 }
