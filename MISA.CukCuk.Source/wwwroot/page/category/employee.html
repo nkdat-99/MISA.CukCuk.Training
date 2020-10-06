@@ -16,6 +16,7 @@
     <link href="/css/common/gird.css" rel="stylesheet" />
     <link href="/css/common/paging.css" rel="stylesheet" />
     <link href="/css/common/dialog.css" rel="stylesheet" />
+    <link href="/css/common/announce.css" rel="stylesheet" />
     <link href="/css/responsive/responsive-menu.css" rel="stylesheet" />
 </head>
 <body>
@@ -140,7 +141,7 @@
             <div class="title-content">
                 <div class="page-title">
                     <h1>Danh mục</h1>
-                    <p>Khách Hàng</p>
+                    <p>Nhân Viên</p>
                 </div>
                 <div class="setting">
                     <button id="setting-reset">Quay lại thiết lập ban đầu</button>
@@ -168,20 +169,20 @@
                     <table id="tblListData" border="0" cellpadding="0">
                         <thead>
                             <tr>
-                                <td fieldName="customerCode">Mã Khách Hàng</td>
-                                <td fieldName="customerName">Tên Khách Hàng</td>
-                                <td fieldName="customerBirthday">Ngày Sinh</td>
-                                <td fieldName="customerCompany">Tên Công Ty</td>
-                                <td fieldName="customerTax">Mã Số Thuế</td>
-                                <td fieldName="customerMoney">Tiền Thuế</td>
-                                <td fieldName="customerAddress">Địa Chỉ Cư Trú</td>
-                                <td fieldName="customerMobile">Số Điện Thoại</td>
-                                <td fieldName="customerEmail">Email</td>
+                                <th fieldName="employeeCode">Mã Nhân Viên</th>
+                                <th fieldName="employeeName">Tên Nhân Viên</th>
+                                <th fieldName="employeeMobile">Số Điện Thoại</th>
+                                <th fieldName="employeeBirthday" format="Date">Ngày Sinh</th>
+                                <th fieldName="employeeCard">Số Tài Khoản</th>
+                                <th fieldName="employeeMoney" format="Money">Tiền Lương</th>
+                                <th fieldName="employeeAddress">Địa Chỉ Cư Trú</th>
+                                <th fieldName="employeeEmail">Email</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                    <table id="header-fixed"></table>
                 </div>
                 <div class="paging">
                     <div class="left">
@@ -217,12 +218,12 @@
             </div>
         </div>
     </div>
-    <!--Dialog chi tiết thông tin khách hàng-->
+    <!--Dialog chi tiết thông tin nhân viên-->
     <div class="dialog-modal"></div>
     <div class="dialog">
         <div class="dialog-title">
             <div class="title-text">
-                Khách Hàng
+                Nhân Viên
             </div>
             <div id="btnClose" class="title-close-button"></div>
         </div>
@@ -230,58 +231,43 @@
             <!--<div class="title-group">Thông tin chi tiết</div>-->
             <div class="group-infor">
                 <div class="row">
-                    <label class="label-left">Mã khách hàng <label style="color: red;">(*)</label></label>
-                    <input fieldName="CustomerCode" id="txtCustomerCode" required type="text" class="input-default flex-left" />
-                    <label class="label-right">Tên khách hàng <label style="color: red;">(*)</label></label>
-                    <input fieldName="CustomerName" id="txtCustomerName" required type="text" class="input-default flex-right" />
+                    <label class="label-left">Mã nhân viên <label style="color: red;">(*)</label></label>
+                    <input fieldName="EmployeeCode" id="txtEmployeeCode" required type="text" class="input-default" />
+                    
                 </div>
                 <div class="row">
-                    <label class="label-left">Mã thẻ thành viên</label>
-                    <input fieldName="CustomerMember" id="txtCustomerMember" type="text" class="input-default flex-left" />
-                    <label class="label-right">Hạng thẻ</label>
-                    <select fieldName="CustomerCard" id="txtCustomerCard" class="input-default flex-right">
-                        <option>Normal</option>
-                        <option>Platinum</option>
-                        <option>Diamond</option>
-                        <option>Vip</option>
-                    </select>
+                    <label class="label-left">Tên nhân viên <label style="color: red;">(*)</label></label>
+                    <input fieldName="EmployeeName" id="txtEmployeeName" required type="text" class="input-default" />
                 </div>
                 <div class="row">
-                    <label class="label-left">Nhóm khách hàng</label>
-                    <select fieldName="CustomerGroup" id="txtCustomerGroup" class="input-default flex-left" style="width: 200px">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                    <label class="label-right">Tiền Thuế</label>
-                    <input fieldName="CustomerMoney" id="txtCustomerMoney" type="text" class="input-default flex-right" />
+                    <label class="label-left">Tiền Lương</label>
+                    <input fieldName="EmployeeMoney" format="Money" id="txtEmployeeMoney" type="text" class="input-default flex-left" />
                 </div>
                 <div class="row">
                     <label class="label-left">Số điện thoại</label>
-                    <input fieldName="CustomerMobile" id="txtCustomerMobile" type="tel" class="input-default flex-left" />
+                    <input fieldName="EmployeeMobile" id="txtEmployeeMobile" type="tel" class="input-default flex-left" />
                 </div>
                 <div class="row">
                     <label class="label-left">Ngày sinh</label>
-                    <input fieldName="CustomerBirthday" id="txtCustomerBirthday" type="date" class="input-default flex-left" />
+                    <input fieldName="EmployeeBirthday" format="Date" id="dtEmployeeBirthday" type="date" class="input-default flex-left" />
                 </div>
                 <div class="row">
                     <label class="label-left">Tên công ty</label>
-                    <input fieldName="CustomerCompany" id="txtCustomerCompany" type="text" class="input-default" />
+                    <input fieldName="EmployeeCompany" id="txtEmployeeCompany" type="text" class="input-default" />
                 </div>
                 <div class="row">
-                    <label class="label-left">Mã số thuế</label>
-                    <input fieldName="CustomerTax" id="txtCustomerTax" type="text" class="input-default flex-left" />
+                    <label class="label-left">Số Tài Khoản</label>
+                    <input fieldName="EmployeeCard" id="txtEmployeeCard" type="text" class="input-default flex-left" />
                     <label class="label-right">Email</label>
-                    <input fieldName="CustomerEmail" id="txtCustomerEmail" type="email" class="input-default flex-right" />
+                    <input fieldName="EmployeeEmail" id="txtEmployeeEmail" type="email" class="input-default flex-right" />
                 </div>
                 <div class="row">
                     <label class="label-left">Địa chỉ cư trú</label>
-                    <input fieldName="CustomerAddress" id="txtCustomerAddress" type="text" class="input-default" />
+                    <input fieldName="EmployeeAddress" id="txtEmployeeAddress" type="text" class="input-default" />
                 </div>
                 <div class="row">
                     <label class="label-left">Ghi chú</label>
-                    <textarea fieldName="CustomerNote" id="txtCustomerNote" class="input-default"></textarea>
+                    <textarea fieldName="EmployeeNote" id="txtEmployeeNote" class="input-default"></textarea>
                 </div>
             </div>
         </div>
@@ -309,9 +295,49 @@
             </div>
         </div>
     </div>
+    <div class="dialog-delete-confirm">
+        <div class="dialog-title">
+            <div class="title-left">
+                <i class="icon-confirm"></i>
+                Xác nhận
+            </div>
+            <div id="btnCloseConfirm" class="confirm-close-button"></div>
+        </div>
+        <div class="dialog-body">
+            <div class="dialog-text">
+                Bạn chắc chắn muốn xóa?
+            </div>
+            <div class="confirm">
+                <button id="btnAgreeDelete" class="delete-agree">
+                    Đồng ý
+                </button>
+                <button id="btnCancelDelete" class="delete-cancel">
+                    Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="dialog-announce">
+        <div class="dialog-title">
+            <div class="title-left">
+                <i class="icon-announce"></i>
+                Thông báo
+            </div>
+            <div id="btnCloseAnnounce" class="announce-close-button"></div>
+        </div>
+        <div class="dialog-body">
+            <div id="txtTitleAnnounce" class="dialog-text"></div>
+            <div class="confirm">
+                <button id="btnConfirmAnnounce" class="delete-agree">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
     <script src="/js/lib/jquery-3.5.1.min.js"></script>
     <script src="/js/common.js"></script>
     <script src="/js/base/base.js"></script>
-    <script src="/js/customer.js"></script>
+    <script src="/js/base/checkRequired.js"></script>
+    <script src="/js/employee.js"></script>
 </body>
 </html>

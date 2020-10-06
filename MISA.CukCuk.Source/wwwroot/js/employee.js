@@ -1,25 +1,25 @@
 ﻿$(document).ready(function () {
     try {
-        customerJS = new CustomerJS();
+        employeeJS = new EmployeeJS();
     } catch (e) {
         console.log(e);
     }
 });
 
-class CustomerJS extends BaseJS {
+class EmployeeJS extends BaseJS {
     constructor() {
-        super('customer');
+        super('employee');
     }
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 6/10/2020
     * */
     //Lấy data từ DATABASE
     getData() {
         self = this;
         $.ajax({
-            url: "/api/customer", // Đường dẫn địa chỉ
+            url: "/api/employee", // Đường dẫn địa chỉ
             method: "GET", // Phương thức
             data: "", // Tham số sẽ truyền qua body request
             contentType: "application/json", // Kiểu dữ liệu trả về
@@ -35,13 +35,13 @@ class CustomerJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
-    * @param {string} customerCode
+    * @param {string} employeeCode
     * */
     //Lấy data chi tiết từ DATABASE
-    getDataDetail(customerCode) {
+    getDataDetail(employeeCode) {
         var self = this;
         $.ajax({
-            url: "/api/customer/" + customerCode,
+            url: "/api/employee/" + employeeCode,
             method: "GET",
             async: false
         }).done(function (res) {
@@ -53,17 +53,17 @@ class CustomerJS extends BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
+    * Date: 6/10/2020
     * @param {object} employee
     * @param {string} method
     * */
     //Thêm data vào DATABASE
-    postData(customer, method) {
+    postData(employee, method) {
         self = this;
         $.ajax({
-            url: "/api/customer",
+            url: "/api/employee",
             method: method,
-            data: JSON.stringify(customer),
+            data: JSON.stringify(employee),
             contentType: "application/json",
         }).done(function (res) {
             //Load lại dữ liệu
@@ -78,14 +78,14 @@ class CustomerJS extends BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 30/9/2020
-    * @param {string} customerCode
+    * Date: 6/10/2020
+    * @param {string} employeeCode
     * */
     //Xóa data
-    deleteData(customerCode) {
+    deleteData(employeeCode) {
         var check = false;
         $.ajax({
-            url: "/api/customer/" + customerCode,
+            url: "/api/employee/" + employeeCode,
             method: "DELETE",
             async: false
         }).done(function (res) {

@@ -31,6 +31,7 @@ class BaseJS {
     * */
     // Gán các sự kiện thành phần
     initEvents() {
+        //Các nút và thành phần thêm, sửa, xóa, hủy bỏ.
         $('#btnAdd').click(this.btnAddOnClick.bind(this));
         $('#btnEdit').click(this.btnEditOnClick.bind(this));
         $('#btnDelete').click(this.btnDeleteOnClick.bind(this));
@@ -39,17 +40,22 @@ class BaseJS {
         $('#btnCancel').click(this.closeDialogOnClick.bind(this));
         $('input[required]').blur(this.validateRequired.bind(this));
         $('#btnHelpDialog').blur(this.returnFocus);
+        //Select Hàng
         $("table tbody").on("click", "tr", this.rowOnSelect);
+        //Responsive Menu
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
-        $('.dialog-modal').click(this.closeDialogOnClick.bind(this));
+        //Ẩn Dialog
+        $('.dialog-modal').click(this.closeAllDialogOnClick.bind(this));
+        //Dialog xác nhận xóa
         $('#btnAgreeDelete').click(this.agreeOnClick.bind(this));
         $('#btnCancelDelete').click(this.closeDialogOnClick.bind(this));
-
+        //Dialog thông báo
         $('#btnCloseConfirm').click(this.closeDialogOnClick.bind(this));
         $('#btnCloseAnnounce').click(this.closeDialogOnClick.bind(this));
-
-        //$('#txtCustomerMoney').change(this.changeMoney.bind(this));
+        $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
+        //Event Keyup Format Money
+        $('input#txtCustomerMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
     }
 
     getData() {
@@ -191,34 +197,30 @@ class BaseJS {
         // 2. Lấy thông tin Mã nhân viên:
         if (trSelected.length > 0) {
             self.showDialogDetail();
-            var customerCode = $(trSelected).children()[0].textContent;
+            var selectCode = $(trSelected).children()[0].textContent;
             // 3. Gọi api service để lấy dữ liệu chi tiết của nhân viên với mã tương ứng:
-            $.ajax({
-                url: "/api/customer/" + customerCode,
-                method: "GET"
-            }).done(function (objDetail) {
-                if (!objDetail) {
-                    alert("Không có nhân viên với mã tương ứng")
-                } else {
-                    // bindding các thông tin của nhân viên lên form:
-                    var fields = $('.dialog input, .dialog select, .dialog textarea');
-                    $.each(fields, function (index, field) {
-                        var fieldName = $(field).attr('fieldName');
-                        fieldName = lowerCaseFirstLetter(fieldName);
-                        var format = $(field).attr('format');
-                        if (format == "Money") {
-                            field.value = objDetail[fieldName].formatMoney();
-                        } else if (format == "Date") {
-                            field.value = dateToYMD(new Date(objDetail[fieldName]));
-                        } else {
-                            field.value = objDetail[fieldName];
-                        }
-                    })
-                }
-            }).fail(function () {
-            })
+            self.getDataDetail(selectCode);
+            var objDetail = self.DataDetail;
+            if (!objDetail) {
+                self.showDialogAnnounce('none');
+            } else {
+                // bindding các thông tin của nhân viên lên form:
+                var fields = $('.dialog input, .dialog select, .dialog textarea');
+                $.each(fields, function (index, field) {
+                    var fieldName = $(field).attr('fieldName');
+                    fieldName = lowerCaseFirstLetter(fieldName);
+                    var format = $(field).attr('format');
+                    if (format == "Money") {
+                        field.value = objDetail[fieldName].formatMoney();
+                    } else if (format == "Date") {
+                        field.value = dateToYMD(new Date(objDetail[fieldName]));
+                    } else {
+                        field.value = objDetail[fieldName];
+                    }
+                })
+            }
         } else {
-            alert("Bạn chưa chọn nhân viên nào!")
+            self.showDialogAnnounce('no-select');
         }
     }
 
@@ -238,16 +240,30 @@ class BaseJS {
                 self.selectDel = trSelected.data('key');
                 self.showDialogDeleteConfirm();
             } else {
-                alert("Bạn chưa chọn nhân viên nào!")
+                self.showDialogAnnounce('no-select');
             }
         } catch (e) {
             console.log(e)
         }
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 6/10/2020
+    * */
+    //Button Agree Dialog Confirm
     agreeOnClick() {
         self.deleteData(self.selectDel);
-        self.closeDialogOnClick();
+    }
+
+    checkDialogConfirm(check) {
+        $('.dialog-delete-confirm').hide();
+        if (check == true) {
+            $('#txtTitleAnnounce').text('Xóa thành công!');
+        } else {
+            $('#txtTitleAnnounce').text('Không có nhân viên với mã tương ứng!');
+        }
+        $('.dialog-announce').show();
     }
 
     /**
@@ -255,8 +271,22 @@ class BaseJS {
     * Date: 30/9/2020
     * */
     //Ẩn Dialog Khi Click
+    closeAllDialogOnClick() {
+        this.hideDialogDetail();
+        this.hideDialogAnnounce();
+        this.hideDialogConfirm();
+    }
+
     closeDialogOnClick() {
         this.hideDialogDetail();
+    }
+
+    closeDialogConfirmOnClick() {
+        this.hideDialogConfirm();
+    }
+
+    closeDialogAnnounceOnClick() {
+        this.hideDialogAnnounce();
     }
 
     /**
@@ -273,7 +303,26 @@ class BaseJS {
 
     showDialogDeleteConfirm() {
         $('.dialog-modal').show();
-        $('.dialog-delete-confirm').show();
+        $('.dialog-delete-confirm').show().fadeIn();
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 6/10/2020
+    * */
+    //Hiện Dialog Thông Báo
+    showDialogAnnounce(checkValue) {
+        $('.dialog-modal').show();
+        if (checkValue == 'POST') {
+            $('#txtTitleAnnounce').text('Thêm thành công!');
+        } else if (checkValue == 'PUT') {
+            $('#txtTitleAnnounce').text('Sửa thành công!');
+        } else if (checkValue == 'none') {
+            $('#txtTitleAnnounce').text('Không có nhân viên với mã tương ứng!');
+        } else if (checkValue == 'no-select') {
+            $('#txtTitleAnnounce').text('Bạn chưa chọn nhân viên nào!');
+        }
+        $('.dialog-announce').show().fadeIn();
     }
 
     /**
@@ -283,11 +332,20 @@ class BaseJS {
     //Ẩn Dialog
     hideDialogDetail() {
         $('.dialog-modal').hide();
-        $('.dialog-delete-confirm').hide();
         $('.dialog').hide();
         $('input').removeClass('required-error');
         $('input').removeClass("title");
         $('input').removeAttr("placeholder");
+    }
+
+    hideDialogConfirm() {
+        $('.dialog-modal').hide();
+        $('.dialog-delete-confirm').hide();
+    }
+
+    hideDialogAnnounce() {
+        $('.dialog-modal').hide();
+        $('.dialog-announce').hide();
     }
 
     /**
@@ -350,6 +408,16 @@ class BaseJS {
     //Return Key Press Tab
     returnFocus() {
         $('#txtCustomerCode').focus();
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 6/10/2020
+    * */
+    //Format Money Keyup
+    formatMoneyKeyup() {
+        var value = parseInt(this.value.replaceAll('.', '')).formatMoney();
+        this.value = value;
     }
 }
 

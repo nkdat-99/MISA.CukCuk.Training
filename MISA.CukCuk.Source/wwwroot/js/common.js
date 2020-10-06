@@ -3,7 +3,7 @@
     * Date: 30/9/2020
     * */
 //Format Money
-Number.prototype.formatMoney = function() {
+Number.prototype.formatMoney = function () {
     return this.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 }
 

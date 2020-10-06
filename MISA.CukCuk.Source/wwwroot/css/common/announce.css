@@ -1,4 +1,9 @@
-﻿.dialog-announce {
+﻿/**
+    * Author: NKĐạt
+    * Date: 28/9/2020
+    * */
+/*------------- Dialog thông báo -------------*/
+.dialog-announce {
     display: none;
     position: absolute;
     width: 300px;
