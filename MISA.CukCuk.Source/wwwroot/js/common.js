@@ -4,7 +4,7 @@
     * */
 //Format Money
 Number.prototype.formatMoney = function () {
-    return this.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    return this.toString().replace(/(.)(?=(\d{3})+$)/g, '$1.');
 }
 
 /**

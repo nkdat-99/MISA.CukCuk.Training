@@ -35,6 +35,7 @@ class BaseJS {
         $('#btnAdd').click(this.btnAddOnClick.bind(this));
         $('#btnEdit').click(this.btnEditOnClick.bind(this));
         $('#btnDelete').click(this.btnDeleteOnClick.bind(this));
+        $('#btnReset').click(this.loadData.bind(this));
         $('#btnClose').click(this.closeDialogOnClick.bind(this));
         $('#btnSave').click(this.btnSaveOnClick.bind(this));
         $('#btnCancel').click(this.closeDialogOnClick.bind(this));
@@ -56,6 +57,8 @@ class BaseJS {
         $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
         //Event Keyup Format Money
         $('input#txtCustomerMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
+        $('input#txtEmployeeMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
+        
     }
 
     getData() {
@@ -159,7 +162,7 @@ class BaseJS {
                         if (objInput[fieldName] == "") {
                             objInput[fieldName] = parseFloat(0);
                         } else {
-                            objInput[fieldName] = parseFloat($(field).val());
+                            objInput[fieldName] = parseFloat($(field).val().replaceAll('.', ''));
                         }
                     } else if (format == "Date") {
                         if (objInput[fieldName] == "") {
@@ -416,8 +419,8 @@ class BaseJS {
     * */
     //Format Money Keyup
     formatMoneyKeyup() {
-        var value = parseInt(this.value.replaceAll('.', '')).formatMoney();
-        this.value = value;
+        var value = parseInt(this.value.replaceAll('.', ''));
+        this.value = value.formatMoney();
     }
 }
 
