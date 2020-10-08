@@ -240,8 +240,14 @@
                     <input fieldName="EmployeeName" id="txtEmployeeName" required type="text" class="input-default" />
                 </div>
                 <div class="row">
-                    <label class="label-left">Tiền Lương</label>
+                    <label class="label-left">Tiền lương</label>
                     <input fieldName="EmployeeMoney" format="Money" id="txtEmployeeMoney" type="text" class="input-default flex-left" />
+                    <label class="label-right">Giới tính</label>
+                    <select fieldName="EmployeeSex" format="Gender" id="txtEmployeeSex" class="input-default flex-right" style="width: 200px">
+                        <option>Nam</option>
+                        <option>Nữ</option>
+                        <option>Khác</option>
+                    </select>
                 </div>
                 <div class="row">
                     <label class="label-left">Số điện thoại</label>
@@ -256,7 +262,7 @@
                     <input fieldName="EmployeeCompany" id="txtEmployeeCompany" type="text" class="input-default" />
                 </div>
                 <div class="row">
-                    <label class="label-left">Số Tài Khoản</label>
+                    <label class="label-left">Số tài khoản</label>
                     <input fieldName="EmployeeCard" id="txtEmployeeCard" type="text" class="input-default flex-left" />
                     <label class="label-right">Email</label>
                     <input fieldName="EmployeeEmail" id="txtEmployeeEmail" type="email" class="input-default flex-right" />

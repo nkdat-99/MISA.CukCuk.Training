@@ -50,15 +50,15 @@ class BaseJS {
         $('.dialog-modal').click(this.closeAllDialogOnClick.bind(this));
         //Dialog xác nhận xóa
         $('#btnAgreeDelete').click(this.agreeOnClick.bind(this));
-        $('#btnCancelDelete').click(this.closeDialogOnClick.bind(this));
+        $('#btnCancelDelete').click(this.closeDialogConfirmOnClick.bind(this));
         //Dialog thông báo
-        $('#btnCloseConfirm').click(this.closeDialogOnClick.bind(this));
-        $('#btnCloseAnnounce').click(this.closeDialogOnClick.bind(this));
+        $('#btnCloseConfirm').click(this.closeDialogConfirmOnClick.bind(this));
+        $('#btnCloseAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
         $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
         //Event Keyup Format Money
         $('input#txtCustomerMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
         $('input#txtEmployeeMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
-        
+
     }
 
     getData() {
@@ -78,6 +78,7 @@ class BaseJS {
             var data = this.Data;
             var self = this;
             $('#tblListData tbody').empty();
+            //console.log(data);
             $.each(data, function (index, item) {
                 var tr = $(`<tr></tr>`);
                 $.each(fields, function (index, field) {
@@ -157,7 +158,18 @@ class BaseJS {
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
+                    //if (format == "Gender") {
+                    //    fieldName = format;
+                    //}
                     objInput[fieldName] = $(field).val();
+                    //if (format == "Gender") {
+                    //    if (objInput[fieldName] == "Nữ")
+                    //        objInput[fieldName] = 0;
+                    //    else if (objInput[fieldName] == "Nam")
+                    //        objInput[fieldName] = 1;
+                    //    else if (objInput[fieldName] == "Khác")
+                    //        objInput[fieldName] = 2;
+                    //} else
                     if (format == "Money") {
                         if (objInput[fieldName] == "") {
                             objInput[fieldName] = parseFloat(0);
