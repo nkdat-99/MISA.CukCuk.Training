@@ -57,7 +57,7 @@ class BaseJS {
         $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
         //Event Keyup Format Money
         $('input#txtCustomerMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
-        $('input#txtEmployeeMoney').on('blur, focus, keyup', this.formatMoneyKeyup);
+        $('input#txtEmployeeSalary').on('blur, focus, keyup', this.formatMoneyKeyup);
 
     }
 

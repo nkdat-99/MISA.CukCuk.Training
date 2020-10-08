@@ -173,8 +173,8 @@
                                 <th fieldName="employeeName">Tên Nhân Viên</th>
                                 <th fieldName="employeeMobile">Số Điện Thoại</th>
                                 <th fieldName="employeeBirthday" format="Date">Ngày Sinh</th>
-                                <th fieldName="employeeCard">Số Tài Khoản</th>
-                                <th fieldName="employeeMoney" format="Money">Tiền Lương</th>
+                                <th fieldName="employeeBankCard">Số Tài Khoản</th>
+                                <th fieldName="employeeSalary" format="Money">Tiền Lương</th>
                                 <th fieldName="employeeAddress">Địa Chỉ Cư Trú</th>
                                 <th fieldName="employeeEmail">Email</th>
                             </tr>
@@ -241,7 +241,7 @@
                 </div>
                 <div class="row">
                     <label class="label-left">Tiền lương</label>
-                    <input fieldName="EmployeeMoney" format="Money" id="txtEmployeeMoney" type="text" class="input-default flex-left" />
+                    <input fieldName="EmployeeSalary" format="Money" id="txtEmployeeSalary" type="text" class="input-default flex-left" />
                     <label class="label-right">Giới tính</label>
                     <select fieldName="EmployeeSex" format="Gender" id="txtEmployeeSex" class="input-default flex-right" style="width: 200px">
                         <option>Nam</option>
@@ -252,10 +252,23 @@
                 <div class="row">
                     <label class="label-left">Số điện thoại</label>
                     <input fieldName="EmployeeMobile" id="txtEmployeeMobile" type="tel" class="input-default flex-left" />
+                    <label class="label-right">Phòng Ban</label>
+                    <select fieldName="EmployeeDepartment" id="txtEmployeeDepartment" class="input-default flex-right" style="width: 200px">
+                        <option>Web</option>
+                        <option>Mobile</option>
+                        <option>DevOps</option>
+                        <option>Java</option>
+                    </select>
                 </div>
                 <div class="row">
                     <label class="label-left">Ngày sinh</label>
                     <input fieldName="EmployeeBirthday" format="Date" id="dtEmployeeBirthday" type="date" class="input-default flex-left" />
+                    <label class="label-right">Vị trí công việc</label>
+                    <select fieldName="EmployeePosition" id="txtEmployeePosition" class="input-default flex-right" style="width: 200px">
+                        <option>Nhân Viên</option>
+                        <option>Bảo Vệ</option>
+                        <option>Lễ Tân</option>
+                    </select>
                 </div>
                 <div class="row">
                     <label class="label-left">Tên công ty</label>
@@ -263,7 +276,7 @@
                 </div>
                 <div class="row">
                     <label class="label-left">Số tài khoản</label>
-                    <input fieldName="EmployeeCard" id="txtEmployeeCard" type="text" class="input-default flex-left" />
+                    <input fieldName="EmployeeBankCard" id="txtEmployeeBankCard" type="text" class="input-default flex-left" />
                     <label class="label-right">Email</label>
                     <input fieldName="EmployeeEmail" id="txtEmployeeEmail" type="email" class="input-default flex-right" />
                 </div>
