@@ -46,6 +46,12 @@ namespace MISA.CukCuk.Training.Models
             new Customer(){CustomerCode = "KH0036", CustomerName = "Từ Minh Quý", CustomerCard="", CustomerMember="", CustomerGroup="", CustomerBirthday = new DateTime (1999, 10 , 20), CustomerCompany = "BKAV", CustomerTax = "012345", CustomerMoney = 100000, CustomerAddress = "Hà Đông, Hà Nội", CustomerMobile = "0359434106", CustomerEmail = "huyenlai99@gmail.com", CustomerNote=""}
         };
 
+        public Customer()
+        {
+            CustomerId = Guid.NewGuid();
+        }
+        public Guid CustomerId { get; set; }
+
         // Mã khách hàng
         public string CustomerCode { get; set; }
 

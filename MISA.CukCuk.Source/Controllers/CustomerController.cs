@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MISA.CukCuk.Training.Models;
+using MySql.Data.MySqlClient;
 
 namespace MISA.CukCuk.Training.Controllers
 {
@@ -12,6 +14,7 @@ namespace MISA.CukCuk.Training.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
+        private readonly IDbConnection _db = new MySqlConnection("server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8");
         // GET: api/Customer
         [HttpGet]
         public IEnumerable<Customer> Get()
