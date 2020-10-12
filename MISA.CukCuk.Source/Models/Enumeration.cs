@@ -11,4 +11,12 @@ namespace MISA.CukCuk.Training.Models
         Male = 1,
         Other = 2
     }
+
+    public enum TypeEnum
+    {
+        Normal = 0,
+        Platinum = 1,
+        Diamond = 2,
+        Vip = 3
+    }
 }

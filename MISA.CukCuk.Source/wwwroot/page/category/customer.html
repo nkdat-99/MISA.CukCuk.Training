@@ -171,13 +171,13 @@
                             <tr>
                                 <th fieldName="customerCode">Mã Khách Hàng</th>
                                 <th fieldName="customerName">Tên Khách Hàng</th>
-                                <th fieldName="customerBirthday" format="Date">Ngày Sinh</th>
-                                <th fieldName="customerCompany">Tên Công Ty</th>
+                                <th fieldName="dayOfBirth" format="Date">Ngày Sinh</th>
+                                <th fieldName="company">Tên Công Ty</th>
                                 <th fieldName="customerTax">Mã Số Thuế</th>
-                                <th fieldName="customerMoney" format="Money">Tiền Thuế</th>
-                                <th fieldName="customerAddress">Địa Chỉ Cư Trú</th>
-                                <th fieldName="customerMobile">Số Điện Thoại</th>
-                                <th fieldName="customerEmail">Email</th>
+                                <th fieldName="moneyTax" format="Money">Tiền Thuế</th>
+                                <th fieldName="address">Địa Chỉ Cư Trú</th>
+                                <th fieldName="phoneNumber">Số Điện Thoại</th>
+                                <th fieldName="email">Email</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -239,9 +239,9 @@
                 </div>
                 <div class="row">
                     <label class="label-left">Mã thẻ thành viên</label>
-                    <input fieldName="CustomerMember" id="txtCustomerMember" type="text" class="input-default flex-left" />
+                    <input fieldName="MemberCard" id="txtMemberCard" type="text" class="input-default flex-left" />
                     <label class="label-right">Hạng thẻ</label>
-                    <select fieldName="CustomerCard" id="txtCustomerCard" class="input-default flex-right">
+                    <select fieldName="MemberType" id="txtMemberType" class="input-default flex-right">
                         <option>Normal</option>
                         <option>Platinum</option>
                         <option>Diamond</option>
@@ -250,40 +250,40 @@
                 </div>
                 <div class="row">
                     <label class="label-left">Nhóm khách hàng</label>
-                    <select fieldName="CustomerGroup" id="txtCustomerGroup" class="input-default flex-left" style="width: 200px">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                    <select fieldName="CustomerGroupId" format="GroupId" id="txtCustomerGroupId" class="input-default flex-left" style="width: 200px">
+                        <option value="6118a7ff-742b-25db-a9c1-8e252c39bb73">Nhóm A</option>
+                        <option value="26021185-77af-263c-842a-acc8fc2f00af">Nhóm B</option>
+                        <option value="2b031b59-5276-589c-9d75-2a7ae1c799c8">Nhóm C</option>
+                        <option value="427b1814-60ed-47cf-edb5-aae5d250830a">Nhóm D</option>
                     </select>
                     <label class="label-right">Tiền Thuế</label>
-                    <input fieldName="CustomerMoney" format="Money" id="txtCustomerMoney" type="text" class="input-default flex-right" />
+                    <input fieldName="MoneyTax" format="Money" id="txtMoneyTax" type="text" class="input-default flex-right" />
                 </div>
                 <div class="row">
                     <label class="label-left">Số điện thoại</label>
-                    <input fieldName="CustomerMobile" id="txtCustomerMobile" type="tel" class="input-default flex-left" />
+                    <input fieldName="PhoneNumber" id="txtPhoneNumber" type="tel" class="input-default flex-left" />
                 </div>
                 <div class="row">
                     <label class="label-left">Ngày sinh</label>
-                    <input fieldName="CustomerBirthday" format="Date" id="dtCustomerBirthday" type="date" class="input-default flex-left" />
+                    <input fieldName="DayOfBirth" format="Date" id="dtDayOfBirth" type="date" class="input-default flex-left" />
                 </div>
                 <div class="row">
                     <label class="label-left">Tên công ty</label>
-                    <input fieldName="CustomerCompany" id="txtCustomerCompany" type="text" class="input-default" />
+                    <input fieldName="Company" id="txtCompany" type="text" class="input-default" />
                 </div>
                 <div class="row">
                     <label class="label-left">Mã số thuế</label>
                     <input fieldName="CustomerTax" id="txtCustomerTax" type="text" class="input-default flex-left" />
                     <label class="label-right">Email</label>
-                    <input fieldName="CustomerEmail" id="txtCustomerEmail" type="email" class="input-default flex-right" />
+                    <input fieldName="Email" id="txtEmail" type="email" class="input-default flex-right" />
                 </div>
                 <div class="row">
                     <label class="label-left">Địa chỉ cư trú</label>
-                    <input fieldName="CustomerAddress" id="txtCustomerAddress" type="text" class="input-default" />
+                    <input fieldName="Address" id="txtAddress" type="text" class="input-default" />
                 </div>
                 <div class="row">
                     <label class="label-left">Ghi chú</label>
-                    <textarea fieldName="CustomerNote" id="txtCustomerNote" class="input-default"></textarea>
+                    <textarea fieldName="Note" id="txtNote" class="input-default"></textarea>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -14,54 +15,54 @@ namespace MISA.CukCuk.Training.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly IDbConnection _db = new MySqlConnection("server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8");
         // GET: api/Customer
         [HttpGet]
         public IEnumerable<Customer> Get()
         {
-            return Customer.CustomerList.OrderBy(e => e.CustomerCode);
+            var customerService = new ServiceCustomer();
+            return customerService.GetCustomers();
         }
 
-        // GET api/Customer/5
-        [HttpGet("{customerCode}")]
-        public object Get(string customerCode)
-        {
-            var customers = Customer.CustomerList.Where(e => e.CustomerCode == customerCode).FirstOrDefault();
-            return customers;
-        }
+        //// GET api/Customer/5
+        //[HttpGet("{customerCode}")]
+        //public object Get(string customerCode)
+        //{
+        //    var customers = Customer.CustomerList.Where(e => e.CustomerCode == customerCode).FirstOrDefault();
+        //    return customers;
+        //}
 
-        // POST api/Customer
+        //// POST api/Customer
         [HttpPost]
-        public bool Post([FromBody]Customer customer)
+        public int Post([FromBody] Customer customer)
         {
-            Customer.CustomerList.Add(customer);
-            return true;
+            var customerService = new ServiceCustomer();
+            return customerService.PostCustomers(customer);
         }
 
-        // PUT api/Customer
-        [HttpPut]
-        public bool Put([FromBody]Customer customer)
-        {
-            // Xác định đối tượng employee thực hiện chỉnh sửa thông tin trong List;
-            var customerEdit = Customer.CustomerList.Where(e => e.CustomerCode == customer.CustomerCode).FirstOrDefault();
-            Customer.CustomerList.Remove(customerEdit);
-            Customer.CustomerList.Add(customer);
-            return true;
-        }
+        //// PUT api/Customer
+        //[HttpPut]
+        //public bool Put([FromBody] Customer customer)
+        //{
+        //    // Xác định đối tượng employee thực hiện chỉnh sửa thông tin trong List;
+        //    var customerEdit = Customer.CustomerList.Where(e => e.CustomerCode == customer.CustomerCode).FirstOrDefault();
+        //    Customer.CustomerList.Remove(customerEdit);
+        //    Customer.CustomerList.Add(customer);
+        //    return true;
+        //}
 
-        // DELETE api/Customer/5
-        [HttpDelete("{customerCode}")]
-        public bool Delete(string customerCode)
-        {
-            var result = false;
-            // Xác định đối tượng employee thực hiện xóa thông tin trong List;
-            var customerDel = Customer.CustomerList.Where(e => e.CustomerCode.Equals(customerCode)).FirstOrDefault();
-            if (customerDel != null)
-            {
-                Customer.CustomerList.Remove(customerDel);
-                result = true;
-            }
-            return result;
-        }
+        //// DELETE api/Customer/5
+        //[HttpDelete("{customerCode}")]
+        //public bool Delete(string customerCode)
+        //{
+        //    var result = false;
+        //    // Xác định đối tượng employee thực hiện xóa thông tin trong List;
+        //    var customerDel = Customer.CustomerList.Where(e => e.CustomerCode.Equals(customerCode)).FirstOrDefault();
+        //    if (customerDel != null)
+        //    {
+        //        Customer.CustomerList.Remove(customerDel);
+        //        result = true;
+        //    }
+        //    return result;
+        //}
     }
 }

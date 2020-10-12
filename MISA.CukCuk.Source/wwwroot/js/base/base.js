@@ -154,22 +154,13 @@ class BaseJS {
             if (isValid) {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
+                var valuegroupId = $('.dialog option');
                 var objInput = new Object();
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
-                    //if (format == "Gender") {
-                    //    fieldName = format;
-                    //}
+                    var groupId = $(valuegroupId).attr('value');
                     objInput[fieldName] = $(field).val();
-                    //if (format == "Gender") {
-                    //    if (objInput[fieldName] == "Nữ")
-                    //        objInput[fieldName] = 0;
-                    //    else if (objInput[fieldName] == "Nam")
-                    //        objInput[fieldName] = 1;
-                    //    else if (objInput[fieldName] == "Khác")
-                    //        objInput[fieldName] = 2;
-                    //} else
                     if (format == "Money") {
                         if (objInput[fieldName] == "") {
                             objInput[fieldName] = parseFloat(0);
@@ -182,10 +173,15 @@ class BaseJS {
                         } else {
                             objInput[fieldName] = $(field).val();
                         }
-                    } else {
+                    } else if (format == "GroupId") {
+                        objInput[fieldName] = $(groupId).val();
+                    }
+                    else {
                         if (objInput[fieldName] == null) objInput[fieldName] = "";
                     }
                 })
+
+                console.log(objInput);
 
                 //Thực hiện cất dữ liệu vào DataBase;
                 if (self.FormMode == "edit") {

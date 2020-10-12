@@ -120,7 +120,7 @@
                 font: 400 13.3333px Arial;
             }
 
-            .dialog .dialog-body .group-infor #txtCustomerMoney, .dialog .dialog-body .group-infor #txtEmployeeSalary {
+            .dialog .dialog-body .group-infor #txtMoneyTax, .dialog .dialog-body .group-infor #txtSalary {
                 text-align: right;
             }
 
