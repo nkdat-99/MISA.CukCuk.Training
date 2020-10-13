@@ -31,13 +31,13 @@ namespace MISA.CukCuk.Training.Controllers
         //    return employees;
         //}
 
-        //// POST api/Employee
-        //[HttpPost]
-        //public bool Post([FromBody] Employee employee)
-        //{
-        //    Employee.EmployeeList.Add(employee);
-        //    return true;
-        //}
+        // POST api/Employee
+        [HttpPost]
+        public int Post([FromBody] Employee employee)
+        {
+            var employeeService = new ServiceEmployee();
+            return employeeService.PostEmployees(employee);
+        }
 
         //// PUT api/Employee
         //[HttpPut]

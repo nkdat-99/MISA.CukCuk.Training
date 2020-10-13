@@ -73,7 +73,7 @@ namespace MISA.CukCuk.Training.Models
             mySqlCommand.Parameters.AddWithValue("CustomerCode", customer.CustomerCode);
             mySqlCommand.Parameters.AddWithValue("CustomerName", customer.CustomerName);
             mySqlCommand.Parameters.AddWithValue("MemberCard", customer.MemberCard);
-            mySqlCommand.Parameters.AddWithValue("Type", customer.Type);
+            mySqlCommand.Parameters.AddWithValue("Type", customer.MemberType);
             mySqlCommand.Parameters.AddWithValue("CustomerGroupId", customer.CustomerGroupId);
             mySqlCommand.Parameters.AddWithValue("DayOfBirth", customer.DayOfBirth);
             mySqlCommand.Parameters.AddWithValue("PhoneNumber", customer.PhoneNumber);
@@ -83,6 +83,7 @@ namespace MISA.CukCuk.Training.Models
             mySqlCommand.Parameters.AddWithValue("Email", customer.Email);
             mySqlCommand.Parameters.AddWithValue("Address", customer.Address);
             mySqlCommand.Parameters.AddWithValue("Note", customer.Note);
+            mySqlCommand.Parameters.AddWithValue("CreateBy", "nkdat");
 
             //Thực thi công việc
             var result = mySqlCommand.ExecuteNonQuery();

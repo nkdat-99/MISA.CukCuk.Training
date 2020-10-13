@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace MISA.CukCuk.Training.Models
 {
@@ -45,7 +46,7 @@ namespace MISA.CukCuk.Training.Models
             return employees;
         }
 
-        public int PostCustomers(Employee employee)
+        public int PostEmployees(Employee employee)
         {
             // Lấy dữ liệu từ Database
             // Khởi tạo thông tin kết nối
@@ -58,9 +59,9 @@ namespace MISA.CukCuk.Training.Models
             MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
             mySqlCommand.CommandType = CommandType.StoredProcedure;
             // Khai báo câu truy vấn
-            mySqlCommand.CommandText = "Proc_InsertCustomer";
+            mySqlCommand.CommandText = "Proc_InsertEmployee";
             // Gán giá trị đầu vào cho các tham số trong store:
-            mySqlCommand.Parameters.AddWithValue("CustomerId", Guid.NewGuid());
+            mySqlCommand.Parameters.AddWithValue("EmployeeId", Guid.NewGuid());
             mySqlCommand.Parameters.AddWithValue("EmployeeCode", employee.EmployeeCode);
             mySqlCommand.Parameters.AddWithValue("EmployeeName", employee.EmployeeName);
             mySqlCommand.Parameters.AddWithValue("Salary", employee.Salary);
@@ -74,6 +75,7 @@ namespace MISA.CukCuk.Training.Models
             mySqlCommand.Parameters.AddWithValue("Email", employee.Email);
             mySqlCommand.Parameters.AddWithValue("Address", employee.Address);
             mySqlCommand.Parameters.AddWithValue("Note", employee.Note);
+            mySqlCommand.Parameters.AddWithValue("CreateBy", "nkdat");
 
             //Thực thi công việc
             var result = mySqlCommand.ExecuteNonQuery();
