@@ -56,7 +56,6 @@ namespace MISA.CukCuk.Training.Models
 
         public int PostCustomers(Customer customer)
         {
-            var customers = new List<Customer>();
             // Lấy dữ liệu từ Database
             // Khởi tạo thông tin kết nối
             string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";

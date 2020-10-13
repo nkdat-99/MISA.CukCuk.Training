@@ -88,12 +88,17 @@ class BaseJS {
                     var value = item[fieldName];
                     if (format == "Date") {
                         var checkDate = "";
-                        if (dateToDMY(new Date(value)) != "01/01/1700") //giá trị mặc định 
+                        if (dateToDMY(new Date(value)) != "31/12/1699") //giá trị mặc định 
                             checkDate = dateToDMY(new Date(value));
                         value = checkDate;
                         var td = $(`<td style="text-align: center;">` + value + `</td>`);
                     } else if (format == "Money") {
-                        var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
+                        //if (value == 0) {
+                        //    value = "";
+                        //    var td = $(`<td>` + value + `</td>`);
+                        //}
+                        //else
+                            var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
                     } else {
                         var td = $(`<td>` + value + `</td>`);
                     }
@@ -154,12 +159,11 @@ class BaseJS {
             if (isValid) {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
-                var valuegroupId = $('.dialog option');
                 var objInput = new Object();
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
-                    var groupId = $(valuegroupId).attr('value');
+                    //var groupId = $(valuegroupId).attr('value');
                     objInput[fieldName] = $(field).val();
                     if (format == "Money") {
                         if (objInput[fieldName] == "") {
@@ -173,10 +177,7 @@ class BaseJS {
                         } else {
                             objInput[fieldName] = $(field).val();
                         }
-                    } else if (format == "GroupId") {
-                        objInput[fieldName] = $(groupId).val();
-                    }
-                    else {
+                    } else {
                         if (objInput[fieldName] == null) objInput[fieldName] = "";
                     }
                 })
