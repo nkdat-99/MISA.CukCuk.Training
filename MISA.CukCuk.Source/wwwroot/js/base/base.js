@@ -163,8 +163,11 @@ class BaseJS {
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
-                    //var groupId = $(valuegroupId).attr('value');
-                    objInput[fieldName] = $(field).val();
+                    if (fieldName == "MemberType" || fieldName == "Sex") {
+                        objInput[format] = parseInt($(field).val());
+                    }  
+                    else
+                        objInput[fieldName] = $(field).val();
                     if (format == "Money") {
                         if (objInput[fieldName] == "") {
                             objInput[fieldName] = parseFloat(0);
