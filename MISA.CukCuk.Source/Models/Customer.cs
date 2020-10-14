@@ -19,12 +19,14 @@ namespace MISA.CukCuk.Training.Models
         public string MemberCard { get; set; }
 
         // Mã thẻ thành viên
-        public TypeEnum Type { set; get; }
+        public int? Type { set; get; }
         public string MemberType
         {
             get
             {
-                switch (Type)
+                if (Type == null)
+                    return string.Empty;
+                switch ((TypeEnum)Type)
                 {
                     case TypeEnum.Normal:
                         return "Normal";

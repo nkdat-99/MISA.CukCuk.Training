@@ -84,7 +84,6 @@ namespace MISA.CukCuk.Training.Models
             mySqlCommand.Parameters.AddWithValue("Address", customer.Address);
             mySqlCommand.Parameters.AddWithValue("Note", customer.Note);
             mySqlCommand.Parameters.AddWithValue("CreateBy", "nkdat");
-
             //Thực thi công việc
             var result = mySqlCommand.ExecuteNonQuery();
             // Đóng kết nối

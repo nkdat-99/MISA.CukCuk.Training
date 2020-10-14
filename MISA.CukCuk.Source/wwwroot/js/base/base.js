@@ -20,6 +20,7 @@ class BaseJS {
             this.initEvents();
             this.FormMode = null;
             this.checkRequired = null;
+            this.selectId = null;
         } catch (e) {
             console.log(e);
         }
@@ -180,17 +181,14 @@ class BaseJS {
                         } else {
                             objInput[fieldName] = $(field).val();
                         }
-                    } else {
-                        if (objInput[fieldName] == null) objInput[fieldName] = null;
                     }
                 })
-
-                console.log(objInput);
-
                 //Thực hiện cất dữ liệu vào DataBase;
                 if (self.FormMode == "edit") {
                     method = "PUT"
+                    objInput["Id"] = self.selectId;
                 }
+                console.log(objInput);
                 self.postData(objInput, method);
             }
         } catch (e) {
@@ -212,9 +210,9 @@ class BaseJS {
         // 2. Lấy thông tin Mã nhân viên:
         if (trSelected.length > 0) {
             self.showDialogDetail();
-            var selectCode = $(trSelected).children()[0].textContent;
+            self.selectId = trSelected.data('key');
             // 3. Gọi api service để lấy dữ liệu chi tiết của nhân viên với mã tương ứng:
-            self.getDataDetail(selectCode);
+            self.getDataDetail(self.selectId);
             var objDetail = self.DataDetail;
             if (!objDetail) {
                 self.showDialogAnnounce('none');

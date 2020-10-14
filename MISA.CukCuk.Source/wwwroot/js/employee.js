@@ -51,6 +51,11 @@ class EmployeeJS extends BaseJS {
         })
     }
 
+    getId() {
+        var Id = $("#tblListData tr.row-selected[employeeId]");
+        return Id;
+    }
+
     /**
     * Author: NKĐạt
     * Date: 6/10/2020

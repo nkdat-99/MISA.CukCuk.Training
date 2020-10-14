@@ -19,12 +19,14 @@ namespace MISA.CukCuk.Training.Models
         public double Salary { get; set; }
 
         // Giới tính nhân viên
-        public GenderEnum Gender { set; get; }
+        public int? Gender { set; get; }
         public string Sex
         {
             get
             {
-                switch (Gender)
+                if (Gender == null)
+                    return string.Empty;
+                switch ((GenderEnum)Gender)
                 {
                     case GenderEnum.Female:
                         return "Nữ";

@@ -24,12 +24,12 @@ namespace MISA.CukCuk.Training.Controllers
         }
 
         // GET api/Employee/5
-        //[HttpGet("{employeeCode}")]
-        //public object Get(string employeeCode)
-        //{
-        //    var employees = Employee.EmployeeList.Where(e => e.EmployeeCode == employeeCode).FirstOrDefault();
-        //    return employees;
-        //}
+        [HttpGet("{employeeId}")]
+        public object Get(Guid employeeId)
+        {
+            var employeeService = new ServiceEmployee();
+            return employeeService.GetEmployeeId(employeeId);
+        }
 
         // POST api/Employee
         [HttpPost]
@@ -40,15 +40,12 @@ namespace MISA.CukCuk.Training.Controllers
         }
 
         //// PUT api/Employee
-        //[HttpPut]
-        //public bool Put([FromBody] Employee employee)
-        //{
-        //    // Xác định đối tượng employee thực hiện chỉnh sửa thông tin trong List;
-        //    var employeeEdit = Employee.EmployeeList.Where(e => e.EmployeeCode == employee.EmployeeCode).FirstOrDefault();
-        //    Employee.EmployeeList.Remove(employeeEdit);
-        //    Employee.EmployeeList.Add(employee);
-        //    return true;
-        //}
+        [HttpPut]
+        public int Put([FromBody] Employee employee)
+        {
+            var employeeService = new ServiceEmployee();
+            return employeeService.PutEmployees(employee);
+        }
 
         // DELETE api/Employee/5
         [HttpDelete("{employeeId}")]
