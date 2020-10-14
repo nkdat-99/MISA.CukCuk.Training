@@ -181,7 +181,7 @@ class BaseJS {
                             objInput[fieldName] = $(field).val();
                         }
                     } else {
-                        if (objInput[fieldName] == null) objInput[fieldName] = "";
+                        if (objInput[fieldName] == null) objInput[fieldName] = null;
                     }
                 })
 

@@ -45,10 +45,10 @@ namespace MISA.CukCuk.Training.Models
         public DateTime? DayOfBirth { get; set; }
 
         // Vị trí công việc
-        public Guid PositionId { get; set; }
+        public Guid? PositionId { get; set; }
 
         // Phòng ban công việc
-        public Guid DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
 
         // Công Ty nhân viên
         public string Company { get; set; }

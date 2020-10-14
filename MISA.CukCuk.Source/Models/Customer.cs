@@ -41,7 +41,7 @@ namespace MISA.CukCuk.Training.Models
         }
 
         // Nhóm khách hàng
-        public Guid CustomerGroupId { get; set; }
+        public Guid? CustomerGroupId { get; set; }
 
         // Tiền Thuế khách hàng
         public double MoneyTax { get; set; }

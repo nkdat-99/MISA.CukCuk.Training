@@ -50,19 +50,12 @@ namespace MISA.CukCuk.Training.Controllers
         //    return true;
         //}
 
-        //// DELETE api/Employee/5
-        //[HttpDelete("{employeeCode}")]
-        //public bool Delete(string employeeCode)
-        //{
-        //    var result = false;
-        //    // Xác định đối tượng employee thực hiện xóa thông tin trong List;
-        //    var employeeDel = Employee.EmployeeList.Where(e => e.EmployeeCode.Equals(employeeCode)).FirstOrDefault();
-        //    if (employeeDel != null)
-        //    {
-        //        Employee.EmployeeList.Remove(employeeDel);
-        //        result = true;
-        //    }
-        //    return result;
-        //}
+        // DELETE api/Employee/5
+        [HttpDelete("{employeeId}")]
+        public int Delete(Guid employeeId)
+        {
+            var employeeService = new ServiceEmployee();
+            return employeeService.DeleteEmployees(employeeId);
+        }
     }
 }

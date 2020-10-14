@@ -91,5 +91,28 @@ namespace MISA.CukCuk.Training.Models
             mySqlConnection.Close();
             return result;
         }
+
+        public int DeleteCustomers(Guid customerId)
+        {
+            // Lấy dữ liệu từ Database
+            // Khởi tạo thông tin kết nối
+            string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
+            // Khởi tạo kết nối
+            MySqlConnection mySqlConnection = new MySqlConnection(conectionString);
+            // Mở kết nối
+            mySqlConnection.Open();
+            // Đối tượng xử lý command
+            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
+            mySqlCommand.CommandType = CommandType.StoredProcedure;
+            // Khai báo câu truy vấn
+            mySqlCommand.CommandText = "Proc_DeleteCustomer";
+            // Gán giá trị đầu vào cho các tham số trong store:
+            mySqlCommand.Parameters.AddWithValue("CustomerIdInput", customerId);
+            //Thực thi công việc
+            var result = mySqlCommand.ExecuteNonQuery();
+            // Đóng kết nối
+            mySqlConnection.Close();
+            return result;
+        }
     }
 }

@@ -35,13 +35,13 @@ class CustomerJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
-    * @param {string} customerCode
+    * @param {string} customerId
     * */
     //Lấy data chi tiết từ DATABASE
-    getDataDetail(customerCode) {
+    getDataDetail(customerId) {
         var self = this;
         $.ajax({
-            url: "/api/customer/" + customerCode,
+            url: "/api/customer/" + customerId,
             method: "GET",
             async: false
         }).done(function (res) {
@@ -79,13 +79,13 @@ class CustomerJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
-    * @param {string} customerCode
+    * @param {string} customerId
     * */
     //Xóa data
-    deleteData(customerCode) {
+    deleteData(customerId) {
         var check = false;
         $.ajax({
-            url: "/api/customer/" + customerCode,
+            url: "/api/customer/" + customerId,
             method: "DELETE",
             async: false
         }).done(function (res) {

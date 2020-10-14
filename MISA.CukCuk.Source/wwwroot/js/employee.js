@@ -35,13 +35,13 @@ class EmployeeJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
-    * @param {string} employeeCode
+    * @param {string} employeeId
     * */
     //Lấy data chi tiết từ DATABASE
-    getDataDetail(employeeCode) {
+    getDataDetail(employeeId) {
         var self = this;
         $.ajax({
-            url: "/api/employee/" + employeeCode,
+            url: "/api/employee/" + employeeId,
             method: "GET",
             async: false
         }).done(function (res) {
@@ -79,13 +79,13 @@ class EmployeeJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
-    * @param {string} employeeCode
+    * @param {string} employeeId
     * */
     //Xóa data
-    deleteData(employeeCode) {
+    deleteData(employeeId) {
         var check = false;
         $.ajax({
-            url: "/api/employee/" + employeeCode,
+            url: "/api/employee/" + employeeId,
             method: "DELETE",
             async: false
         }).done(function (res) {
