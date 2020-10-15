@@ -94,11 +94,6 @@ class BaseJS {
                         value = checkDate;
                         var td = $(`<td style="text-align: center;">` + value + `</td>`);
                     } else if (format == "Money") {
-                        //if (value == 0) {
-                        //    value = "";
-                        //    var td = $(`<td>` + value + `</td>`);
-                        //}
-                        //else
                             var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
                     } else {
                         var td = $(`<td>` + value + `</td>`);
@@ -118,8 +113,9 @@ class BaseJS {
      * Author: NKĐạt
      * @param {object} objInput
      * @param {string} method
+     * @param {string} id
      */
-    postData(objInput, method) { };
+    postData(objInput, method, id) { };
 
     /**
      * Author: NKĐạt
@@ -164,8 +160,8 @@ class BaseJS {
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
-                    if (fieldName == "MemberType" || fieldName == "Sex") {
-                        objInput[format] = parseInt($(field).val());
+                    if (fieldName == "Type" || fieldName == "Gender") {
+                        objInput[fieldName] = parseInt($(field).val());
                     }  
                     else
                         objInput[fieldName] = $(field).val();
@@ -186,10 +182,9 @@ class BaseJS {
                 //Thực hiện cất dữ liệu vào DataBase;
                 if (self.FormMode == "edit") {
                     method = "PUT"
-                    objInput["Id"] = self.selectId;
                 }
                 console.log(objInput);
-                self.postData(objInput, method);
+                self.postData(objInput, method, self.selectId);
             }
         } catch (e) {
             console.log(e)

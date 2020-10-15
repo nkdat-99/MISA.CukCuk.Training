@@ -39,10 +39,11 @@ namespace MISA.CukCuk.Training.Controllers
             return employeeService.PostEmployees(employee);
         }
 
-        //// PUT api/Employee
-        [HttpPut]
-        public int Put([FromBody] Employee employee)
+        //// PUT api/Employee/id
+        [HttpPut("{id}")]
+        public int Put([FromBody] Employee employee, string id)
         {
+            employee.EmployeeId = Guid.Parse(id);
             var employeeService = new ServiceEmployee();
             return employeeService.PutEmployees(employee);
         }

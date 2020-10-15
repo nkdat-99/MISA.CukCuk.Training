@@ -23,13 +23,13 @@ namespace MISA.CukCuk.Training.Controllers
             return customerService.GetCustomers();
         }
 
-        //// GET api/Customer/5
-        //[HttpGet("{customerCode}")]
-        //public object Get(string customerCode)
-        //{
-        //    var customers = Customer.CustomerList.Where(e => e.CustomerCode == customerCode).FirstOrDefault();
-        //    return customers;
-        //}
+        // GET api/Customer/5
+        [HttpGet("{customerId}")]
+        public object Get(Guid customerId)
+        {
+            var customerService = new ServiceCustomer();
+            return customerService.GetCustomerId(customerId);
+        }
 
         //// POST api/Customer
         [HttpPost]
@@ -39,16 +39,14 @@ namespace MISA.CukCuk.Training.Controllers
             return customerService.PostCustomers(customer);
         }
 
-        //// PUT api/Customer
-        //[HttpPut]
-        //public bool Put([FromBody] Customer customer)
-        //{
-        //    // Xác định đối tượng employee thực hiện chỉnh sửa thông tin trong List;
-        //    var customerEdit = Customer.CustomerList.Where(e => e.CustomerCode == customer.CustomerCode).FirstOrDefault();
-        //    Customer.CustomerList.Remove(customerEdit);
-        //    Customer.CustomerList.Add(customer);
-        //    return true;
-        //}
+        // PUT api/Customer
+        [HttpPut("{id}")]
+        public int Put([FromBody] Customer customer, string id)
+        {
+            customer.CustomerId = Guid.Parse(id);
+            var customerService = new ServiceCustomer();
+            return customerService.PutCustomers(customer);
+        }
 
         // DELETE api/Customer/5
         [HttpDelete("{customerId}")]

@@ -63,10 +63,14 @@ class EmployeeJS extends BaseJS {
     * @param {string} method
     * */
     //Thêm data vào DATABASE
-    postData(employee, method) {
+    postData(employee, method, id) {
         self = this;
+        var url = "/api/employee";
+        if (method == "PUT") {
+            url += '/' + id;
+        }
         $.ajax({
-            url: "/api/employee",
+            url: url,
             method: method,
             data: JSON.stringify(employee),
             contentType: "application/json",

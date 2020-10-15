@@ -58,10 +58,14 @@ class CustomerJS extends BaseJS {
     * @param {string} method
     * */
     //Thêm data vào DATABASE
-    postData(customer, method) {
+    postData(customer, method, id) {
         self = this;
+        var url = "/api/customer";
+        if (method == "PUT") {
+            url += '/' + id;
+        }
         $.ajax({
-            url: "/api/customer",
+            url: url,
             method: method,
             data: JSON.stringify(customer),
             contentType: "application/json",
