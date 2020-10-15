@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MISA.CukCuk.Training.DatabaseAccess;
+using MISA.CukCuk.Training.Interface;
 
 namespace MISA.CukCuk.Training
 {
@@ -26,6 +28,7 @@ namespace MISA.CukCuk.Training
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IDatabaseAccess, DatabaseMariaDBAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

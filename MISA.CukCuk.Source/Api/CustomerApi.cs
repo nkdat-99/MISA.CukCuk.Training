@@ -13,7 +13,7 @@ namespace MISA.CukCuk.Training.Controllers
 {
     [Route("api/customer")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerApi : ControllerBase
     {
         // GET: api/Customer
         [HttpGet]
@@ -28,7 +28,7 @@ namespace MISA.CukCuk.Training.Controllers
         public object Get(Guid customerId)
         {
             var customerService = new ServiceCustomer();
-            return customerService.GetCustomerId(customerId);
+            return customerService.GetCustomerById(customerId);
         }
 
         //// POST api/Customer

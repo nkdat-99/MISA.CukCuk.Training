@@ -1,19 +1,20 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MISA.CukCuk.Training.Interface;
+using MISA.CukCuk.Training.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
 
-namespace MISA.CukCuk.Training.Models
+namespace MISA.CukCuk.Training.DatabaseAccess
 {
-    public class ServiceEmployee
+    public class DatabaseMariaDBAccess : IDisposable, IDatabaseAccess
     {
         readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
         MySqlConnection _sqlConnection;
         MySqlCommand _sqlCommand;
-        public ServiceEmployee()
+        public DatabaseMariaDBAccess()
         {
             // Lấy dữ liệu từ Database
             // Khởi tạo kết nối
@@ -25,7 +26,7 @@ namespace MISA.CukCuk.Training.Models
             _sqlCommand.CommandType = CommandType.StoredProcedure;
         }
 
-        public List<Employee> GetEmployees()
+        public IEnumerable<Employee> GetEmployees()
         {
             var employees = new List<Employee>();
             _sqlCommand.CommandText = "Proc_GetEmployees";
@@ -53,7 +54,6 @@ namespace MISA.CukCuk.Training.Models
                 Console.WriteLine(ex);
             }
             // Đóng kết nối
-            _sqlConnection.Close();
             return employees;
         }
 
@@ -83,11 +83,10 @@ namespace MISA.CukCuk.Training.Models
                 Console.WriteLine(ex);
             }
             // Đóng kết nối
-            _sqlConnection.Close();
             return employee;
         }
 
-        public int PostEmployees(Employee employee)
+        public int Insert(Employee employee)
         {
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_InsertEmployee";
@@ -111,11 +110,10 @@ namespace MISA.CukCuk.Training.Models
             //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            _sqlConnection.Close();
             return result;
         }
 
-        public int PutEmployees(Employee employee)
+        public int Update(Employee employee)
         {
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_UpdateEmployee";
@@ -139,11 +137,10 @@ namespace MISA.CukCuk.Training.Models
             //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            _sqlConnection.Close();
             return result;
         }
 
-        public int DeleteEmployees(Guid employeeId)
+        public int Delete(Guid employeeId)
         {
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_DeleteEmployee";
@@ -152,8 +149,12 @@ namespace MISA.CukCuk.Training.Models
             //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            _sqlConnection.Close();
             return result;
+        }
+
+        public void Dispose()
+        {
+            _sqlConnection.Close();
         }
     }
 }

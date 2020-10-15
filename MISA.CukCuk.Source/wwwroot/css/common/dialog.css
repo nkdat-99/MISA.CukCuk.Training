@@ -124,6 +124,10 @@
                 text-align: right;
             }
 
+            .dialog .dialog-body .group-infor #dtDayOfBirth {
+                text-align: center;
+            }
+
     .dialog .dialog-footer {
         display: flex;
         height: 40px;

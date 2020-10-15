@@ -1,45 +1,87 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MISA.CukCuk.Training.Interface;
+using MISA.CukCuk.Training.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
 
-namespace MISA.CukCuk.Training.Models
+namespace MISA.CukCuk.Training.DatabaseAccess
 {
-    public class ServiceEmployee
+    public class DatabaseSqlServerAccess : IDatabaseAccess
     {
         readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
-        MySqlConnection _sqlConnection;
-        MySqlCommand _sqlCommand;
-        public ServiceEmployee()
+        SqlConnection _sqlConnection;
+        SqlCommand _sqlCommand;
+        public DatabaseSqlServerAccess()
         {
             // Lấy dữ liệu từ Database
             // Khởi tạo kết nối
-            _sqlConnection = new MySqlConnection(_connectionString);
+            _sqlConnection = new SqlConnection(_connectionString);
             // Mở kết nối
             _sqlConnection.Open();
             // Đối tượng xử lý command
             _sqlCommand = _sqlConnection.CreateCommand();
             _sqlCommand.CommandType = CommandType.StoredProcedure;
         }
+        public int Delete(Guid id)
+        {
+            // Khai báo câu truy vấn
+            _sqlCommand.CommandText = "Proc_DeleteEmployee";
+            // Gán giá trị đầu vào cho các tham số trong store:
+            _sqlCommand.Parameters.AddWithValue("EmployeeIdInput", id);
+            //Thực thi công việc
+            var result = _sqlCommand.ExecuteNonQuery();
+            // Đóng kết nối
+            return result;
+        }
 
-        public List<Employee> GetEmployees()
+        public Employee GetEmployeeById(Guid employeeId)
+        {
+            var employee = new Employee();
+            _sqlCommand.CommandText = "Proc_GetEmployeeById";
+            _sqlCommand.Parameters.AddWithValue("@EmployeeId", employeeId);
+            try
+            {
+                // Thực hiện đọc dữ liệu
+                SqlDataReader SqlDataReader = _sqlCommand.ExecuteReader();
+                while (SqlDataReader.Read())
+                {
+                    for (int i = 0; i < SqlDataReader.FieldCount; i++)
+                    {
+                        var columnName = SqlDataReader.GetName(i);
+                        var value = SqlDataReader.GetValue(i);
+                        var propertyInfo = employee.GetType().GetProperty(columnName);
+                        if (propertyInfo != null && value != DBNull.Value)
+                            propertyInfo.SetValue(employee, value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            // Đóng kết nối
+            return employee;
+        }
+
+        public IEnumerable<Employee> GetEmployees()
         {
             var employees = new List<Employee>();
             _sqlCommand.CommandText = "Proc_GetEmployees";
             try
             {
                 // Thực hiện đọc dữ liệu
-                MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
-                while (mySqlDataReader.Read())
+                SqlDataReader SqlDataReader = _sqlCommand.ExecuteReader();
+                while (SqlDataReader.Read())
                 {
                     var employee = new Employee();
-                    for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                    for (int i = 0; i < SqlDataReader.FieldCount; i++)
                     {
-                        var columnName = mySqlDataReader.GetName(i);
-                        var value = mySqlDataReader.GetValue(i);
+                        var columnName = SqlDataReader.GetName(i);
+                        var value = SqlDataReader.GetValue(i);
                         var propertyInfo = employee.GetType().GetProperty(columnName);
                         if (propertyInfo != null && value != DBNull.Value)
                             propertyInfo.SetValue(employee, value);
@@ -53,41 +95,10 @@ namespace MISA.CukCuk.Training.Models
                 Console.WriteLine(ex);
             }
             // Đóng kết nối
-            _sqlConnection.Close();
             return employees;
         }
 
-        public Employee GetEmployeeById(Guid employeeId)
-        {
-            var employee = new Employee();
-            _sqlCommand.CommandText = "Proc_GetEmployeeById";
-            _sqlCommand.Parameters.AddWithValue("@EmployeeId", employeeId);
-            try
-            {
-                // Thực hiện đọc dữ liệu
-                MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
-                while (mySqlDataReader.Read())
-                {
-                    for (int i = 0; i < mySqlDataReader.FieldCount; i++)
-                    {
-                        var columnName = mySqlDataReader.GetName(i);
-                        var value = mySqlDataReader.GetValue(i);
-                        var propertyInfo = employee.GetType().GetProperty(columnName);
-                        if (propertyInfo != null && value != DBNull.Value)
-                            propertyInfo.SetValue(employee, value);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            // Đóng kết nối
-            _sqlConnection.Close();
-            return employee;
-        }
-
-        public int PostEmployees(Employee employee)
+        public int Insert(Employee employee)
         {
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_InsertEmployee";
@@ -111,11 +122,10 @@ namespace MISA.CukCuk.Training.Models
             //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            _sqlConnection.Close();
             return result;
         }
 
-        public int PutEmployees(Employee employee)
+        public int Update(Employee employee)
         {
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_UpdateEmployee";
@@ -139,20 +149,6 @@ namespace MISA.CukCuk.Training.Models
             //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            _sqlConnection.Close();
-            return result;
-        }
-
-        public int DeleteEmployees(Guid employeeId)
-        {
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_DeleteEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("EmployeeIdInput", employeeId);
-            //Thực thi công việc
-            var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
-            _sqlConnection.Close();
             return result;
         }
     }

@@ -9,26 +9,30 @@ namespace MISA.CukCuk.Training.Models
 {
     public class ServiceCustomer
     {
+        readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
+        MySqlConnection _sqlConnection;
+        MySqlCommand _sqlCommand;
+        public ServiceCustomer()
+        {
+            // Lấy dữ liệu từ Database
+            // Khởi tạo kết nối
+            _sqlConnection = new MySqlConnection(_connectionString);
+            // Mở kết nối
+            _sqlConnection.Open();
+            // Đối tượng xử lý command
+            _sqlCommand = _sqlConnection.CreateCommand();
+            _sqlCommand.CommandType = CommandType.StoredProcedure;
+        }
+
         public List<Customer> GetCustomers()
         {
             var customers = new List<Customer>();
-            // Lấy dữ liệu từ Database
-            // Khởi tạo thông tin kết nối
-            string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
-            // Khởi tạo kết nối
-            MySqlConnection mySqlConnection = new MySqlConnection(conectionString);
-            // Mở kết nối
-            // Đối tượng xử lý command
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandType = CommandType.StoredProcedure;
             // Khai báo câu truy vấn
-            mySqlCommand.CommandText = "Proc_GetCustomers";
+            _sqlCommand.CommandText = "Proc_GetCustomers";
             // Thực hiện đọc dữ liệu
             try
             {
-                mySqlConnection.Open();
-                mySqlCommand.ExecuteNonQuery();
-                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+                MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
                     var customer = new Customer();
@@ -44,7 +48,7 @@ namespace MISA.CukCuk.Training.Models
 
                 }
                 // Đóng kết nối
-                mySqlConnection.Close();
+                _sqlConnection.Close();
             }
             catch (Exception ex)
             {
@@ -54,27 +58,16 @@ namespace MISA.CukCuk.Training.Models
             return customers;
         }
 
-        public Customer GetCustomerId(Guid customerId)
+        public Customer GetCustomerById(Guid customerId)
         {
-            // Lấy dữ liệu từ Database
-            // Khởi tạo thông tin kết nối
-            string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
-            // Khởi tạo kết nối
-            MySqlConnection mySqlConnection = new MySqlConnection(conectionString);
-            // Mở kết nối
-            // Đối tượng xử lý command
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandType = CommandType.StoredProcedure;
             // Khai báo câu truy vấn
-            mySqlCommand.CommandText = "Proc_GetCustomerById";
-            mySqlCommand.Parameters.AddWithValue("@CustomerId", customerId);
+            _sqlCommand.CommandText = "Proc_GetCustomerById";
+            _sqlCommand.Parameters.AddWithValue("@CustomerId", customerId);
             // Thực hiện đọc dữ liệu
             var customer = new Customer();
             try
             {
-                mySqlConnection.Open();
-                mySqlCommand.ExecuteNonQuery();
-                MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+                MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
                     for (int i = 0; i < mySqlDataReader.FieldCount; i++)
@@ -88,7 +81,7 @@ namespace MISA.CukCuk.Training.Models
 
                 }
                 // Đóng kết nối
-                mySqlConnection.Close();
+                _sqlConnection.Close();
             }
             catch (Exception ex)
             {
@@ -100,98 +93,68 @@ namespace MISA.CukCuk.Training.Models
 
         public int PostCustomers(Customer customer)
         {
-            // Lấy dữ liệu từ Database
-            // Khởi tạo thông tin kết nối
-            string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
-            // Khởi tạo kết nối
-            MySqlConnection mySqlConnection = new MySqlConnection(conectionString);
-            // Mở kết nối
-            mySqlConnection.Open();
-            // Đối tượng xử lý command
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandType = CommandType.StoredProcedure;
             // Khai báo câu truy vấn
-            mySqlCommand.CommandText = "Proc_InsertCustomer";
+            _sqlCommand.CommandText = "Proc_InsertCustomer";
             // Gán giá trị đầu vào cho các tham số trong store:
-            mySqlCommand.Parameters.AddWithValue("CustomerId", Guid.NewGuid());
-            mySqlCommand.Parameters.AddWithValue("CustomerCode", customer.CustomerCode);
-            mySqlCommand.Parameters.AddWithValue("CustomerName", customer.CustomerName);
-            mySqlCommand.Parameters.AddWithValue("MemberCard", customer.MemberCard);
-            mySqlCommand.Parameters.AddWithValue("Type", customer.Type);
-            mySqlCommand.Parameters.AddWithValue("CustomerGroupId", customer.CustomerGroupId);
-            mySqlCommand.Parameters.AddWithValue("DayOfBirth", customer.DayOfBirth);
-            mySqlCommand.Parameters.AddWithValue("PhoneNumber", customer.PhoneNumber);
-            mySqlCommand.Parameters.AddWithValue("Company", customer.Company);
-            mySqlCommand.Parameters.AddWithValue("CustomerTax", customer.CustomerTax);
-            mySqlCommand.Parameters.AddWithValue("MoneyTax", customer.MoneyTax);
-            mySqlCommand.Parameters.AddWithValue("Email", customer.Email);
-            mySqlCommand.Parameters.AddWithValue("Address", customer.Address);
-            mySqlCommand.Parameters.AddWithValue("Note", customer.Note);
-            mySqlCommand.Parameters.AddWithValue("CreateBy", "nkdat");
+            _sqlCommand.Parameters.AddWithValue("CustomerId", Guid.NewGuid());
+            _sqlCommand.Parameters.AddWithValue("CustomerCode", customer.CustomerCode);
+            _sqlCommand.Parameters.AddWithValue("CustomerName", customer.CustomerName);
+            _sqlCommand.Parameters.AddWithValue("MemberCard", customer.MemberCard);
+            _sqlCommand.Parameters.AddWithValue("Type", customer.Type);
+            _sqlCommand.Parameters.AddWithValue("CustomerGroupId", customer.CustomerGroupId);
+            _sqlCommand.Parameters.AddWithValue("DayOfBirth", customer.DayOfBirth);
+            _sqlCommand.Parameters.AddWithValue("PhoneNumber", customer.PhoneNumber);
+            _sqlCommand.Parameters.AddWithValue("Company", customer.Company);
+            _sqlCommand.Parameters.AddWithValue("CustomerTax", customer.CustomerTax);
+            _sqlCommand.Parameters.AddWithValue("MoneyTax", customer.MoneyTax);
+            _sqlCommand.Parameters.AddWithValue("Email", customer.Email);
+            _sqlCommand.Parameters.AddWithValue("Address", customer.Address);
+            _sqlCommand.Parameters.AddWithValue("Note", customer.Note);
+            _sqlCommand.Parameters.AddWithValue("CreateBy", "nkdat");
             //Thực thi công việc
-            var result = mySqlCommand.ExecuteNonQuery();
+            var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            mySqlConnection.Close();
+            _sqlConnection.Close();
             return result;
         }
 
         public int PutCustomers(Customer customer)
         {
-            // Lấy dữ liệu từ Database
-            // Khởi tạo thông tin kết nối
-            string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
-            // Khởi tạo kết nối
-            MySqlConnection mySqlConnection = new MySqlConnection(conectionString);
-            // Mở kết nối
-            mySqlConnection.Open();
-            // Đối tượng xử lý command
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandType = CommandType.StoredProcedure;
             // Khai báo câu truy vấn
-            mySqlCommand.CommandText = "Proc_UpdateCustomer";
+            _sqlCommand.CommandText = "Proc_UpdateCustomer";
             // Gán giá trị đầu vào cho các tham số trong store:
-            mySqlCommand.Parameters.AddWithValue("CustomerId", customer.CustomerId);
-            mySqlCommand.Parameters.AddWithValue("CustomerCode", customer.CustomerCode);
-            mySqlCommand.Parameters.AddWithValue("CustomerName", customer.CustomerName);
-            mySqlCommand.Parameters.AddWithValue("MemberCard", customer.MemberCard);
-            mySqlCommand.Parameters.AddWithValue("Type", customer.Type);
-            mySqlCommand.Parameters.AddWithValue("CustomerGroupId", customer.CustomerGroupId);
-            mySqlCommand.Parameters.AddWithValue("DayOfBirth", customer.DayOfBirth);
-            mySqlCommand.Parameters.AddWithValue("PhoneNumber", customer.PhoneNumber);
-            mySqlCommand.Parameters.AddWithValue("Company", customer.Company);
-            mySqlCommand.Parameters.AddWithValue("CustomerTax", customer.CustomerTax);
-            mySqlCommand.Parameters.AddWithValue("MoneyTax", customer.MoneyTax);
-            mySqlCommand.Parameters.AddWithValue("Email", customer.Email);
-            mySqlCommand.Parameters.AddWithValue("Address", customer.Address);
-            mySqlCommand.Parameters.AddWithValue("Note", customer.Note);
-            mySqlCommand.Parameters.AddWithValue("ModifyBy", "nkdat");
+            _sqlCommand.Parameters.AddWithValue("CustomerId", customer.CustomerId);
+            _sqlCommand.Parameters.AddWithValue("CustomerCode", customer.CustomerCode);
+            _sqlCommand.Parameters.AddWithValue("CustomerName", customer.CustomerName);
+            _sqlCommand.Parameters.AddWithValue("MemberCard", customer.MemberCard);
+            _sqlCommand.Parameters.AddWithValue("Type", customer.Type);
+            _sqlCommand.Parameters.AddWithValue("CustomerGroupId", customer.CustomerGroupId);
+            _sqlCommand.Parameters.AddWithValue("DayOfBirth", customer.DayOfBirth);
+            _sqlCommand.Parameters.AddWithValue("PhoneNumber", customer.PhoneNumber);
+            _sqlCommand.Parameters.AddWithValue("Company", customer.Company);
+            _sqlCommand.Parameters.AddWithValue("CustomerTax", customer.CustomerTax);
+            _sqlCommand.Parameters.AddWithValue("MoneyTax", customer.MoneyTax);
+            _sqlCommand.Parameters.AddWithValue("Email", customer.Email);
+            _sqlCommand.Parameters.AddWithValue("Address", customer.Address);
+            _sqlCommand.Parameters.AddWithValue("Note", customer.Note);
+            _sqlCommand.Parameters.AddWithValue("ModifyBy", "nkdat");
             //Thực thi công việc
-            var result = mySqlCommand.ExecuteNonQuery();
+            var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            mySqlConnection.Close();
+            _sqlConnection.Close();
             return result;
         }
 
         public int DeleteCustomers(Guid customerId)
         {
-            // Lấy dữ liệu từ Database
-            // Khởi tạo thông tin kết nối
-            string conectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
-            // Khởi tạo kết nối
-            MySqlConnection mySqlConnection = new MySqlConnection(conectionString);
-            // Mở kết nối
-            mySqlConnection.Open();
-            // Đối tượng xử lý command
-            MySqlCommand mySqlCommand = mySqlConnection.CreateCommand();
-            mySqlCommand.CommandType = CommandType.StoredProcedure;
             // Khai báo câu truy vấn
-            mySqlCommand.CommandText = "Proc_DeleteCustomer";
+            _sqlCommand.CommandText = "Proc_DeleteCustomer";
             // Gán giá trị đầu vào cho các tham số trong store:
-            mySqlCommand.Parameters.AddWithValue("CustomerIdInput", customerId);
+            _sqlCommand.Parameters.AddWithValue("CustomerIdInput", customerId);
             //Thực thi công việc
-            var result = mySqlCommand.ExecuteNonQuery();
+            var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
-            mySqlConnection.Close();
+            _sqlConnection.Close();
             return result;
         }
     }
