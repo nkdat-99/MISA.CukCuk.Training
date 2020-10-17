@@ -13,6 +13,6 @@ namespace MISA.Bussiness.Interfaces
         /// <param name="employeeCode"></param>
         /// <returns>true: có; false: không</returns>
         /// CreatedBy: NKDAT (16/10/2020)
-        bool CheckEmployeeByCode(string employeeCode);
+        public bool CheckEmployeeByCode(string employeeCode);
     }
 }

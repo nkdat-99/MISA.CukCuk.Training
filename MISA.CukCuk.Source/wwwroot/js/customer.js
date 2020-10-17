@@ -13,9 +13,9 @@ class CustomerJS extends BaseJS {
 
     /**
     * Author: NKĐạt
+    * Lấy data từ DATABASE
     * Date: 30/9/2020
     * */
-    //Lấy data từ DATABASE
     getData() {
         self = this;
         $.ajax({
@@ -35,9 +35,9 @@ class CustomerJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
+    * Lấy data chi tiết từ DATABASE
     * @param {string} customerId
     * */
-    //Lấy data chi tiết từ DATABASE
     getDataDetail(customerId) {
         var self = this;
         $.ajax({
@@ -54,18 +54,14 @@ class CustomerJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Thêm data vào DATABASE
     * @param {object} employee
     * @param {string} method
     * */
-    //Thêm data vào DATABASE
-    postData(customer, method, id) {
+    postData(customer, method) {
         self = this;
-        var url = "/api/customer";
-        if (method == "PUT") {
-            url += '/' + id;
-        }
         $.ajax({
-            url: url,
+            url: url = "/api/customer",
             method: method,
             data: JSON.stringify(customer),
             contentType: "application/json",
@@ -83,9 +79,9 @@ class CustomerJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Xóa data
     * @param {string} customerId
     * */
-    //Xóa data
     deleteData(customerId) {
         var check = false;
         $.ajax({
@@ -105,6 +101,11 @@ class CustomerJS extends BaseJS {
         })
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 8/10/2020
+    * Custom yêu cầu nhập dữ liệu
+    * */
     validateCustom() {
         return true;
     };

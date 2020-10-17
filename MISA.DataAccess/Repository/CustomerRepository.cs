@@ -7,15 +7,15 @@ using System.Text;
 
 namespace MISA.DataAccess.Repository
 {
-    public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
+    public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
-        public EmployeeRepository(IDatabaseAccess<Employee> databaseAccess) : base(databaseAccess)
+        public CustomerRepository(IDatabaseAccess<Customer> databaseAccess) : base(databaseAccess)
         {
         }
 
-        public bool CheckEmployeeByCode(string employeeCode)
+        public bool CheckCustomerByCode(string customerCode)
         {
-            var objectValue = _databaseAccess.Get("Proc_GetEmployeeByCode", employeeCode);
+            var objectValue = _databaseAccess.Get("Proc_GetCustomerByCode", customerCode);
             if (objectValue == null)
                 return false;
             else

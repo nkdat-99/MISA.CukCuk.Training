@@ -9,9 +9,13 @@ namespace MISA.CukCuk.Training.DatabaseAccess
 {
     public class DatabaseMariaDBAccess<T> : IDisposable, IDatabaseAccess<T>
     {
+        #region DECLARE
         readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
         MySqlConnection _sqlConnection;
         MySqlCommand _sqlCommand;
+        #endregion
+
+        #region CONSTRUCTOR
         public DatabaseMariaDBAccess()
         {
             // Lấy dữ liệu từ Database
@@ -23,10 +27,12 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             _sqlCommand = _sqlConnection.CreateCommand();
             _sqlCommand.CommandType = CommandType.StoredProcedure;
         }
+        #endregion
 
+        #region METHOD
         public IEnumerable<T> Get()
         {
-            var employees = new List<T>();
+            var objectT = new List<T>();
             var className = typeof(T).Name;
             _sqlCommand.CommandText = $"Proc_Get{className}s";
             try
@@ -35,16 +41,16 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                 MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
-                    var employee = Activator.CreateInstance<T>();
+                    var obj = Activator.CreateInstance<T>();
                     for (int i = 0; i < mySqlDataReader.FieldCount; i++)
                     {
                         var columnName = mySqlDataReader.GetName(i);
                         var value = mySqlDataReader.GetValue(i);
-                        var propertyInfo = employee.GetType().GetProperty(columnName);
+                        var propertyInfo = obj.GetType().GetProperty(columnName);
                         if (propertyInfo != null && value != DBNull.Value)
-                            propertyInfo.SetValue(employee, value);
+                            propertyInfo.SetValue(obj, value);
                     }
-                    employees.Add(employee);
+                    objectT.Add(obj);
 
                 }
             }
@@ -52,15 +58,14 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             {
                 Console.WriteLine(ex);
             }
-            // Đóng kết nối
-            return employees;
+            return objectT;
         }
 
-        public T GetById(Guid employeeId)
+        public T GetById(Guid id)
         {
-            var employee = Activator.CreateInstance<T>();
+            var obj = Activator.CreateInstance<T>();
             _sqlCommand.CommandText = "Proc_GetEmployeeById";
-            _sqlCommand.Parameters.AddWithValue("@EmployeeId", employeeId);
+            _sqlCommand.Parameters.AddWithValue("@EmployeeId", id);
             try
             {
                 // Thực hiện đọc dữ liệu
@@ -71,9 +76,9 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                     {
                         var columnName = mySqlDataReader.GetName(i);
                         var value = mySqlDataReader.GetValue(i);
-                        var propertyInfo = employee.GetType().GetProperty(columnName);
+                        var propertyInfo = obj.GetType().GetProperty(columnName);
                         if (propertyInfo != null && value != DBNull.Value)
-                            propertyInfo.SetValue(employee, value);
+                            propertyInfo.SetValue(obj, value);
                     }
                 }
             }
@@ -81,8 +86,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             {
                 Console.WriteLine(ex);
             }
-            // Đóng kết nối
-            return employee;
+            return obj;
         }
 
         public int Insert(T entity)
@@ -111,7 +115,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return result;
         }
 
-        public int Update(T employee)
+        public int Update(T entity)
         {
             _sqlCommand.Parameters.Clear();
             var employee = entity as Employee;
@@ -137,12 +141,12 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return result;
         }
 
-        public int Delete(Guid employeeId)
+        public int Delete(Guid objId)
         {
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_DeleteEmployee";
             // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("EmployeeIdInput", employeeId);
+            _sqlCommand.Parameters.AddWithValue("EmployeeIdInput", objId);
             //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
             // Đóng kết nối
@@ -183,5 +187,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             _sqlCommand.Parameters.AddWithValue("@EmployeeCode", code);
             return _sqlCommand.ExecuteScalar();
         }
+        #endregion
     }
 }

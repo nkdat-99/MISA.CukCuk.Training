@@ -23,17 +23,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             _sqlCommand = _sqlConnection.CreateCommand();
             _sqlCommand.CommandType = CommandType.StoredProcedure;
         }
-        public int Delete(Guid id)
-        {
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_DeleteEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("@EmployeeIdInput", id);
-            //Thực thi công việc
-            var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
-            return result;
-        }
+        
 
         public Employee GetById(Guid employeeId)
         {
@@ -96,56 +86,17 @@ namespace MISA.CukCuk.Training.DatabaseAccess
 
         public int Insert(Employee employee)
         {
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_InsertEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("@EmployeeId", Guid.NewGuid());
-            _sqlCommand.Parameters.AddWithValue("@EmployeeCode", employee.EmployeeCode);
-            _sqlCommand.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
-            _sqlCommand.Parameters.AddWithValue("@Salary", employee.Salary);
-            _sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
-            _sqlCommand.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
-            _sqlCommand.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-            _sqlCommand.Parameters.AddWithValue("@DayOfBirth", employee.DayOfBirth);
-            _sqlCommand.Parameters.AddWithValue("@PositionId", employee.PositionId);
-            _sqlCommand.Parameters.AddWithValue("@Company", employee.Company);
-            _sqlCommand.Parameters.AddWithValue("@BankCard", employee.BankCard);
-            _sqlCommand.Parameters.AddWithValue("@Email", employee.Email);
-            _sqlCommand.Parameters.AddWithValue("@Address", employee.Address);
-            _sqlCommand.Parameters.AddWithValue("@Note", employee.Note);
-            _sqlCommand.Parameters.AddWithValue("@CreateBy", "nkdat");
-
-            //Thực thi công việc
-            var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
-            return result;
+            throw new NotImplementedException();
         }
 
         public int Update(Employee employee)
         {
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_UpdateEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("@EmployeeIdInput", employee.EmployeeId);
-            _sqlCommand.Parameters.AddWithValue("@EmployeeCode", employee.EmployeeCode);
-            _sqlCommand.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
-            _sqlCommand.Parameters.AddWithValue("@Salary", employee.Salary);
-            _sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
-            _sqlCommand.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
-            _sqlCommand.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-            _sqlCommand.Parameters.AddWithValue("@DayOfBirth", employee.DayOfBirth);
-            _sqlCommand.Parameters.AddWithValue("@PositionId", employee.PositionId);
-            _sqlCommand.Parameters.AddWithValue("@Company", employee.Company);
-            _sqlCommand.Parameters.AddWithValue("@BankCard", employee.BankCard);
-            _sqlCommand.Parameters.AddWithValue("@Email", employee.Email);
-            _sqlCommand.Parameters.AddWithValue("@Address", employee.Address);
-            _sqlCommand.Parameters.AddWithValue("@Note", employee.Note);
-            _sqlCommand.Parameters.AddWithValue("@ModifyBy", "nkdat");
+            throw new NotImplementedException();
+        }
 
-            //Thực thi công việc
-            var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
-            return result;
+        public int Delete(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Employee> Get(string storeName)

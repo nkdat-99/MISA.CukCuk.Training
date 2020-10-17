@@ -12,7 +12,7 @@ namespace MISA.CukCuk.Training.Api
     public class EmployeeApi : BaseApi<Employee>
     {
         IEmployeeService _employeeService;
-        public EmployeeApi(IEmployeeService employeeService) : base(employeeService)
+        public EmployeeApi(IEmployeeService employeeService):base(employeeService)
         {
             _employeeService = employeeService;
         }

@@ -51,15 +51,16 @@ namespace MISA.CukCuk.Training.Api
                 return BadRequest(serviceResponse);
         }
 
-        // PUT api/Employee/id
-        public IActionResult Put([FromBody] T employee, string id)
+        // PUT api/Employee
+        [HttpPut]
+        public IActionResult Put([FromBody] T obj)
         {
-            employee.EmployeeId = Guid.Parse(id);
-            var result = _databaseAccess.Update(employee);
+            var serviceResponse = _baseService.Update(obj);
+            var result = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
             if (result > 0)
                 return CreatedAtAction("PUT", result);
             else
-                return BadRequest();
+                return BadRequest(serviceResponse);
         }
 
         // DELETE api/Employee/5

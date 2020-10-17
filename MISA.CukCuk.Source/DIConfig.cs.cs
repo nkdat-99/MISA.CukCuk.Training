@@ -2,6 +2,7 @@
 using MISA.Bussiness.Interfaces;
 using MISA.Bussiness.Service;
 using MISA.CukCuk.Training.DatabaseAccess;
+using MISA.CukCuk.Training.Interface;
 using MISA.DataAccess.Interfaces;
 using MISA.DataAccess.Repository;
 using System;
@@ -20,7 +21,7 @@ namespace MISA.CukCuk.Training
             //services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped(typeof(IDatabaseMariaDBAccess<>), typeof(DatabaseMariaDBAccess<>));
+            services.AddScoped(typeof(IDatabaseAccess<>), typeof(DatabaseMariaDBAccess<>));
         }
     }
 }

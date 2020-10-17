@@ -2,8 +2,8 @@
     /**
     * Author: NKĐạt
     * Date: 28/9/2020
+    * Timeout Event Responsive Menu
     * */
-    // Timeout Event Responsive Menu
     var timeout;
     $(window).resize(function () {
         //debugger
@@ -29,8 +29,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Gán các sự kiện thành phần
     * */
-    // Gán các sự kiện thành phần
     initEvents() {
         //Các nút và thành phần thêm, sửa, xóa, hủy bỏ.
         $('#btnAdd').click(this.btnAddOnClick.bind(this));
@@ -69,8 +69,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Lấy dữ liệu và Binding dữ liệu lên trên UI
     * */
-    // Lấy dữ liệu và Binding dữ liệu lên trên UI
     loadData() {
         try {
             // Đọc thông tin các cột dữ liệu:
@@ -94,7 +94,7 @@ class BaseJS {
                         value = checkDate;
                         var td = $(`<td style="text-align: center;">` + value + `</td>`);
                     } else if (format == "Money") {
-                            var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
+                        var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
                     } else {
                         var td = $(`<td>` + value + `</td>`);
                     }
@@ -113,21 +113,22 @@ class BaseJS {
      * Author: NKĐạt
      * @param {object} objInput
      * @param {string} method
-     * @param {string} id
+     * Call ajax hàm postdata
      */
-    postData(objInput, method, id) { };
+    postData(objInput, method) { };
 
     /**
      * Author: NKĐạt
-     * @param {string} customerCode
+     * @param {string} selectDel
+     * Call ajax hàm deletedata
      */
     deleteData(selectDel) { };
 
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Hiển thị dialog chi tiết thông tin
     * */
-    // Hiển thị dialog chi tiết thông tin
     btnAddOnClick() {
         this.FormMode = "add";
         this.showDialogDetail();
@@ -136,8 +137,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Check và lưu dữ liệu
     * */
-    //Check và lưu dữ liệu
     btnSaveOnClick() {
         try {
             //Vaildate dữ liệu nhập vào (Kiểm tra dữ liệu có đúng hay không)
@@ -145,6 +146,7 @@ class BaseJS {
             var isValid = true;
             var self = this;
             var method = "POST";
+            var nameId = Object.keys(self.data[0])[0];
             $.each(inputRequireds, function (index, input) {
                 if (!validData.validateRequired(input)) {
                     isValid = false;
@@ -157,12 +159,13 @@ class BaseJS {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
                 var objInput = new Object();
+                objInput[nameId] = "00000000-0000-0000-0000-000000000000";
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
                     if (fieldName == "Type" || fieldName == "Gender") {
                         objInput[fieldName] = parseInt($(field).val());
-                    }  
+                    }
                     else
                         objInput[fieldName] = $(field).val();
                     if (format == "Money") {
@@ -181,10 +184,11 @@ class BaseJS {
                 })
                 //Thực hiện cất dữ liệu vào DataBase;
                 if (self.FormMode == "edit") {
-                    method = "PUT"
+                    method = "PUT";
+                    objInput[nameId] = self.selectId;
                 }
                 console.log(objInput);
-                self.postData(objInput, method, self.selectId);
+                self.postData(objInput, method);
             }
         } catch (e) {
             console.log(e)
@@ -194,8 +198,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 3/10/2020
+    * Sửa dữ liệu
     * */
-    //Sửa dữ liệu
     btnEditOnClick() {
         this.FormMode = "edit";
         // Lấy dữ liệu của nhân viên tương ứng đã chọn:
@@ -235,8 +239,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Xóa dữ liệu
     * */
-    ////Xóa dữ liệu
     btnDeleteOnClick() {
         try {
             var self = this;
@@ -258,12 +262,18 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
+    * Button Agree Dialog Confirm
     * */
-    //Button Agree Dialog Confirm
     agreeOnClick() {
         self.deleteData(self.selectDel);
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 6/10/2020
+    * Hiện dialog thông báo
+    * @param {string} check
+    * */
     checkDialogConfirm(check) {
         $('.dialog-delete-confirm').hide();
         if (check == true) {
@@ -277,8 +287,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Event Ẩn Dialog
     * */
-    //Ẩn Dialog Khi Click
     closeAllDialogOnClick() {
         this.hideDialogDetail();
         this.hideDialogAnnounce();
@@ -300,8 +310,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Hiện Dialog Khi Click
     * */
-    //Hiện Dialog
     showDialogDetail() {
         $('.dialog input, .dialog textarea, .dialog select').val(null);
         $('.dialog-modal').show();
@@ -317,8 +327,9 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
+    * Hiện Dialog Thông Báo
+    * @param {string} checkValue
     * */
-    //Hiện Dialog Thông Báo
     showDialogAnnounce(checkValue) {
         $('.dialog-modal').show();
         if (checkValue == 'POST') {
@@ -336,8 +347,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
+    * Ẩn Dialog Khi Click
     * */
-    //Ẩn Dialog
     hideDialogDetail() {
         $('.dialog-modal').hide();
         $('.dialog').hide();
@@ -359,8 +370,9 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 2/10/2020
+    * Check các thông tin bắt buộc nhập
+    * @param {this} sender
     * */
-    //Check các thông tin bắt buộc nhập
     validateRequired(sender) {
         validData.validateRequired(sender.currentTarget);
     }
@@ -372,8 +384,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 25/9/2020
+    * Select hàng
     * */
-    //Select hàng
     rowOnSelect() {
         $(this).siblings().removeClass('row-selected');
         $(this).addClass('row-selected');
@@ -382,8 +394,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 28/9/2020
+    * Responsive Menu
     * */
-    //Responsive Menu
     slideOnClick() {
         var x = document.getElementById("menu-id");
         if ($(window).width() <= 768) {
@@ -398,8 +410,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 28/9/2020
+    * Responsive Menu Close
     * */
-    //Responsive Menu Close
     mainPageOnClick() {
         var x = document.getElementById("menu-id");
         if ($(window).width() <= 768) {
@@ -412,8 +424,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 29/9/2020
+    * Return Key Press Tab
     * */
-    //Return Key Press Tab
     returnFocus() {
         $('#txtCustomerCode').focus();
     }
@@ -421,8 +433,8 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
+    * Format Money Keyup
     * */
-    //Format Money Keyup
     formatMoneyKeyup() {
         var value = parseInt(this.value.replaceAll('.', ''));
         this.value = value.formatMoney();
@@ -430,10 +442,10 @@ class BaseJS {
 }
 
 /**
-    * Author: NKĐạt
-    * Date: 28/9/2020
-    * */
-// Responesive Menu 
+* Author: NKĐạt
+* Date: 28/9/2020
+* Responesive Menu
+* */
 function menu_responsive() {
     if ($(window).width() > 768) {
         var x = document.getElementById("menu-id");

@@ -5,14 +5,14 @@ using System.Text;
 
 namespace MISA.DataAccess.Interfaces
 {
-    public interface IEmployeeRepository : IBaseRepository<Employee>
+    public interface ICustomerRepository : IBaseRepository<Customer>
     {
         /// <summary>
         /// Kiểm tra thông tin nhân viên theo mã
         /// </summary>
-        /// <param name="employeeCode"></param>
+        /// <param name="customerCode"></param>
         /// <returns>true: có; false: không</returns>
         /// CreatedBy: NKDAT (15/10/2020)
-        bool CheckEmployeeByCode(string employeeCode);
+        bool CheckCustomerByCode(string customerCode);
     }
 }

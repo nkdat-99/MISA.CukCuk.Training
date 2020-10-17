@@ -1,4 +1,8 @@
-﻿@media screen and (max-width: 1024px) {
+﻿/**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * */
+@media screen and (max-width: 1024px) {
     .header .notice-box {
         justify-content: flex-end;
         margin-right: 5px;

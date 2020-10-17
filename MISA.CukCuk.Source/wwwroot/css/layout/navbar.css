@@ -2,8 +2,8 @@
     * Author: NKĐạt
     * Date: 25/9/2020
     * */
-/*---------- Sidebar ----------*/
 
+/*---------- Sidebar ----------*/
 .navbar {
     display: flex;
     width: 100%;
@@ -27,7 +27,6 @@
     }
 
 /*---------- Logo ----------*/
-
 .logo .icon-left-header {
     width: 40px;
     height: 100%;

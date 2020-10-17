@@ -1,4 +1,5 @@
-﻿using MISA.DataAccess.Interfaces;
+﻿using MISA.CukCuk.Training.Interface;
+using MISA.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,34 +8,34 @@ namespace MISA.DataAccess.Repository
 {
     public class BaseRepository<T> : IBaseRepository<T>
     {
-        protected IDatabaseMariaDBAccess<T> _databaseContext;
-        public BaseRepository(IDatabaseMariaDBAccess<T> databaseContext)
+        protected IDatabaseAccess<T> _databaseAccess;
+        public BaseRepository(IDatabaseAccess<T> databaseAccess)
         {
-            _databaseContext = databaseContext;
+            _databaseAccess = databaseAccess;
         }
         public int Delete(Guid id)
         {
-            return _databaseContext.Delete(id);
+            return _databaseAccess.Delete(id);
         }
 
         public IEnumerable<T> Get()
         {
-            return _databaseContext.Get();
+            return _databaseAccess.Get();
         }
 
         public T GetById(Guid objId)
         {
-            return _databaseContext.GetById(objId);
+            return _databaseAccess.GetById(objId);
         }
 
         public int Insert(T entity)
         {
-            return _databaseContext.Insert(entity);
+            return _databaseAccess.Insert(entity);
         }
 
         public int Update(T entity)
         {
-            return _databaseContext.Update(entity);
+            return _databaseAccess.Update(entity);
         }
     }
 }

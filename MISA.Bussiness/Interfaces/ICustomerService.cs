@@ -3,16 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MISA.DataAccess.Interfaces
+namespace MISA.Bussiness.Interfaces
 {
-    public interface IEmployeeRepository : IBaseRepository<Employee>
+    public interface ICustomerService : IBaseService<Customer>
     {
         /// <summary>
         /// Kiểm tra thông tin nhân viên theo mã
         /// </summary>
-        /// <param name="employeeCode"></param>
+        /// <param name="customerCode"></param>
         /// <returns>true: có; false: không</returns>
-        /// CreatedBy: NKDAT (15/10/2020)
-        bool CheckEmployeeByCode(string employeeCode);
+        /// CreatedBy: NKDAT (16/10/2020)
+        bool CheckCustomerByCode(string customerCode);
     }
 }

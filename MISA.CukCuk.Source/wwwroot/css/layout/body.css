@@ -12,7 +12,6 @@ body {
 }
 
 /*---------- Font ----------*/
-
 @font-face {
     font-family: 'MISA Fonts';
     src: url('/content/fonts/fontello.woff') format('woff');

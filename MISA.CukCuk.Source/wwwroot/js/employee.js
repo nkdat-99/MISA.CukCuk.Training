@@ -13,9 +13,9 @@ class EmployeeJS extends BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 6/10/2020
+    * Date: 4/10/2020
+    * Lấy data từ DATABASE
     * */
-    //Lấy data từ DATABASE
     getData() {
         self = this;
         $.ajax({
@@ -34,10 +34,10 @@ class EmployeeJS extends BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 6/10/2020
+    * Date: 5/10/2020
+    * Lấy data chi tiết từ DATABASE
     * @param {string} employeeId
     * */
-    //Lấy data chi tiết từ DATABASE
     getDataDetail(employeeId) {
         var self = this;
         $.ajax({
@@ -51,26 +51,17 @@ class EmployeeJS extends BaseJS {
         })
     }
 
-    getId() {
-        var Id = $("#tblListData tr.row-selected[employeeId]");
-        return Id;
-    }
-
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
+    * Thêm data vào DATABASE
     * @param {object} employee
     * @param {string} method
     * */
-    //Thêm data vào DATABASE
-    postData(employee, method, id) {
+    postData(employee, method) {
         self = this;
-        var url = "/api/employee";
-        if (method == "PUT") {
-            url += '/' + id;
-        }
         $.ajax({
-            url: url,
+            url: url = "/api/employee",
             method: method,
             data: JSON.stringify(employee),
             contentType: "application/json",
@@ -88,9 +79,9 @@ class EmployeeJS extends BaseJS {
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
+    * Xóa data
     * @param {string} employeeId
     * */
-    //Xóa data
     deleteData(employeeId) {
         var check = false;
         $.ajax({
@@ -110,6 +101,11 @@ class EmployeeJS extends BaseJS {
         })
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 8/10/2020
+    * Custom yêu cầu nhập dữ liệu
+    * */
     validateCustom() {
         return true;
     };

@@ -10,7 +10,7 @@ namespace MISA.Bussiness.Service
     public class EmployeeService : BaseService<Employee>, IEmployeeService
     {
         IEmployeeRepository _employeeRepository;
-        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository):base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
@@ -28,15 +28,7 @@ namespace MISA.Bussiness.Service
             if (isValidExitsCode)
             {
                 isValid = false;
-                validateErrorResponseMsg.Add("Mã bị trùng 1");
-            }
-
-            // Check trùng số chứng minh thư:
-            var isValidExitsMobile = CheckEmployeeByCode(entity.EmployeeCode);
-            if (isValidExitsMobile)
-            {
-                isValid = false;
-                validateErrorResponseMsg.Add("Bị trùng số điện thoại");
+                validateErrorResponseMsg.Add("Mã bị trùng");
             }
 
             return isValid;

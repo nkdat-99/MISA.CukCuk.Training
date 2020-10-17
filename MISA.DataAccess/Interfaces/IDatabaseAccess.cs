@@ -8,12 +8,17 @@ namespace MISA.CukCuk.Training.Interface
 {
     public interface IDatabaseAccess<T>
     {
+        /// <summary>
+        /// Lấy dữ liệu
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (16/10/2020)
         IEnumerable<T> Get();
         IEnumerable<T> Get(string storeName);
         object Get(string storeName, string code);
-        T GetById(Guid employeeId);
-        int Insert(T employee);
-        int Update(T employee);
-        int Delete(Guid id);
+        T GetById(Guid id);
+        int Insert(T obj);
+        int Update(T obj);
+        int Delete(Guid objid);
     }
 }

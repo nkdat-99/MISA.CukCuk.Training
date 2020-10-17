@@ -15,7 +15,7 @@ namespace MISA.Bussiness.Interfaces
         IEnumerable<T> Get();
         T GetById(Guid objId);
         ServiceResponse Insert(T obj);
-        int Update(T obj);
+        ServiceResponse Update(T obj);
         int Delete(Guid id);
     }
 }

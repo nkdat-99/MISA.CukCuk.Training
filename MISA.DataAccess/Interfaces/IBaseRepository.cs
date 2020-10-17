@@ -18,4 +18,3 @@ namespace MISA.DataAccess.Interfaces
         int Delete(Guid id);
     }
 }
-}
