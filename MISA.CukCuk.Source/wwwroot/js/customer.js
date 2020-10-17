@@ -42,6 +42,7 @@ class CustomerJS extends BaseJS {
         var self = this;
         $.ajax({
             url: "/api/customer/" + customerId,
+            contentType: "application/json",
             method: "GET",
             async: false
         }).done(function (res) {
@@ -55,13 +56,13 @@ class CustomerJS extends BaseJS {
     * Author: NKĐạt
     * Date: 30/9/2020
     * Thêm data vào DATABASE
-    * @param {object} employee
+    * @param {object} customer
     * @param {string} method
     * */
     postData(customer, method) {
         self = this;
         $.ajax({
-            url: url = "/api/customer",
+            url: "/api/customer",
             method: method,
             data: JSON.stringify(customer),
             contentType: "application/json",

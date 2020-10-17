@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 
 namespace MISA.CukCuk.Training.DatabaseAccess
 {
@@ -32,6 +33,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         #region METHOD
         public IEnumerable<T> Get()
         {
+            _sqlCommand.Parameters.Clear();
             var objectT = new List<T>();
             var className = typeof(T).Name;
             _sqlCommand.CommandText = $"Proc_Get{className}s";
@@ -51,7 +53,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                             propertyInfo.SetValue(obj, value);
                     }
                     objectT.Add(obj);
-
                 }
             }
             catch (Exception ex)
@@ -61,11 +62,13 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return objectT;
         }
 
-        public T GetById(Guid id)
+        public T GetById(int id)
         {
-            var obj = Activator.CreateInstance<T>();
-            _sqlCommand.CommandText = "Proc_GetEmployeeById";
+            _sqlCommand.Parameters.Clear();
+            var className = typeof(T).Name;
+            _sqlCommand.CommandText = $"Proc_Get{className}ById";
             _sqlCommand.Parameters.AddWithValue("@EmployeeId", id);
+            var obj = Activator.CreateInstance<T>();
             try
             {
                 // Thực hiện đọc dữ liệu
@@ -91,65 +94,51 @@ namespace MISA.CukCuk.Training.DatabaseAccess
 
         public int Insert(T entity)
         {
+            var entityName = typeof(T).Name;
             _sqlCommand.Parameters.Clear();
-            var employee = entity as Employee;
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_InsertEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("@EmployeeId", Guid.NewGuid());
-            _sqlCommand.Parameters.AddWithValue("@EmployeeCode", employee.EmployeeCode);
-            _sqlCommand.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
-            _sqlCommand.Parameters.AddWithValue("@Salary", employee.Salary);
-            _sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
-            _sqlCommand.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
-            _sqlCommand.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
-            _sqlCommand.Parameters.AddWithValue("@DayOfBirth", employee.DayOfBirth);
-            _sqlCommand.Parameters.AddWithValue("@PositionId", employee.PositionId);
-            _sqlCommand.Parameters.AddWithValue("@Company", employee.Company);
-            _sqlCommand.Parameters.AddWithValue("@BankCard", employee.BankCard);
-            _sqlCommand.Parameters.AddWithValue("@Email", employee.Email);
-            _sqlCommand.Parameters.AddWithValue("@Address", employee.Address);
-            _sqlCommand.Parameters.AddWithValue("@Note", employee.Note);
-            _sqlCommand.Parameters.AddWithValue("@CreateBy", "nkdat");
+            _sqlCommand.CommandText = $"Proc_Insert{entityName}";
+            MySqlCommandBuilder.DeriveParameters(_sqlCommand);
+            var parameters = _sqlCommand.Parameters;
+            foreach (MySqlParameter param in parameters)
+            {
+                var paramName = param.ParameterName.Replace("@", string.Empty);
+                var property = entity.GetType().GetProperty(paramName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (property != null)
+                    param.Value = property.GetValue(entity);
+            }
             var result = _sqlCommand.ExecuteNonQuery();
             return result;
         }
 
         public int Update(T entity)
         {
+            var entityName = typeof(T).Name;
             _sqlCommand.Parameters.Clear();
-            var employee = entity as Employee;
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_UpdateEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("EmployeeIdInput", employee.EmployeeId);
-            _sqlCommand.Parameters.AddWithValue("EmployeeCode", employee.EmployeeCode);
-            _sqlCommand.Parameters.AddWithValue("EmployeeName", employee.EmployeeName);
-            _sqlCommand.Parameters.AddWithValue("Salary", employee.Salary);
-            _sqlCommand.Parameters.AddWithValue("Gender", employee.Gender);
-            _sqlCommand.Parameters.AddWithValue("PhoneNumber", employee.PhoneNumber);
-            _sqlCommand.Parameters.AddWithValue("DepartmentId", employee.DepartmentId);
-            _sqlCommand.Parameters.AddWithValue("DayOfBirth", employee.DayOfBirth);
-            _sqlCommand.Parameters.AddWithValue("PositionId", employee.PositionId);
-            _sqlCommand.Parameters.AddWithValue("Company", employee.Company);
-            _sqlCommand.Parameters.AddWithValue("BankCard", employee.BankCard);
-            _sqlCommand.Parameters.AddWithValue("Email", employee.Email);
-            _sqlCommand.Parameters.AddWithValue("Address", employee.Address);
-            _sqlCommand.Parameters.AddWithValue("Note", employee.Note);
-            _sqlCommand.Parameters.AddWithValue("ModifyBy", "nkdat");
+            _sqlCommand.CommandText = $"Proc_Insert{entityName}";
+            MySqlCommandBuilder.DeriveParameters(_sqlCommand);
+            var parameters = _sqlCommand.Parameters;
+            foreach (MySqlParameter param in parameters)
+            {
+                var paramName = param.ParameterName.Replace("@", string.Empty);
+                var property = entity.GetType().GetProperty(paramName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (property != null)
+                    param.Value = property.GetValue(entity);
+            }
             var result = _sqlCommand.ExecuteNonQuery();
             return result;
         }
 
-        public int Delete(Guid objId)
+        public int Delete(object id)
         {
-            // Khai báo câu truy vấn
-            _sqlCommand.CommandText = "Proc_DeleteEmployee";
-            // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("EmployeeIdInput", objId);
-            //Thực thi công việc
+            var className = typeof(T).Name;
+            _sqlCommand.Parameters.Clear();
+            _sqlCommand.CommandText = $"Proc_Delete{className}ById";
+            MySqlCommandBuilder.DeriveParameters(_sqlCommand);
+            if (_sqlCommand.Parameters.Count > 0)
+            {
+                _sqlCommand.Parameters[0].Value = id;
+            }
             var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
             return result;
         }
 

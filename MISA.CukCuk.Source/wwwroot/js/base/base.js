@@ -146,7 +146,7 @@ class BaseJS {
             var isValid = true;
             var self = this;
             var method = "POST";
-            var nameId = Object.keys(self.data[0])[0];
+            var nameId = Object.keys(self.Data[0])[0];
             $.each(inputRequireds, function (index, input) {
                 if (!validData.validateRequired(input)) {
                     isValid = false;
@@ -313,10 +313,14 @@ class BaseJS {
     * Hiện Dialog Khi Click
     * */
     showDialogDetail() {
-        $('.dialog input, .dialog textarea, .dialog select').val(null);
+        $('.dialog input, .dialog textaream, .dialog select').val(null);
         $('.dialog-modal').show();
         $('.dialog').show();
         $('#txtCustomerCode').focus();
+        var selects = $(".dialog select"); 
+        $.each(selects, function (index, select) {
+            $("option:first-child").prop("selected", true);
+        })
     }
 
     showDialogDeleteConfirm() {

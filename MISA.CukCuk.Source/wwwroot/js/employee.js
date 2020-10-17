@@ -43,6 +43,7 @@ class EmployeeJS extends BaseJS {
         $.ajax({
             url: "/api/employee/" + employeeId,
             method: "GET",
+            contentType: "application/json",
             async: false
         }).done(function (res) {
             self.DataDetail = res;
@@ -61,7 +62,7 @@ class EmployeeJS extends BaseJS {
     postData(employee, method) {
         self = this;
         $.ajax({
-            url: url = "/api/employee",
+            url: "/api/employee",
             method: method,
             data: JSON.stringify(employee),
             contentType: "application/json",

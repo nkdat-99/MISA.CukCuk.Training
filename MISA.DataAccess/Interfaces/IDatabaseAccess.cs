@@ -16,9 +16,9 @@ namespace MISA.CukCuk.Training.Interface
         IEnumerable<T> Get();
         IEnumerable<T> Get(string storeName);
         object Get(string storeName, string code);
-        T GetById(Guid id);
+        T GetById(object id);
         int Insert(T obj);
         int Update(T obj);
-        int Delete(Guid objid);
+        int Delete(object id);
     }
 }
