@@ -28,7 +28,9 @@ namespace MISA.CukCuk.Training
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IDatabaseAccess, DatabaseMariaDBAccess>();
+            //services.AddScoped<IDatabaseAccess, DatabaseMariaDBAccess>();
+            //services.AddScoped<IDatabaseAccess, DatabaseSqlServerAccess>();
+            DIConfig.InjectionConfig(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

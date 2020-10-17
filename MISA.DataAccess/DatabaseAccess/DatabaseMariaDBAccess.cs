@@ -4,12 +4,10 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Training.DatabaseAccess
 {
-    public class DatabaseMariaDBAccess : IDisposable, IDatabaseAccess
+    public class DatabaseMariaDBAccess<T> : IDisposable, IDatabaseAccess<T>
     {
         readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
         MySqlConnection _sqlConnection;
@@ -26,17 +24,18 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             _sqlCommand.CommandType = CommandType.StoredProcedure;
         }
 
-        public IEnumerable<Employee> GetEmployees()
+        public IEnumerable<T> Get()
         {
-            var employees = new List<Employee>();
-            _sqlCommand.CommandText = "Proc_GetEmployees";
+            var employees = new List<T>();
+            var className = typeof(T).Name;
+            _sqlCommand.CommandText = $"Proc_Get{className}s";
             try
             {
                 // Thực hiện đọc dữ liệu
                 MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
-                    var employee = new Employee();
+                    var employee = Activator.CreateInstance<T>();
                     for (int i = 0; i < mySqlDataReader.FieldCount; i++)
                     {
                         var columnName = mySqlDataReader.GetName(i);
@@ -57,9 +56,9 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return employees;
         }
 
-        public Employee GetEmployeeById(Guid employeeId)
+        public T GetById(Guid employeeId)
         {
-            var employee = new Employee();
+            var employee = Activator.CreateInstance<T>();
             _sqlCommand.CommandText = "Proc_GetEmployeeById";
             _sqlCommand.Parameters.AddWithValue("@EmployeeId", employeeId);
             try
@@ -86,35 +85,36 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return employee;
         }
 
-        public int Insert(Employee employee)
+        public int Insert(T entity)
         {
+            _sqlCommand.Parameters.Clear();
+            var employee = entity as Employee;
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_InsertEmployee";
             // Gán giá trị đầu vào cho các tham số trong store:
-            _sqlCommand.Parameters.AddWithValue("EmployeeId", Guid.NewGuid());
-            _sqlCommand.Parameters.AddWithValue("EmployeeCode", employee.EmployeeCode);
-            _sqlCommand.Parameters.AddWithValue("EmployeeName", employee.EmployeeName);
-            _sqlCommand.Parameters.AddWithValue("Salary", employee.Salary);
-            _sqlCommand.Parameters.AddWithValue("Gender", employee.Gender);
-            _sqlCommand.Parameters.AddWithValue("PhoneNumber", employee.PhoneNumber);
-            _sqlCommand.Parameters.AddWithValue("DepartmentId", employee.DepartmentId);
-            _sqlCommand.Parameters.AddWithValue("DayOfBirth", employee.DayOfBirth);
-            _sqlCommand.Parameters.AddWithValue("PositionId", employee.PositionId);
-            _sqlCommand.Parameters.AddWithValue("Company", employee.Company);
-            _sqlCommand.Parameters.AddWithValue("BankCard", employee.BankCard);
-            _sqlCommand.Parameters.AddWithValue("Email", employee.Email);
-            _sqlCommand.Parameters.AddWithValue("Address", employee.Address);
-            _sqlCommand.Parameters.AddWithValue("Note", employee.Note);
-            _sqlCommand.Parameters.AddWithValue("CreateBy", "nkdat");
-
-            //Thực thi công việc
+            _sqlCommand.Parameters.AddWithValue("@EmployeeId", Guid.NewGuid());
+            _sqlCommand.Parameters.AddWithValue("@EmployeeCode", employee.EmployeeCode);
+            _sqlCommand.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
+            _sqlCommand.Parameters.AddWithValue("@Salary", employee.Salary);
+            _sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
+            _sqlCommand.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
+            _sqlCommand.Parameters.AddWithValue("@DepartmentId", employee.DepartmentId);
+            _sqlCommand.Parameters.AddWithValue("@DayOfBirth", employee.DayOfBirth);
+            _sqlCommand.Parameters.AddWithValue("@PositionId", employee.PositionId);
+            _sqlCommand.Parameters.AddWithValue("@Company", employee.Company);
+            _sqlCommand.Parameters.AddWithValue("@BankCard", employee.BankCard);
+            _sqlCommand.Parameters.AddWithValue("@Email", employee.Email);
+            _sqlCommand.Parameters.AddWithValue("@Address", employee.Address);
+            _sqlCommand.Parameters.AddWithValue("@Note", employee.Note);
+            _sqlCommand.Parameters.AddWithValue("@CreateBy", "nkdat");
             var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
             return result;
         }
 
-        public int Update(Employee employee)
+        public int Update(T employee)
         {
+            _sqlCommand.Parameters.Clear();
+            var employee = entity as Employee;
             // Khai báo câu truy vấn
             _sqlCommand.CommandText = "Proc_UpdateEmployee";
             // Gán giá trị đầu vào cho các tham số trong store:
@@ -133,10 +133,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             _sqlCommand.Parameters.AddWithValue("Address", employee.Address);
             _sqlCommand.Parameters.AddWithValue("Note", employee.Note);
             _sqlCommand.Parameters.AddWithValue("ModifyBy", "nkdat");
-
-            //Thực thi công việc
             var result = _sqlCommand.ExecuteNonQuery();
-            // Đóng kết nối
             return result;
         }
 
@@ -155,6 +152,36 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         public void Dispose()
         {
             _sqlConnection.Close();
+        }
+
+        public IEnumerable<T> Get(string storeName)
+        {
+            var entities = new List<T>();
+            _sqlCommand.CommandText = storeName;
+            // Thực hiện đọc dữ liệu
+            MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
+            while (mySqlDataReader.Read())
+            {
+                var entity = Activator.CreateInstance<T>();
+                for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                {
+                    var columnName = mySqlDataReader.GetName(i);
+                    var value = mySqlDataReader.GetValue(i);
+                    var propertyInfo = entity.GetType().GetProperty(columnName);
+                    if (propertyInfo != null && value != DBNull.Value)
+                        propertyInfo.SetValue(entity, value);
+                }
+                entities.Add(entity);
+            }
+            return entities;
+        }
+
+        public object Get(string storeName, string code)
+        {
+            _sqlCommand.Parameters.Clear();
+            _sqlCommand.CommandText = storeName;
+            _sqlCommand.Parameters.AddWithValue("@EmployeeCode", code);
+            return _sqlCommand.ExecuteScalar();
         }
     }
 }
