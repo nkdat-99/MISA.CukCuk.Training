@@ -14,11 +14,11 @@
 .dialog {
     display: none;
     position: absolute;
-    width: 710px;
-    height: 400px;
+    width: 730px;
+    height: 485px;
     border-radius: 3px;
     background-color: #fff;
-    top: calc(50% - 225px);
+    top: calc(50% - 260px);
     left: calc(50% - 365px);
     right: 0;
     bottom: 0;
@@ -31,7 +31,6 @@
         display: flex;
         align-items: center;
         padding: 0 0 3px 10px;
-        font-size: 15px;
     }
 
         .dialog .dialog-title .title-text {
@@ -62,77 +61,166 @@
             border-bottom: 1px solid #dedede;
             padding-bottom: 4px;
             margin-bottom: 8px;
+            margin-top: 5px;
         }
 
         .dialog .dialog-body .group-infor {
             width: 100%;
         }
 
-            .dialog .dialog-body .group-infor .row {
-                margin: 4px 0;
-                display: flex;
-                align-items: center;
-            }
-
-            .dialog .dialog-body .group-infor .label-left {
-                display: inline-block;
-                width: 150px;
-            }
-
-            .dialog .dialog-body .group-infor .label-right {
-                margin-left: 8px;
-                width: 130px;
-            }
-
-            .dialog .dialog-body .group-infor .input-default {
-                padding: 0px 4px;
-                border-radius: 0;
-                height: 24px;
-                box-shadow: none;
-                border: 1px solid #ccc;
+            .dialog .dialog-body .group-infor .group-basic {
                 width: 100%;
-                margin-left: 1px;
+                display: flex;
             }
 
-                .dialog .dialog-body .group-infor .input-default:focus {
-                    border: 1px solid #0071c1;
-                    outline-offset: unset !important;
-                    outline: none !important;
+        .dialog .dialog-body .group-left {
+            width: 80%;
+        }
+
+        .dialog .dialog-body .group-infor .row {
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .dialog .dialog-body .group-infor .label-left {
+            display: inline-block;
+            width: 165px;
+        }
+
+        .dialog .dialog-body .group-infor .label-right {
+            margin-left: 8px;
+            width: 70px;
+        }
+
+        .dialog .dialog-body .group-infor .input-default {
+            padding: 0px 4px;
+            border-radius: 0;
+            height: 24px;
+            box-shadow: none;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-left: 8px;
+        }
+
+            .dialog .dialog-body .group-infor .input-default:focus {
+                border: 1px solid #0071c1;
+                outline-offset: unset !important;
+                outline: none !important;
+            }
+
+        .dialog .dialog-body .group-infor .flex-right {
+            flex: 1;
+        }
+
+        .dialog .dialog-body .group-infor .flex-left {
+            margin-left: -33px;
+            width: 170px;
+        }
+
+        .dialog .dialog-body .group-infor .flex-full {
+            width: 765px;
+        }
+
+        .dialog .dialog-body .group-infor textarea {
+            resize: none;
+            height: 55px !important;
+            padding: 3px 4px !important;
+            font: 400 13.3333px Arial;
+        }
+
+        .dialog .dialog-body .group-infor select {
+            height: 26px !important;
+        }
+
+        .dialog .dialog-body .group-infor [type="date"] {
+            font: 400 13.3333px Arial;
+            text-align: center;
+        }
+
+        .dialog .dialog-body .group-infor #txtMoneyTax, .dialog .dialog-body .group-infor #txtSalary {
+            text-align: right;
+        }
+
+        .dialog .dialog-body .group-infor .unit-money {
+            position: absolute;
+            right: 13px;
+            font-style: italic;
+            font-family: auto;
+        }
+
+        .dialog .dialog-body .group-right {
+            padding: 4px 0;
+            margin-left: 8px;
+        }
+
+            .dialog .dialog-body .group-right .avatar-box {
+                position: relative;
+                width: 132px;
+                height: 140px;
+                border: 1px solid #ccc;
+                background-image: url('/content/imgs/avatardefault.png');
+                background-position-y: -8px;
+                background-position-x: center;
+            }
+
+                .dialog .dialog-body .group-right .avatar-box .ct-btn-avatar {
+                    display: flex;
+                    background-color: #fff;
+                    border-width: 1px;
+                    border-style: solid;
+                    border-color: buttonface;
+                    border-image: initial;
+                    justify-content: center;
+                    padding: 4px;
+                    min-width: 35px !important;
+                    height: 22px;
+                    line-height: 7px;
+                    font-size: 16px;
                 }
 
-            .dialog .dialog-body .group-infor .flex-right {
-                flex: 1;
-            }
+                .dialog .dialog-body .group-right .avatar-box .btn-select-avatar:hover, .dialog .dialog-body .group-right .avatar-box .btn-select-avatar:focus {
+                    border-color: #0071c1;
+                    background-image: -webkit-linear-gradient(top,#eff0ec,#e1f2e9);
+                    outline: none;
+                    outline: none;
+                    border: 1px solid #1e32d0;
+                }
 
-            .dialog .dialog-body .group-infor .flex-left {
-                margin-left: -28px;
-                width: 190px;
-            }
+                .dialog .dialog-body .group-right .avatar-box .btn-select-avatar {
+                    position: absolute;
+                    bottom: 8px;
+                    left: 24px;
+                }
 
-            .dialog .dialog-body .group-infor textarea {
-                resize: none;
-                height: 55px !important;
-                padding: 3px 4px !important;
-                font: 400 13.3333px Arial;
-            }
+                .dialog .dialog-body .group-right .avatar-box .btn-remove-avatar {
+                    position: absolute;
+                    bottom: 8px;
+                    right: 24px;
+                    color: #f00;
+                    background-color: #e6e6e6;
+                    border: #e6e6e6;
+                }
 
-            .dialog .dialog-body .group-infor [type="date"] {
-                font: 400 13.3333px Arial;
-            }
+                    .dialog .dialog-body .group-right .avatar-box .btn-remove-avatar::before {
+                        content: "";
+                        font-family: 'MISA Fonts';
+                        color: #f00;
+                        font-size: 12px;
+                        line-height: 14px;
+                    }
 
-            .dialog .dialog-body .group-infor #txtMoneyTax, .dialog .dialog-body .group-infor #txtSalary {
-                text-align: right;
-            }
-
-            .dialog .dialog-body .group-infor #dtDayOfBirth {
-                text-align: center;
-            }
+        .dialog .dialog-body .content-upload {
+            padding-top: 4px;
+            text-align: center;
+            font-style: italic;
+            font-family: auto;
+        }
 
     .dialog .dialog-footer {
         display: flex;
         height: 40px;
         width: 100%;
-        border-top: 1px solid #ccc;
         position: absolute;
         bottom: 0;
     }
@@ -219,89 +307,3 @@
 .row-selected {
     background-color: #bfd1fe !important;
 }
-
-/*------------ Dialog xác nhận Delete ------------*/
-.dialog-delete-confirm {
-    display: none;
-    position: absolute;
-    width: 300px;
-    height: 120px;
-    border-radius: 3px;
-    background-color: #fff;
-    top: 25%;
-    left: calc(50% - 125px);
-    right: 0;
-    bottom: 0;
-    border: 4px solid #0973b9;
-}
-
-    .dialog-delete-confirm .dialog-title {
-        height: 25px;
-        background-color: #0973b9;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 5px 3px;
-    }
-
-    .dialog-delete-confirm .title-left {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-size: 15px;
-        color: #fff;
-    }
-
-    .dialog-delete-confirm .confirm-close-button {
-        border: 1px solid #ccc;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        background-image: url('/content/imgs/cancel.png');
-        background-position: center;
-        background-repeat: no-repeat;
-        cursor: pointer;
-    }
-
-    .dialog-delete-confirm .dialog-body {
-        height: calc(100% - 25px);
-    }
-
-    .dialog-delete-confirm .dialog-text {
-        text-align: center;
-        line-height: 40px;
-        font-size: 15px;
-        height: 40px;
-    }
-
-    .dialog-delete-confirm .icon-confirm {
-        width: 23px;
-        height: 15px;
-        background: url('/content/imgs/exclamation.png') no-repeat;
-        background-size: auto;
-    }
-
-    .dialog-delete-confirm .confirm {
-        display: flex;
-        justify-content: space-around;
-    }
-
-        .dialog-delete-confirm .confirm button {
-            width: 95px;
-            height: 35px;
-            padding: 2px 5px;
-            margin: 5px;
-            display: flex;
-            background-color: #ededed;
-            border-image: initial;
-            border: 1px solid #ccc;
-            justify-content: center;
-            align-items: center;
-        }
-
-            .dialog-delete-confirm .confirm button:hover,
-            .dialog-delete-confirm .confirm button:focus {
-                border-color: #0071c1;
-                outline: none;
-                background-image: -webkit-linear-gradient(top,#eff0ec,#e1f2e9);
-            }

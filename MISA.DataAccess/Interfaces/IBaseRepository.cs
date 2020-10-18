@@ -12,9 +12,10 @@ namespace MISA.DataAccess.Interfaces
         /// <returns></returns>
         /// CreatedBy: NKDAT (16/10/2020)
         IEnumerable<T> Get();
-        T GetById(Guid objId);
+        IEnumerable<T> Get(string storeName);
+        T GetById(object objId);
         int Insert(T obj);
         int Update(T obj);
-        int Delete(Guid id);
+        int Delete(object objId);
     }
 }

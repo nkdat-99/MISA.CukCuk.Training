@@ -12,14 +12,5 @@ namespace MISA.DataAccess.Repository
         public CustomerRepository(IDatabaseAccess<Customer> databaseAccess) : base(databaseAccess)
         {
         }
-
-        public bool CheckCustomerByCode(string customerCode)
-        {
-            var objectValue = _databaseAccess.Get("Proc_GetCustomerByCode", customerCode);
-            if (objectValue == null)
-                return false;
-            else
-                return true;
-        }
     }
 }

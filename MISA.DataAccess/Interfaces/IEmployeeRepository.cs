@@ -13,6 +13,6 @@ namespace MISA.DataAccess.Interfaces
         /// <param name="employeeCode"></param>
         /// <returns>true: có; false: không</returns>
         /// CreatedBy: NKDAT (15/10/2020)
-        bool CheckEmployeeByCode(string employeeCode);
+        object CheckEmployeeByCode(string employeeCode);
     }
 }

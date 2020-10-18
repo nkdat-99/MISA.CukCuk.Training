@@ -9,6 +9,7 @@
 class EmployeeJS extends BaseJS {
     constructor() {
         super('employee');
+
     }
 
     /**
@@ -27,6 +28,25 @@ class EmployeeJS extends BaseJS {
             async: false
         }).done(function (response) {
             self.Data = response;
+        }).fail(function (res) {
+            console.log(res);
+        })
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 17/10/2020
+    * Lấy data bản ghi cuối cùng từ DATABASE
+    * */
+    getNewEmployeeCode() {
+        self = this;
+        $.ajax({
+            url: "/api/employee/newemployeecode",
+            method: "POST",
+            contentType: "application/json",
+            async: true
+        }).done(function (response) {
+            $('#txtEmployeeCode').val(response);
         }).fail(function (res) {
             console.log(res);
         })
@@ -74,6 +94,8 @@ class EmployeeJS extends BaseJS {
             self.showDialogAnnounce(method);
         }).fail(function (res) {
             console.log(res);
+            //console.log(res.responseJSON.msg[0]);
+            //console.log(res.responseJSON);
         });
     }
 

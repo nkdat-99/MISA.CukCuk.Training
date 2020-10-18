@@ -1,6 +1,6 @@
 ﻿/**
     * Author: NKĐạt
-    * Date: 28/9/2020
+    * Date: 17/10/2020
     * */
 /*------------- Dialog thông báo -------------*/
 .dialog-announce {
@@ -88,3 +88,106 @@
                 outline: none;
                 background-image: -webkit-linear-gradient(top,#eff0ec,#e1f2e9);
             }
+
+/*------------ Dialog xác nhận ------------*/
+.dialog-confirm {
+    display: none;
+    position: absolute;
+    width: 395px;
+    height: 130px;
+    border-radius: 3px;
+    background-color: #fff;
+    top: 25%;
+    left: calc(50% - 125px);
+    right: 0;
+    bottom: 0;
+    border: 4px solid #0973b9;
+}
+
+    .dialog-confirm .dialog-title {
+        height: 25px;
+        background-color: #0973b9;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 5px 2px;
+    }
+
+    .dialog-confirm .title-left {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        color: #fff;
+    }
+
+    .dialog-confirm .confirm-close-button {
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        background-image: url('/content/imgs/cancel.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+
+    .dialog-confirm .dialog-body {
+        height: calc(100% - 25px);
+        display: flex;
+    }
+
+    .dialog-confirm .icon-confirm-left {
+        height: 100%;
+        width: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 10px;
+    }
+
+        .dialog-confirm .icon-confirm-left .icon-confirm {
+            display: flex;
+            width: 40px;
+            height: 40px;
+            background: url('/content/imgs/help.png') no-repeat;
+            background-size: cover;
+        }
+
+    .dialog-confirm .text-confirm-right {
+        height: 100%;
+        width: calc(100% - 50px);
+    }
+
+    .dialog-confirm .dialog-text {
+        font-size: 13.9px;
+        height: 50px;
+        margin: 10px 10px 0px 0px;
+    }
+
+    .dialog-confirm .confirm {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 10px;
+    }
+
+        .dialog-confirm .confirm button {
+            width: 85px;
+            height: 30px;
+            padding: 2px 5px;
+            margin: 5px;
+            display: flex;
+            background-color: #ededed;
+            border-image: initial;
+            border: 1px solid #ccc;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .dialog-confirm .confirm button:hover,
+            .dialog-confirm .confirm button:focus {
+                border-color: #0071c1;
+                outline: none;
+                background-image: -webkit-linear-gradient(top,#eff0ec,#e1f2e9);
+            }
+

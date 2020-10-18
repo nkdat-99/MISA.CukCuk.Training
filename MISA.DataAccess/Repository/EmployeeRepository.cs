@@ -13,13 +13,9 @@ namespace MISA.DataAccess.Repository
         {
         }
 
-        public bool CheckEmployeeByCode(string employeeCode)
+        public object CheckEmployeeByCode(string employeeCode)
         {
-            var objectValue = _databaseAccess.Get("Proc_GetEmployeeByCode", employeeCode);
-            if (objectValue == null)
-                return false;
-            else
-                return true;
+            return _databaseAccess.Get("Proc_GetEmployeeByCode", employeeCode);
         }
     }
 }

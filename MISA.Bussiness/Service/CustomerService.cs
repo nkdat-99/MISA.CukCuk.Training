@@ -15,23 +15,9 @@ namespace MISA.Bussiness.Service
             _customerRepository = customerRepository;
         }
 
-        public bool CheckCustomerByCode(string employeeCode)
+        public bool CheckCustomerByCode(string customerCode)
         {
-            return _customerRepository.CheckCustomerByCode(employeeCode);
-        }
-
-        protected override bool Validate(Customer entity)
-        {
-            var isValid = true;
-            // Check trùng mã:
-            var isValidExitsCode = CheckCustomerByCode(entity.CustomerCode);
-            if (isValidExitsCode)
-            {
-                isValid = false;
-                validateErrorResponseMsg.Add("Mã bị trùng");
-            }
-
-            return isValid;
+            throw new NotImplementedException();
         }
     }
 }

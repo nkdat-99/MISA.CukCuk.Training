@@ -68,18 +68,15 @@
             border: 1px solid #999999;
         }
 
-    /* Remove the original arrow */
     .paging select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-color: #cccccc52 !important;
+        background-color: #ecececc7 !important;
     }
 
     .paging .pop {
         position: relative;
     }
 
-        .paging .pop:after {
+/*        .paging .pop:after {
             position: absolute;
             right: 1px;
             top: 1px;
@@ -90,7 +87,7 @@
             padding: 3px 7px;
             background-color: #fff;
             border-left: 1px solid #ccc;
-        }
+        }*/
 
         .paging .pop label {
             margin-right: 10px;

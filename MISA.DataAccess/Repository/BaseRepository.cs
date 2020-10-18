@@ -13,9 +13,9 @@ namespace MISA.DataAccess.Repository
         {
             _databaseAccess = databaseAccess;
         }
-        public int Delete(Guid id)
+        public int Delete(object objId)
         {
-            return _databaseAccess.Delete(id);
+            return _databaseAccess.Delete(objId);
         }
 
         public IEnumerable<T> Get()
@@ -23,7 +23,12 @@ namespace MISA.DataAccess.Repository
             return _databaseAccess.Get();
         }
 
-        public T GetById(Guid objId)
+        public IEnumerable<T> Get(string storeName)
+        {
+            return _databaseAccess.Get(storeName);
+        }
+
+        public T GetById(object objId)
         {
             return _databaseAccess.GetById(objId);
         }

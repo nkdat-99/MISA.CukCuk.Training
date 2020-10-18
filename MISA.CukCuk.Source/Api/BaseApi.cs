@@ -32,9 +32,9 @@ namespace MISA.CukCuk.Training.Api
         [HttpGet("{id}")]
         public IActionResult Get([FromRoute] Guid id)
         {
-            var employee = _baseService.GetById(id);
-            if (employee != null)
-                return Ok(employee);
+            var obj = _baseService.GetById(id);
+            if (obj != null)
+                return Ok(obj);
             else
                 return NoContent();
         }
@@ -44,9 +44,8 @@ namespace MISA.CukCuk.Training.Api
         public IActionResult Post([FromBody] T obj)
         {
             var serviceResponse = _baseService.Insert(obj);
-            var result = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
-            if (result > 0)
-                return CreatedAtAction("POST", result);
+            if (serviceResponse.Success)
+                return CreatedAtAction("POST", (serviceResponse.Data ?? 0));
             else
                 return BadRequest(serviceResponse);
         }
@@ -65,8 +64,18 @@ namespace MISA.CukCuk.Training.Api
 
         // DELETE api/Employee/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete([FromRoute] string id)
         {
+            var obj = 0;
+            foreach (var s in id.Split(','))
+            {
+                obj += _baseService.Delete(Guid.Parse(s));
+            }
+
+            if (obj != 0)
+                return Ok(obj);
+            else
+                return NoContent();
         }
     }
 }

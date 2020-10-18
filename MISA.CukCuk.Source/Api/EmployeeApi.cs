@@ -16,5 +16,20 @@ namespace MISA.CukCuk.Training.Api
         {
             _employeeService = employeeService;
         }
+
+        [Route("NewEmployeeCode")]
+        [HttpPost]
+        public string NewEmployeeCode()
+        {
+            var t = _employeeService.Get("Proc_GetNewEmployeeCode");
+            if (t.Any())
+            {
+                return "NV"+ ( int.Parse(t.First().EmployeeCode.Replace("NV", ""))+1).ToString().PadLeft(5, '0');
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 }

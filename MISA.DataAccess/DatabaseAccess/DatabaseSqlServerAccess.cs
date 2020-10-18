@@ -25,7 +25,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         }
         
 
-        public Employee GetById(Guid employeeId)
+        public Employee GetById(object employeeId)
         {
             var employee = new Employee();
             _sqlCommand.CommandText = "Proc_GetEmployeeById";
@@ -50,7 +50,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             {
                 Console.WriteLine(ex);
             }
-            // Đóng kết nối
             return employee;
         }
 
@@ -80,7 +79,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             {
                 Console.WriteLine(ex);
             }
-            // Đóng kết nối
             return employees;
         }
 
@@ -94,7 +92,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             throw new NotImplementedException();
         }
 
-        public int Delete(Guid id)
+        public int Delete(object id)
         {
             throw new NotImplementedException();
         }
@@ -112,6 +110,11 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         object IDatabaseAccess<Employee>.Get(string storeName, string code)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _sqlConnection.Close();
         }
     }
 }

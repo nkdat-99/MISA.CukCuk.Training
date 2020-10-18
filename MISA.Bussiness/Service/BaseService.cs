@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MISA.Bussiness.Service
 {
-    public class BaseService<T> : IBaseService<T>
+    public class BaseService<T> : IBaseService<T> where T: new()
     {
         IBaseRepository<T> _baseRepository;
         protected List<string> validateErrorResponseMsg = new List<string>();
@@ -16,17 +16,21 @@ namespace MISA.Bussiness.Service
             _baseRepository = baseRepository;
         }
 
-        public int Delete(Guid id)
+        public int Delete(object objectId)
         {
-            return _baseRepository.Delete(id);
+            return _baseRepository.Delete(objectId);
         }
 
         public IEnumerable<T> Get()
         {
             return _baseRepository.Get();
         }
+        public IEnumerable<T> Get(string storeName)
+        {
+            return _baseRepository.Get(storeName);
+        }
 
-        public T GetById(Guid objectId)
+        public T GetById(object objectId)
         {
             return _baseRepository.GetById(objectId);
         }
@@ -34,7 +38,8 @@ namespace MISA.Bussiness.Service
         public ServiceResponse Insert(T entity)
         {
             var serviceResponse = new ServiceResponse();
-            if (Validate(entity) == true)
+            T temp = new T();
+            if (Validate(entity, ref temp) == true)
             {
                 serviceResponse.Success = true;
                 serviceResponse.Msg.Add("Thành công");
@@ -44,6 +49,7 @@ namespace MISA.Bussiness.Service
             {
                 serviceResponse.Success = false;
                 serviceResponse.Msg = validateErrorResponseMsg;
+                serviceResponse.Data = temp;
             }
             return serviceResponse;
         }
@@ -52,21 +58,13 @@ namespace MISA.Bussiness.Service
         public ServiceResponse Update(T entity)
         {
             var serviceResponse = new ServiceResponse();
-            if (Validate(entity) == true)
-            {
-                serviceResponse.Success = true;
-                serviceResponse.Msg.Add("Thành công");
-                serviceResponse.Data = _baseRepository.Insert(entity);
-            }
-            else
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Msg = validateErrorResponseMsg;
-            }
+            serviceResponse.Success = true;
+            serviceResponse.Msg.Add("Thành công");
+            serviceResponse.Data = _baseRepository.Update(entity);
             return serviceResponse;
         }
 
-        protected virtual bool Validate(T entity)
+        protected virtual bool Validate(T entity, ref T returnValue)
         {
             return true;
         }

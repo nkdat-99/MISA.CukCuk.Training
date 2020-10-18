@@ -19,4 +19,11 @@ namespace MISA.CukCuk.Training.Models
         Diamond = 2,
         Vip = 3
     }
+
+    public enum StatusEnum
+    {
+        Working = 0,
+        Intern = 1,
+        Quit = 2
+    }
 }

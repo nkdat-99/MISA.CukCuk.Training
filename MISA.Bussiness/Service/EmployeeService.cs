@@ -15,20 +15,21 @@ namespace MISA.Bussiness.Service
             _employeeRepository = employeeRepository;
         }
 
-        public bool CheckEmployeeByCode(string employeeCode)
+        public object CheckEmployeeByCode(string employeeCode)
         {
             return _employeeRepository.CheckEmployeeByCode(employeeCode);
         }
 
-        protected override bool Validate(Employee entity)
+        protected override bool Validate(Employee entity, ref Employee outData)
         {
             var isValid = true;
             // Check trùng mã:
             var isValidExitsCode = CheckEmployeeByCode(entity.EmployeeCode);
-            if (isValidExitsCode)
+            if (isValidExitsCode!=null)
             {
                 isValid = false;
                 validateErrorResponseMsg.Add("Mã bị trùng");
+                outData = isValidExitsCode as Employee;
             }
 
             return isValid;

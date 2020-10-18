@@ -10,6 +10,13 @@
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(menu_responsive, 10);
     });
+
+    $(document).keydown(function (event) {
+
+        if (!(event.which == 83 && event.ctrlKey) && !(event.which == 19)) return true;
+        event.preventDefault();
+        alert("Ctrl-S pressed");
+    });
 })
 
 class BaseJS {
@@ -55,6 +62,7 @@ class BaseJS {
         //Dialog thông báo
         $('#btnCloseConfirm').click(this.closeDialogConfirmOnClick.bind(this));
         $('#btnCloseAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
+        $('#btnCloseWarning').click(this.closeDialogWarningOnClick.bind(this));
         $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
         //Event Keyup Format Money
         $('#txtMoneyTax').on('blur, focus, keyup', this.formatMoneyKeyup);
@@ -132,6 +140,7 @@ class BaseJS {
     btnAddOnClick() {
         this.FormMode = "add";
         this.showDialogDetail();
+        this.getNewEmployeeCode();
     }
 
     /**
@@ -147,6 +156,7 @@ class BaseJS {
             var self = this;
             var method = "POST";
             var nameId = Object.keys(self.Data[0])[0];
+            nameId = upperCaseFirstLetter(nameId);
             $.each(inputRequireds, function (index, input) {
                 if (!validData.validateRequired(input)) {
                     isValid = false;
@@ -163,7 +173,7 @@ class BaseJS {
                 $.each(fields, function (index, field) {
                     var fieldName = $(field).attr('fieldName');
                     var format = $(field).attr('format');
-                    if (fieldName == "Type" || fieldName == "Gender") {
+                    if (format == "Int") {
                         objInput[fieldName] = parseInt($(field).val());
                     }
                     else
@@ -248,8 +258,13 @@ class BaseJS {
             // Lấy mã nhân viên được chọn:
             var trSelected = $("#tblListData tr.row-selected");
             // Gọi API service thực hiện:
+            var listDel = [];
             if (trSelected.length > 0) {
-                self.selectDel = trSelected.data('key');
+                trSelected.each((i, e)=>{
+                    listDel.push($(e).data('key'));
+                })
+                
+                self.selectDel = listDel.join();
                 self.showDialogDeleteConfirm();
             } else {
                 self.showDialogAnnounce('no-select');
@@ -275,7 +290,7 @@ class BaseJS {
     * @param {string} check
     * */
     checkDialogConfirm(check) {
-        $('.dialog-delete-confirm').hide();
+        $('.dialog-confirm').hide();
         if (check == true) {
             $('#txtTitleAnnounce').text('Xóa thành công!');
         } else {
@@ -307,13 +322,17 @@ class BaseJS {
         this.hideDialogAnnounce();
     }
 
+    closeDialogWarningOnClick() {
+        this.hideDialogWarning();
+    }
+
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
     * Hiện Dialog Khi Click
     * */
     showDialogDetail() {
-        $('.dialog input, .dialog textaream, .dialog select').val(null);
+        $('.dialog input, .dialog textarea, .dialog select').val(null);
         $('.dialog-modal').show();
         $('.dialog').show();
         $('#txtCustomerCode').focus();
@@ -325,7 +344,7 @@ class BaseJS {
 
     showDialogDeleteConfirm() {
         $('.dialog-modal').show();
-        $('.dialog-delete-confirm').show().fadeIn();
+        $('.dialog-confirm').show().fadeIn();
     }
 
     /**
@@ -363,7 +382,12 @@ class BaseJS {
 
     hideDialogConfirm() {
         $('.dialog-modal').hide();
-        $('.dialog-delete-confirm').hide();
+        $('.dialog-confirm').hide();
+    }
+
+    hideDialogWarning() {
+        $('.dialog-modal').hide();
+        $('.dialog-warning').hide();
     }
 
     hideDialogAnnounce() {
@@ -390,9 +414,15 @@ class BaseJS {
     * Date: 25/9/2020
     * Select hàng
     * */
-    rowOnSelect() {
-        $(this).siblings().removeClass('row-selected');
-        $(this).addClass('row-selected');
+    rowOnSelect(event) {
+
+        if (event.ctrlKey) {
+            $(this).toggleClass('row-selected');
+        }
+        else {
+            $(this).siblings().removeClass('row-selected');
+            $(this).addClass('row-selected');
+        }
     }
 
     /**
@@ -431,6 +461,7 @@ class BaseJS {
     * Return Key Press Tab
     * */
     returnFocus() {
+        $('#txtEmployeeCode').focus();
         $('#txtCustomerCode').focus();
     }
 

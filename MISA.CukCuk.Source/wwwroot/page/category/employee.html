@@ -169,12 +169,14 @@
                             <tr>
                                 <th fieldName="employeeCode">Mã Nhân Viên</th>
                                 <th fieldName="employeeName">Tên Nhân Viên</th>
-                                <th fieldName="phoneNumber">Số Điện Thoại</th>
+                                <th fieldName="sex">Giới tính</th>
                                 <th fieldName="dayOfBirth" format="Date">Ngày Sinh</th>
-                                <th fieldName="bankCard">Số Tài Khoản</th>
-                                <th fieldName="salary" format="Money">Tiền Lương</th>
-                                <th fieldName="address">Địa Chỉ Cư Trú</th>
+                                <th fieldName="phoneNumber">Số Điện Thoại</th>
                                 <th fieldName="email">Email</th>
+                                <th fieldName="positionName">Vị trí</th>
+                                <th fieldName="departmentName">Phòng ban</th>
+                                <th fieldName="salary" format="Money">Mức lương</th>
+                                <th fieldName="statusShow">Tình trạng công việc</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -222,69 +224,109 @@
     <div class="dialog">
         <div class="dialog-title">
             <div class="title-text">
-                Nhân Viên
+                Thông tin nhân viên
             </div>
             <div id="btnClose" class="title-close-button"></div>
         </div>
         <div class="dialog-body">
             <div class="group-infor">
-                <div class="row">
-                    <label class="label-left">Mã nhân viên <label style="color: red;">(*)</label></label>
-                    <input fieldName="EmployeeCode" id="txtEmployeeCode" required type="text" class="input-default" />
+                <div class="title-group">Thông tin chung</div>
+                <div class="group-basic">
+                    <div class="group-left">
+                        <div class="row">
+                            <label class="label-left">Mã nhân viên <label style="color: red;">(*)</label></label>
+                            <input fieldName="EmployeeCode" id="txtEmployeeCode" required type="text" class="input-default" />
 
+                        </div>
+                        <div class="row">
+                            <label class="label-left">Tên nhân viên <label style="color: red;">(*)</label></label>
+                            <input fieldName="EmployeeName" id="txtEmployeeName" required type="text" class="input-default" />
+                        </div>
+                        <div class="row">
+                            <label class="label-left">Ngày sinh</label>
+                            <input fieldName="DayOfBirth" format="Date" id="dtDayOfBirth" type="date" class="input-default flex-left" />
+                            <label class="label-right">Giới tính</label>
+                            <select fieldName="Gender" format="Int" id="txtSex" class="input-default flex-right" style="width: 190px">
+                                <option value="0">Nữ</option>
+                                <option value="1">Nam</option>
+                                <option value="2">Khác</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label class="label-left">Email <label style="color: red;">(*)</label></label>
+                            <input fieldName="Email" id="txtEmail" type="email" required class="input-default" />
+                        </div>
+                        <div class="row">
+                            <label class="label-left">ĐT di động <label style="color: red;">(*)</label></label>
+                            <input fieldName="PhoneNumber" id="txtPhoneNumber" type="tel" required class="input-default" />
+                        </div>
+                        <div class="row">
+                            <label class="label-left">Số CMT/HC</label>
+                            <input fieldName="IdCard" id="txtIdCard" type="text" class="input-default flex-left" />
+                            <label class="label-right">Ngày cấp</label>
+                            <input fieldName="DayOfIdCard" format="Date" id="dtDayOfIdCard" type="date" class="input-default flex-right" />
+                        </div>
+                    </div>
+                    <div class="group-right">
+                        <div class="avatar-box">
+                            <button class="ct-btn-avatar btn-select-avatar">...</button>
+                            <button class="ct-btn-avatar btn-remove-avatar icon-cancel-avatar" disabled></button>
+                        </div>
+                        <div class="content-upload">
+                            Chỉ được upload tệp
+                            <br>
+                            <b>.jpg .jpeg, .png, .gif</b>
+                        </div>
+                        <div class="box-select-avatar"></div>
+                    </div>
                 </div>
                 <div class="row">
-                    <label class="label-left">Tên nhân viên <label style="color: red;">(*)</label></label>
-                    <input fieldName="EmployeeName" id="txtEmployeeName" required type="text" class="input-default" />
+                    <label class="label-left">Nơi cấp CMND</label>
+                    <input fieldName="Address" id="txtAddress" type="text" class="input-default" style="width: 755px;" />
                 </div>
-                <div class="row">
-                    <label class="label-left">Giới tính</label>
-                    <select fieldName="Gender" id="txtSex" class="input-default flex-left" style="width: 200px">
-                        <option value="0">Nữ</option>
-                        <option value="1">Nam</option>
-                        <option value="2">Khác</option>
-                    </select>
-                    <label class="label-right">Tiền lương</label>
-                    <input fieldName="Salary" format="Money" id="txtSalary" type="text" class="input-default flex-right" />
-                </div>
-                <div class="row">
-                    <label class="label-left">Số điện thoại</label>
-                    <input fieldName="PhoneNumber" id="txtPhoneNumber" type="tel" class="input-default flex-left" />
-                    <label class="label-right">Phòng Ban</label>
-                    <select fieldName="DepartmentId" id="txtDepartmentId" class="input-default flex-right" style="width: 200px">
-                        <option value="142cb08f-7c31-21fa-8e90-67245e8b283e">Phòng Sản Xuất</option>
-                        <option value="17120d02-6ab5-3e43-18cb-66948daf6128">Phòng Đào Tạo</option>
-                        <option value="469b3ece-744a-45d5-957d-e8c757976496">Phòng Nghiên Cứu</option>
-                        <option value="4e272fc4-7875-78d6-7d32-6a1673ffca7c">Phòng Thiết Kế</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <label class="label-left">Ngày sinh</label>
-                    <input fieldName="DayOfBirth" format="Date" id="dtDayOfBirth" type="date" class="input-default flex-left" />
-                    <label class="label-right">Vị trí công việc</label>
-                    <select fieldName="PositionId" id="txtPositionId" class="input-default flex-right" style="width: 200px">
-                        <option value="2f1172a9-1b5d-6fc4-777e-3e3b283cabde">Nhân Viên</option>
-                        <option value="2f8a5a0d-54fa-587b-5676-66508ad02725">Bảo Vệ</option>
-                        <option value="699acaa2-66da-563a-1702-ce5da15ac776">Lễ Tân</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <label class="label-left">Tên công ty</label>
-                    <input fieldName="Company" id="txtCompany" type="text" class="input-default" />
-                </div>
-                <div class="row">
-                    <label class="label-left">Số tài khoản</label>
-                    <input fieldName="BankCard" id="txtBankCard" type="text" class="input-default flex-left" />
-                    <label class="label-right">Email</label>
-                    <input fieldName="Email" id="txtEmail" type="email" class="input-default flex-right" />
-                </div>
-                <div class="row">
-                    <label class="label-left">Địa chỉ cư trú</label>
-                    <input fieldName="Address" id="txtAddress" type="text" class="input-default" />
-                </div>
-                <div class="row">
-                    <label class="label-left">Ghi chú</label>
-                    <textarea fieldName="Note" id="txtNote" class="input-default"></textarea>
+                <div class="title-group" style="margin-top: 10px;">Thông tin công việc</div>
+                <div class="group-work">
+                    <div class="row">
+                        <label class="label-left">Phòng Ban</label>
+                        <select fieldName="DepartmentId" id="txtDepartmentId" class="input-default flex-full">
+                            <option value="39446ba3-3071-7af6-a5a9-deaf32c96293">Phòng Nghiên Cứu Công Nghệ</option>
+                            <option value="48b51439-3625-6c0c-7532-03c92da59c43">Văn Phòng Tổng Công Ty</option>
+                            <option value="71952621-23c8-61d2-d0eb-e423f1575e00">Khối Sản Xuất</option>
+                            <option value="447816de-6069-15bf-de3d-c9e9e9038fe2">Văn Phòng TP Hồ Chí Minh</option>
+                            <option value="423d5b84-2191-6cce-df3d-c9e9e9038fe2">Phòng Đào Tạo</option>
+                            <option value="3541ff76-58f0-6d1a-e836-63d5d5eff719">Văn Phòng Hà Nội</option>
+                            <option value="79aca385-65e3-1ebe-f488-479bce9b28fc">Văn Phòng Đà Nẵng</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Vị trí công việc</label>
+                        <select fieldName="PositionId" id="txtPositionId" class="input-default flex-full">
+                            <option value="2d46bab3-4f6b-69a8-71b0-22cff29e2663">Nhân Viên</option>
+                            <option value="7b65a1d7-52df-5fb9-16cf-1ab46ebdb0f4">Quản Lý Dự Án</option>
+                            <option value="12b28924-2015-5d35-f1ff-0bf8e460a224">Quản Lý Nghiệp Vụ</option>
+                            <option value="28fac2a7-3b08-4b3b-d8b4-8d4600c9080b">Trưởng Phòng</option>
+                            <option value="1ddeb8b3-47c4-3566-f0ff-0bf8e460a224">Chánh Văn Phòng</option>
+                            <option value="4ac29d56-58aa-17b5-5865-a41d0e078d49">Phó Giám Đốc</option>
+                            <option value="6cb25a5f-3341-5f1d-d9b4-8d4600c9080b">Giám Đốc</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Mã số thuế cá nhân</label>
+                        <input fieldName="TaxCode" id="txtTaxCode" type="text" class="input-default flex-left" />
+                        <label class="label-right">Mức lương</label>
+                        <input fieldName="Salary" format="Money" id="txtSalary" type="text" style="padding-right: 45px;" class="input-default flex-right" />
+                        <span class="unit-money">(VNĐ)</span>
+                    </div>
+                    <div class="row">
+                        <label class="label-left">Ngày gia nhập</label>
+                        <input fieldName="DayOfTaxCode" format="Date" id="dtDayOfTaxCode" type="date" class="input-default flex-left" />
+                        <label class="label-right">Tình trạng</label>
+                        <select fieldName="Status" format="Int" id="txtStatus" class="input-default flex-right" style="width: 190px">
+                            <option value="0">Đang làm việc</option>
+                            <option value="1">Đang thử việc</option>
+                            <option value="2">Đã nghỉ việc</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -313,26 +355,30 @@
         </div>
     </div>
 
-    <!----- Dialog xác nhận xóa ----->
-    <div class="dialog-delete-confirm">
+    <!----- Dialog xác nhận ----->
+    <div class="dialog-confirm">
         <div class="dialog-title">
             <div class="title-left">
-                <i class="icon-confirm"></i>
-                Xác nhận
+                CUKCUK - Quản lí nhà hàng
             </div>
             <div id="btnCloseConfirm" class="confirm-close-button"></div>
         </div>
         <div class="dialog-body">
-            <div class="dialog-text">
-                Bạn chắc chắn muốn xóa?
+            <div class="icon-confirm-left">
+                <i class="icon-confirm"></i>
             </div>
-            <div class="confirm">
-                <button id="btnAgreeDelete" class="delete-agree">
-                    Đồng ý
-                </button>
-                <button id="btnCancelDelete" class="delete-cancel">
-                    Hủy bỏ
-                </button>
+            <div class="text-confirm-right">
+                <div id="txtTitleConfirm" class="dialog-text">
+                    Bạn chắc chắn muốn xóa những Nhân viên đã chọn không?
+                </div>
+                <div class="confirm">
+                    <button id="btnAgreeDelete" class="delete-agree">
+                        Đồng ý
+                    </button>
+                    <button id="btnCancelDelete" class="delete-cancel">
+                        Hủy bỏ
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -341,8 +387,7 @@
     <div class="dialog-announce">
         <div class="dialog-title">
             <div class="title-left">
-                <i class="icon-announce"></i>
-                Thông báo
+                CUKCUK - Quản lí nhà hàng
             </div>
             <div id="btnCloseAnnounce" class="announce-close-button"></div>
         </div>
@@ -352,6 +397,51 @@
                 <button id="btnConfirmAnnounce" class="delete-agree">
                     OK
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!----- Dialog cảnh báo ----->
+    <div class="dialog-warning">
+        <div class="dialog-title">
+            <div class="title-left">
+                CUKCUK - Quản lí nhà hàng
+            </div>
+            <div id="btnCloseWarning" class="warning-close-button"></div>
+        </div>
+        <div class="dialog-body">
+            <div id="txtTitleAnnounce" class="dialog-text"></div>
+            <div class="confirm">
+                <button id="btnConfirmAnnounce" class="delete-agree">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-warning">
+        <div class="dialog-title">
+            <div class="title-left">
+                CUKCUK - Quản lí nhà hàng
+            </div>
+            <div id="btnCloseWarning" class="warning-close-button"></div>
+        </div>
+        <div class="dialog-body">
+            <div class="icon-warning-left">
+                <i class="icon-warning"></i>
+            </div>
+            <div class="text-warning-right">
+                <div id="txtTitleWarning" class="dialog-text">
+                    Bạn chắc chắn muốn xóa những Nhân viên đã chọn không?
+                </div>
+                <div class="confirm">
+                    <button id="btnAgreeDelete" class="delete-agree">
+                        Có
+                    </button>
+                    <button id="btnCancelDelete" class="delete-cancel">
+                        Không
+                    </button>
+                </div>
             </div>
         </div>
     </div>
