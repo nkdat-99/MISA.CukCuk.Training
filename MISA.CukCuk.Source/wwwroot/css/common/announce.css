@@ -2,6 +2,18 @@
     * Author: NKĐạt
     * Date: 17/10/2020
     * */
+/*------------- Dialog Modal thông báo -------------*/
+.dialog-modal-announce {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    background-color: #808080;
+    opacity: 0.5;
+}
 /*------------- Dialog thông báo -------------*/
 .dialog-announce {
     display: none;
@@ -199,7 +211,7 @@
     height: 130px;
     border-radius: 3px;
     background-color: #fff;
-    top: 25%;
+    top: 30%;
     left: calc(50% - 200px);
     right: 0;
     bottom: 0;
@@ -219,7 +231,7 @@
         height: 100%;
         display: flex;
         align-items: center;
-        font-size: 13px;
+        font-size: 13.9px;
         color: #fff;
     }
 

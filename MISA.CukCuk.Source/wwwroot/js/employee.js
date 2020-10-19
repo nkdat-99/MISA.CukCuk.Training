@@ -93,9 +93,16 @@ class EmployeeJS extends BaseJS {
             self.hideDialogDetail();
             self.showDialogAnnounce(method);
         }).fail(function (res) {
-            console.log(res);
-            //console.log(res.responseJSON.msg[0]);
-            //console.log(res.responseJSON);
+            console.log(res.responseJSON);
+            if (res.responseJSON.msg == "Nhập thông tin") {
+                self.showDialogWarning('validate');
+            } else if (res.responseJSON.msg == "Sai Email") {
+                self.showDialogWarning('checkEmail');
+            } else if (res.responseJSON.msg == "Mã bị trùng") {
+                self.checkByCode = res.responseJSON.data.employeeCode;
+                self.checkByName = res.responseJSON.data.employeeName;
+                self.showDialogWarning('checkCode');
+            } 
         });
     }
 

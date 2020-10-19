@@ -11,10 +11,10 @@
     });
 
     $(document).keydown(function (event) {
-
         if (!(event.which == 83 && event.ctrlKey) && !(event.which == 19)) return true;
         event.preventDefault();
-        alert("Ctrl-S pressed");
+        //this.btnSaveOnClick.bind(this);
+        this.btnSaveOnClick();
     });
 })
 
@@ -42,19 +42,21 @@ class BaseJS {
         $('#btnAdd').click(this.btnAddOnClick.bind(this));
         $('#btnEdit').click(this.btnEditOnClick.bind(this));
         $('#btnDelete').click(this.btnDeleteOnClick.bind(this));
-        $('#btnReset').click(this.loadData.bind(this));
+        $('#btnReset').click(this.btnResetOnClick.bind(this));
         $('#btnClose').click(this.closeDialogOnClick.bind(this));
         $('#btnSave').click(this.btnSaveOnClick.bind(this));
         $('#btnCancel').click(this.closeDialogOnClick.bind(this));
-        $('input[required]').blur(this.validateRequired.bind(this));
         $('#btnHelpDialog').blur(this.returnFocus);
+        //Validate yêu cầu
+        $('input[required]').blur(this.validateRequired.bind(this));
         //Select Hàng
         $("table tbody").on("click", "tr", this.rowOnSelect);
         //Responsive Menu
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
         //Ẩn Dialog
-        $('.dialog-modal').click(this.closeAllDialogOnClick.bind(this));
+        $('.dialog-modal').click(this.closeDialogOnClick.bind(this));
+        $('.dialog-modal-announce').click(this.closeDialogAnnounceOnClick.bind(this));
         //Dialog xác nhận 
         $('#btnCloseConfirm').click(this.closeDialogConfirmOnClick.bind(this));
         $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
@@ -68,6 +70,8 @@ class BaseJS {
         //Event Keyup Format Money
         $('#txtMoneyTax').on('blur, focus, keyup', this.formatMoneyKeyup);
         $('#txtSalary').on('blur, focus, keyup', this.formatMoneyKeyup);
+        //
+        $(document).keydown(this.keydownbtn.bind(this))
 
     }
 
@@ -109,6 +113,7 @@ class BaseJS {
                     }
                     $(tr).append(td);
                     $(tr).data('key', item[Object.keys(item)[0]]);
+                    $(tr).data('code', item[Object.keys(item)[1]]);
                 })
                 // Binding dữ liệu lên trên UI
                 $('#tblListData tbody').append(tr);
@@ -163,9 +168,10 @@ class BaseJS {
                     isValid = false;
                 }
             })
-            if (isValid) {
+            if (!isValid)
+                self.showDialogWarning('validate');
+            if (isValid)
                 isValid = self.validateCustom();
-            }
             if (isValid) {
                 // Đọc thông tin các ô dữ liệu:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
@@ -259,6 +265,7 @@ class BaseJS {
             // Lấy mã nhân viên được chọn:
             var trSelected = $("#tblListData tr.row-selected");
             // Gọi API service thực hiện:
+            self.selectCode = trSelected.data('code');
             var listDel = [];
             if (trSelected.length > 0) {
                 trSelected.each((i, e) => {
@@ -276,6 +283,16 @@ class BaseJS {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 19/10/2020
+    * Reset dữ liệu
+    * */
+    btnResetOnClick() {
+        this.getData();
+        this.loadData();
     }
 
     /**
@@ -308,8 +325,12 @@ class BaseJS {
     * Date: 30/9/2020
     * Event Ẩn Dialog
     * */
-    closeAllDialogOnClick() {
+    closeDialogOnClick() {
         this.hideDialogDetail();
+
+    }
+
+    closeDialogAnnounceOnClick() {
         this.hideDialogAnnounce();
         this.hideDialogConfirm();
         this.hideDialogWarning();
@@ -348,9 +369,10 @@ class BaseJS {
     }
 
     showDialogConfirm(checkValue) {
-        $('.dialog-modal').show();
+        self = this;
+        $('.dialog-modal-announce').show();
         if (checkValue == 'del-1') {
-            $('#txtTitleConfirm').text('Bạn chắc chắn muốn xóa Nhân viên <<>> không ?');
+            $('#txtTitleConfirm').text('Bạn chắc chắn muốn xóa Nhân viên <<' + self.selectCode + '>> không ?');
         } else if (checkValue == 'del-n') {
             $('#txtTitleConfirm').text('Bạn chắc chắn muốn xóa những Nhân viên đã chọn không ?');
         }
@@ -364,7 +386,7 @@ class BaseJS {
     * @param {string} checkValue
     * */
     showDialogAnnounce(checkValue) {
-        $('.dialog-modal').show();
+        $('.dialog-modal-announce').show();
         if (checkValue == 'POST') {
             $('#txtTitleAnnounce').text('Thêm thành công!');
         } else if (checkValue == 'PUT') {
@@ -380,11 +402,18 @@ class BaseJS {
     * @param {string} checkValue
     * */
     showDialogWarning(checkValue) {
-        $('.dialog-modal').show();
+        self = this;
+        $('.dialog-modal-announce').show();
         if (checkValue == 'none') {
             $('#txtTitleWarning').text('Không có nhân viên với mã tương ứng!');
         } else if (checkValue == 'no-select') {
             $('#txtTitleWarning').text('Bạn chưa chọn nhân viên nào!');
+        } else if (checkValue == 'validate') {
+            $('#txtTitleWarning').text('Họ và tên nhân viên không được bỏ trống!');
+        } else if (checkValue == 'checkCode') {
+            $('#txtTitleWarning').text('Mã nhân viên trùng với Mã nhân viên của nhân viên: ' + self.checkByCode + ' - ' + self.checkByName);
+        } else if (checkValue == 'checkEmail') {
+            $('#txtTitleWarning').text('Bạn phải nhập đúng định dạng Email');
         }
         $('.dialog-warning').show();
     }
@@ -403,17 +432,17 @@ class BaseJS {
     }
 
     hideDialogConfirm() {
-        $('.dialog-modal').hide();
+        $('.dialog-modal-announce').hide();
         $('.dialog-confirm').hide();
     }
 
     hideDialogWarning() {
-        $('.dialog-modal').hide();
+        $('.dialog-modal-announce').hide();
         $('.dialog-warning').hide();
     }
 
     hideDialogAnnounce() {
-        $('.dialog-modal').hide();
+        $('.dialog-modal-announce').hide();
         $('.dialog-announce').hide();
     }
 
