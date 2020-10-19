@@ -6,7 +6,6 @@
     * */
     var timeout;
     $(window).resize(function () {
-        //debugger
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(menu_responsive, 10);
     });
@@ -56,14 +55,16 @@ class BaseJS {
         $('.main').click(this.mainPageOnClick.bind(this));
         //Ẩn Dialog
         $('.dialog-modal').click(this.closeAllDialogOnClick.bind(this));
-        //Dialog xác nhận xóa
-        $('#btnAgreeDelete').click(this.agreeOnClick.bind(this));
-        $('#btnCancelDelete').click(this.closeDialogConfirmOnClick.bind(this));
-        //Dialog thông báo
+        //Dialog xác nhận 
         $('#btnCloseConfirm').click(this.closeDialogConfirmOnClick.bind(this));
-        $('#btnCloseAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
-        $('#btnCloseWarning').click(this.closeDialogWarningOnClick.bind(this));
         $('#btnConfirmAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
+        $('#btnAgreeConfirm').click(this.agreeOnClick.bind(this));
+        $('#btnCancelConfirm').click(this.closeDialogConfirmOnClick.bind(this));
+        //Dialog thông báo
+        $('#btnCloseAnnounce').click(this.closeDialogAnnounceOnClick.bind(this));
+        //Dialog cảnh báo
+        $('#btnCloseWarning').click(this.closeDialogWarningOnClick.bind(this));
+        $('#btnConfirmWarning').click(this.closeDialogWarningOnClick.bind(this));
         //Event Keyup Format Money
         $('#txtMoneyTax').on('blur, focus, keyup', this.formatMoneyKeyup);
         $('#txtSalary').on('blur, focus, keyup', this.formatMoneyKeyup);
@@ -224,7 +225,7 @@ class BaseJS {
             self.getDataDetail(self.selectId);
             var objDetail = self.DataDetail;
             if (!objDetail) {
-                self.showDialogAnnounce('none');
+                self.showDialogWarning('none');
             } else {
                 // bindding các thông tin của nhân viên lên form:
                 var fields = $('.dialog input, .dialog select, .dialog textarea');
@@ -242,7 +243,7 @@ class BaseJS {
                 })
             }
         } else {
-            self.showDialogAnnounce('no-select');
+            self.showDialogWarning('no-select');
         }
     }
 
@@ -260,14 +261,17 @@ class BaseJS {
             // Gọi API service thực hiện:
             var listDel = [];
             if (trSelected.length > 0) {
-                trSelected.each((i, e)=>{
+                trSelected.each((i, e) => {
                     listDel.push($(e).data('key'));
                 })
-                
+
                 self.selectDel = listDel.join();
-                self.showDialogDeleteConfirm();
+                if (trSelected.length == 1)
+                    self.showDialogConfirm('del-1');
+                else
+                    self.showDialogConfirm('del-n');
             } else {
-                self.showDialogAnnounce('no-select');
+                self.showDialogWarning('no-select');
             }
         } catch (e) {
             console.log(e)
@@ -308,6 +312,7 @@ class BaseJS {
         this.hideDialogDetail();
         this.hideDialogAnnounce();
         this.hideDialogConfirm();
+        this.hideDialogWarning();
     }
 
     closeDialogOnClick() {
@@ -336,15 +341,20 @@ class BaseJS {
         $('.dialog-modal').show();
         $('.dialog').show();
         $('#txtCustomerCode').focus();
-        var selects = $(".dialog select"); 
+        var selects = $(".dialog select");
         $.each(selects, function (index, select) {
             $("option:first-child").prop("selected", true);
         })
     }
 
-    showDialogDeleteConfirm() {
+    showDialogConfirm(checkValue) {
         $('.dialog-modal').show();
-        $('.dialog-confirm').show().fadeIn();
+        if (checkValue == 'del-1') {
+            $('#txtTitleConfirm').text('Bạn chắc chắn muốn xóa Nhân viên <<>> không ?');
+        } else if (checkValue == 'del-n') {
+            $('#txtTitleConfirm').text('Bạn chắc chắn muốn xóa những Nhân viên đã chọn không ?');
+        }
+        $('.dialog-confirm').show();
     }
 
     /**
@@ -359,12 +369,24 @@ class BaseJS {
             $('#txtTitleAnnounce').text('Thêm thành công!');
         } else if (checkValue == 'PUT') {
             $('#txtTitleAnnounce').text('Sửa thành công!');
-        } else if (checkValue == 'none') {
-            $('#txtTitleAnnounce').text('Không có nhân viên với mã tương ứng!');
-        } else if (checkValue == 'no-select') {
-            $('#txtTitleAnnounce').text('Bạn chưa chọn nhân viên nào!');
         }
-        $('.dialog-announce').show().fadeIn();
+        $('.dialog-announce').show();
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 19/10/2020
+    * Hiện Dialog Cảnh Báo
+    * @param {string} checkValue
+    * */
+    showDialogWarning(checkValue) {
+        $('.dialog-modal').show();
+        if (checkValue == 'none') {
+            $('#txtTitleWarning').text('Không có nhân viên với mã tương ứng!');
+        } else if (checkValue == 'no-select') {
+            $('#txtTitleWarning').text('Bạn chưa chọn nhân viên nào!');
+        }
+        $('.dialog-warning').show();
     }
 
     /**
