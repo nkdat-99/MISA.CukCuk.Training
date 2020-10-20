@@ -55,21 +55,20 @@ namespace MISA.CukCuk.Training.Api
         public IActionResult Put([FromBody] T obj)
         {
             var serviceResponse = _baseService.Update(obj);
-            var result = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
-            if (result > 0)
-                return CreatedAtAction("PUT", result);
+            if (serviceResponse.Success)
+                return CreatedAtAction("PUT", (serviceResponse.Data ?? 0));
             else
                 return BadRequest(serviceResponse);
         }
 
         // DELETE api/Employee/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] string id)
+        [HttpDelete("{code}")]
+        public IActionResult Delete([FromRoute] string code)
         {
             var obj = 0;
-            foreach (var s in id.Split(','))
+            foreach (var s in code.Split(','))
             {
-                obj += _baseService.Delete(Guid.Parse(s));
+                obj += _baseService.Delete(s);
             }
 
             if (obj != 0)

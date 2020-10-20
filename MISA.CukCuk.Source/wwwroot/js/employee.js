@@ -38,15 +38,16 @@ class EmployeeJS extends BaseJS {
     * Date: 17/10/2020
     * Lấy data bản ghi cuối cùng từ DATABASE
     * */
-    getNewEmployeeCode() {
+    getNewCode(check) {
         self = this;
         $.ajax({
             url: "/api/employee/newemployeecode",
-            method: "POST",
+            method: "GET",
             contentType: "application/json",
-            async: true
+            async: check
         }).done(function (response) {
             $('#txtEmployeeCode').val(response);
+            self.newCode = response;
         }).fail(function (res) {
             console.log(res);
         })
@@ -93,16 +94,18 @@ class EmployeeJS extends BaseJS {
             self.hideDialogDetail();
             self.showDialogAnnounce(method);
         }).fail(function (res) {
-            console.log(res.responseJSON);
-            if (res.responseJSON.msg == "Nhập thông tin") {
+            if (res.responseJSON.msg != "Sai email" && res.responseJSON.msg != "Mã bị trùng") {
+                self.checkValidate = res.responseJSON.msg;
                 self.showDialogWarning('validate');
-            } else if (res.responseJSON.msg == "Sai Email") {
+            }
+            if (res.responseJSON.msg == "Sai email") {
                 self.showDialogWarning('checkEmail');
-            } else if (res.responseJSON.msg == "Mã bị trùng") {
+            }
+            if (res.responseJSON.msg == "Mã bị trùng") {
                 self.checkByCode = res.responseJSON.data.employeeCode;
                 self.checkByName = res.responseJSON.data.employeeName;
                 self.showDialogWarning('checkCode');
-            } 
+            }
         });
     }
 
@@ -110,12 +113,12 @@ class EmployeeJS extends BaseJS {
     * Author: NKĐạt
     * Date: 6/10/2020
     * Xóa data
-    * @param {string} employeeId
+    * @param {string} employeeCode
     * */
-    deleteData(employeeId) {
+    deleteData(employeeCode) {
         var check = false;
         $.ajax({
-            url: "/api/employee/" + employeeId,
+            url: "/api/employee/" + employeeCode,
             method: "DELETE",
             async: false
         }).done(function (res) {

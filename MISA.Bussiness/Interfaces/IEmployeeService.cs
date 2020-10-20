@@ -11,8 +11,9 @@ namespace MISA.Bussiness.Interfaces
         /// Kiểm tra thông tin nhân viên theo mã
         /// </summary>
         /// <param name="employeeCode"></param>
+        /// /// <param name="id"></param>
         /// <returns>true: có; false: không</returns>
         /// CreatedBy: NKDAT (16/10/2020)
-        public object CheckEmployeeByCode(string employeeCode);
+        public object CheckEmployeeByCode(string employeeCode, object id);
     }
 }

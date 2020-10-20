@@ -58,9 +58,19 @@ namespace MISA.Bussiness.Service
         public ServiceResponse Update(T entity)
         {
             var serviceResponse = new ServiceResponse();
-            serviceResponse.Success = true;
-            serviceResponse.Msg.Add("Thành công");
-            serviceResponse.Data = _baseRepository.Update(entity);
+            T temp = new T();
+            if (Validate(entity, ref temp) == true)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Msg.Add("Thành công");
+                serviceResponse.Data = _baseRepository.Update(entity);
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Msg = validateErrorResponseMsg;
+                serviceResponse.Data = temp;
+            }
             return serviceResponse;
         }
 

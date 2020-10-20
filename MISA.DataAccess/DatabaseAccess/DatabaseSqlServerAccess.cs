@@ -107,7 +107,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             throw new NotImplementedException();
         }
 
-        object IDatabaseAccess<Employee>.Get(string storeName, string code)
+        object IDatabaseAccess<Employee>.Get(string storeName, string code, object id)
         {
             throw new NotImplementedException();
         }

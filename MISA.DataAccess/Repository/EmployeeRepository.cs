@@ -13,9 +13,9 @@ namespace MISA.DataAccess.Repository
         {
         }
 
-        public object CheckEmployeeByCode(string employeeCode)
+        public object CheckEmployeeByCode(string employeeCode, object id)
         {
-            return _databaseAccess.Get("Proc_GetEmployeeByCode", employeeCode);
+            return _databaseAccess.Get("Proc_GetEmployeeByCode", employeeCode, id);
         }
     }
 }

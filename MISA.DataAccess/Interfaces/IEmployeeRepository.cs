@@ -11,8 +11,9 @@ namespace MISA.DataAccess.Interfaces
         /// Kiểm tra thông tin nhân viên theo mã
         /// </summary>
         /// <param name="employeeCode"></param>
+        /// /// <param name="id"></param>
         /// <returns>true: có; false: không</returns>
         /// CreatedBy: NKDAT (15/10/2020)
-        object CheckEmployeeByCode(string employeeCode);
+        object CheckEmployeeByCode(string employeeCode, object id);
     }
 }

@@ -15,7 +15,7 @@ namespace MISA.CukCuk.Training.Interface
         /// CreatedBy: NKDAT (16/10/2020)
         IEnumerable<T> Get();
         IEnumerable<T> Get(string storeName);
-        object Get(string storeName, string code);
+        object Get(string storeName, string code, object id);
         T GetById(object id);
         int Insert(T obj);
         int Update(T obj);

@@ -11,13 +11,12 @@
             $(input).addClass('required-error');
             $(input).attr("title", "Bạn phải nhập thông tin này");
             $(input).attr("placeholder", "Bạn phải nhập thông tin này");
-            return false;
+            //console.log($(input).attr('fieldname'));
+            return true; //Không xét yêu cầu nhập ở JS, xét required trên service.
         } else {
             $(input).removeClass('required-error');
             $(input).removeClass("title");
             return true;
         }
     },
-
-    validateEmail: function () { }
 }

@@ -11,27 +11,51 @@ namespace MISA.Bussiness.Service
     public class EmployeeService : BaseService<Employee>, IEmployeeService
     {
         IEmployeeRepository _employeeRepository;
-        public EmployeeService(IEmployeeRepository employeeRepository):base(employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository) : base(employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
 
-        public object CheckEmployeeByCode(string employeeCode)
+        public object CheckEmployeeByCode(string employeeCode, object id)
         {
-            return _employeeRepository.CheckEmployeeByCode(employeeCode);
+            return _employeeRepository.CheckEmployeeByCode(employeeCode, id);
         }
 
         protected override bool Validate(Employee entity, ref Employee outData)
         {
             var isValid = true;
+            var announce = "";
             // Check các trường thông tin bắt buộc nhập:
-            if (entity.EmployeeCode.Trim() == "" || entity.EmployeeName.Trim() == "" || entity.Email.Trim() == "" || entity.PhoneNumber.Trim() == "")
+            if (entity.EmployeeCode.Trim() == "")
             {
                 isValid = false;
-                validateErrorResponseMsg.Add("Nhập thông tin");
+                announce += "Mã nhân viên";
+            }
+            if (entity.EmployeeName.Trim() == "")
+            {
+                isValid = false;
+                if (announce != "")
+                    announce += ", ";
+                announce += "Họ và tên nhân viên";
+            }
+            if (entity.Email.Trim() == "")
+            {
+                isValid = false;
+                if (announce != "")
+                    announce += ", ";
+                announce += "Email";
+            }
+            if (entity.PhoneNumber.Trim() == "")
+            {
+                isValid = false;
+                if (announce != "")
+                    announce += ", ";
+                announce += "Số điện thoại";
+            }
+            if (isValid == false) {
+                validateErrorResponseMsg.Add(announce);
                 return isValid;
             }
-
             // Check định dạng Email:
             try
             {
@@ -40,13 +64,13 @@ namespace MISA.Bussiness.Service
             catch (FormatException)
             {
                 isValid = false;
-                validateErrorResponseMsg.Add("Sai Email");
+                validateErrorResponseMsg.Add("Sai email");
                 return isValid;
             }
 
             // Check trùng mã nhân viên:
-            var isValidExitsCode = CheckEmployeeByCode(entity.EmployeeCode);
-            if (isValidExitsCode!=null)
+            var isValidExitsCode = CheckEmployeeByCode(entity.EmployeeCode, entity.EmployeeId);
+            if (isValidExitsCode != null)
             {
                 isValid = false;
                 validateErrorResponseMsg.Add("Mã bị trùng");

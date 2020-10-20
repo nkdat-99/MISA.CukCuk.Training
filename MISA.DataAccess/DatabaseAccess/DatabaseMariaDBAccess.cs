@@ -126,7 +126,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                     return result;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return 0;
             }
@@ -161,7 +161,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             }
         }
 
-        public int Delete(object id)
+        public int Delete(object code)
         {
             try
             {
@@ -171,11 +171,11 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                     var className = typeof(T).Name;
                     _sqlCommand.Parameters.Clear();
                     _sqlCommand.CommandText = $"Proc_Delete{className}";
-                    _sqlCommand.Parameters.AddWithValue($"@{className}IdInput", id);
+                    _sqlCommand.Parameters.AddWithValue($"@{className}CodeInput", code);
                     MySqlCommandBuilder.DeriveParameters(_sqlCommand);
                     if (_sqlCommand.Parameters.Count > 0)
                     {
-                        _sqlCommand.Parameters[0].Value = id;
+                        _sqlCommand.Parameters[0].Value = code;
                     }
                     var result = _sqlCommand.ExecuteNonQuery();
                     return result;
@@ -220,7 +220,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             }
         }
 
-        public object Get(string storeName, string code)
+        public object Get(string storeName, string code, object id)
         {var objectT = new List<T>();
             try
             {
@@ -231,6 +231,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                     var className = typeof(T).Name;
                     _sqlCommand.Parameters.Clear();
                     _sqlCommand.CommandText = storeName;
+                    _sqlCommand.Parameters.AddWithValue($"@{className}Id", id);
                     _sqlCommand.Parameters.AddWithValue($"@{className}Code", code);
                     // Thực hiện đọc dữ liệu
                     using MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
