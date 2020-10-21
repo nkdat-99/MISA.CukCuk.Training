@@ -13,6 +13,8 @@ namespace MISA.Bussiness.Interfaces
         /// <returns></returns>
         /// CreatedBy: NKDAT (15/10/2020)
         IEnumerable<T> Get();
+        int GetCount();
+        IEnumerable<T> Get(int page, int size);
         IEnumerable<T> Get(string storeName);
         T GetById(object objId);
         ServiceResponse Insert(T obj);

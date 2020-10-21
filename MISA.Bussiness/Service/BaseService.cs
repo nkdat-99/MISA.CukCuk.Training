@@ -3,6 +3,7 @@ using MISA.Common.Models;
 using MISA.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using System.Text;
 
 namespace MISA.Bussiness.Service
@@ -24,6 +25,16 @@ namespace MISA.Bussiness.Service
         public IEnumerable<T> Get()
         {
             return _baseRepository.Get();
+        }
+
+        public IEnumerable<T> Get(int page, int size)
+        {
+            return _baseRepository.Get(page, size);
+        }
+
+        public int GetCount()
+        {
+            return _baseRepository.GetCount();
         }
         public IEnumerable<T> Get(string storeName)
         {

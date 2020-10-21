@@ -17,7 +17,6 @@ namespace MISA.CukCuk.Training.Api
             _baseService = baseService;
         }
 
-        // GET: api/Employee
         [HttpGet]
         public IActionResult Get()
         {
@@ -28,7 +27,26 @@ namespace MISA.CukCuk.Training.Api
                 return NoContent();
         }
 
-        // GET api/Employee/5
+        [HttpGet("count")]
+        public IActionResult GetCount()
+        {
+            var rs = _baseService.GetCount();
+            if (rs >= 0)
+                return Ok(rs);
+            else
+                return NoContent();
+        }
+
+        [HttpGet("paging")]
+        public IActionResult Get([FromQuery] int page, int size)
+        {
+            var rs = _baseService.Get(page, size);
+            if (rs != null)
+                return Ok(rs);
+            else
+                return NoContent();
+        }
+
         [HttpGet("{id}")]
         public IActionResult Get([FromRoute] Guid id)
         {
@@ -39,7 +57,6 @@ namespace MISA.CukCuk.Training.Api
                 return NoContent();
         }
 
-        // POST api/Employee
         [HttpPost]
         public IActionResult Post([FromBody] T obj)
         {
@@ -50,7 +67,6 @@ namespace MISA.CukCuk.Training.Api
                 return BadRequest(serviceResponse);
         }
 
-        // PUT api/Employee
         [HttpPut]
         public IActionResult Put([FromBody] T obj)
         {
@@ -61,7 +77,6 @@ namespace MISA.CukCuk.Training.Api
                 return BadRequest(serviceResponse);
         }
 
-        // DELETE api/Employee/5
         [HttpDelete("{code}")]
         public IActionResult Delete([FromRoute] string code)
         {

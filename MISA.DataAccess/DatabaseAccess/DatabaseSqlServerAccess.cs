@@ -53,7 +53,7 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return employee;
         }
 
-        public IEnumerable<Employee> Get()
+        public IEnumerable<Employee> Get(string page, string size)
         {
             var employees = new List<Employee>();
             _sqlCommand.CommandText = "Proc_GetEmployees";
@@ -97,16 +97,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Employee> Get(string storeName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object Get(string storeName, string code)
-        {
-            throw new NotImplementedException();
-        }
-
         object IDatabaseAccess<Employee>.Get(string storeName, string code, object id)
         {
             throw new NotImplementedException();
@@ -115,6 +105,26 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         public void Dispose()
         {
             _sqlConnection.Close();
+        }
+
+        public IEnumerable<Employee> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Employee> Get(int page, int name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Employee> Get(string storeName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetCount()
+        {
+            throw new NotImplementedException();
         }
     }
 }

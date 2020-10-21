@@ -14,7 +14,12 @@
 class BaseJS {
     constructor() {
         try {
-            this.getData();
+            this.offset = 0;
+            this.pageSize = $('#pageSize').val();
+            this.getDataPaging(0, this.pageSize);
+            this.getDataCount();
+            this.getDepartment();
+            this.getPosition();
             this.loadData();
             this.initEvents();
             this.FormMode = null;
@@ -45,6 +50,12 @@ class BaseJS {
         $('input[required]').blur(this.validateRequired.bind(this));
         //Select Hàng
         $("table tbody").on("click", "tr", this.rowOnSelect);
+        //Các btn phân trang 
+        $('#btnFirst').click(this.btnFirstOnClick.bind(this));
+        $('#btnPrev').click(this.btnPrevOnClick.bind(this));
+        $('#btnNext').click(this.btnNextOnClick.bind(this));
+        $('#btnLast').click(this.btnLastOnClick.bind(this));
+        $('#pageSize').on("change", this.pageSizeOnChange.bind(this));
         //Responsive Menu
         $('#slideMenu').click(this.slideOnClick.bind(this));
         $('.main').click(this.mainPageOnClick.bind(this));
@@ -70,8 +81,79 @@ class BaseJS {
         $(document).keydown(this.keydowncancel.bind(this));
     }
 
-    getData() {
+    getDataPaging() {
         this.Data = [];
+    }
+
+    pageSizeOnChange() {
+        this.pageSize = $('#pageSize').val();
+        this.getDataPaging(0, this.pageSize);
+        this.loadData();
+        this.offset = 0;
+        $('#totalStart').text(1);
+        $('#totalEnd').text(this.pageSize);
+        $('#numPage').val(1);
+        if (parseInt(this.DataCount % this.pageSize) == 0)
+            $('#numTotal').text(parseInt(this.DataCount / this.pageSize));
+        else
+            $('#numTotal').text(parseInt(this.DataCount / this.pageSize) + 1);
+    }
+
+    btnFirstOnClick() {
+        this.getDataPaging(0, this.pageSize);
+        this.loadData();
+        $('#totalStart').text(1);
+        $('#totalEnd').text(this.pageSize);
+        $('#numPage').val(1);
+        this.offset = 0;
+    }
+
+    btnLastOnClick() {
+        var maxTotal = parseInt(this.DataCount / this.pageSize);
+        if (parseInt(this.DataCount % this.pageSize) != 0)
+            maxTotal += 1;
+        $('#numTotal').text(maxTotal);
+        this.offset = (maxTotal - 1) * this.pageSize;
+        this.getDataPaging(this.offset, this.pageSize);
+        this.loadData();
+        $('#totalStart').text(this.offset);
+        $('#totalEnd').text(this.DataCount);
+        $('#numPage').val(maxTotal);
+    }
+
+    btnNextOnClick() {
+        var currentPageNumber = $('#numPage').val();
+        var total = parseInt(currentPageNumber);
+        var maxTotal = parseInt(this.DataCount / this.pageSize);
+        if (parseInt(this.DataCount % this.pageSize) != 0)
+            maxTotal += 1;
+        if (currentPageNumber && currentPageNumber < maxTotal) {
+            $('#numPage').val(total + 1);
+            this.getDataPaging(total * this.pageSize, this.pageSize);
+            this.loadData();
+            $('#totalStart').text(total * this.pageSize);
+            if (currentPageNumber == maxTotal)
+                $('#totalEnd').text(this.DataCount);
+            else
+                $('#totalEnd').text((total + 1) * this.pageSize);
+            this.offset = total * this.pageSize;
+        }
+    }
+
+    btnPrevOnClick() {
+        var currentPageNumber = $('#numPage').val();
+        var total = parseInt(currentPageNumber);
+        if (currentPageNumber && total > 1) {
+            $('#numPage').val(total - 1);
+            this.getDataPaging((total - 2) * this.pageSize, this.pageSize);
+            this.loadData();
+            if (total == 2) {
+                $('#totalStart').text(1);
+            } else
+                $('#totalStart').text((total - 2) * this.pageSize);
+            $('#totalEnd').text((total - 1) * this.pageSize);
+            this.offset = (total - 2) * this.pageSize;
+        }
     }
 
     /**
@@ -83,9 +165,16 @@ class BaseJS {
         try {
             // Đọc thông tin các cột dữ liệu:
             var fields = $('#tblListData thead th');
-            // Lấy dữ liệu:
-            var data = this.Data;
             var self = this;
+            var maxTotal = parseInt(this.DataCount / this.pageSize);
+            if (parseInt(this.DataCount % this.pageSize) != 0)
+                maxTotal += 1;
+            if ($('#numPage').val() == maxTotal) 
+                $('#totalEnd').text(this.DataCount);
+            $('#numTotal').text(maxTotal);
+            $('#countTotal').text(self.DataCount);
+            // Lấy dữ liệu:
+            var data = self.Data;
             $('#tblListData tbody').empty();
             //console.log(data);
             $.each(data, function (index, item) {
@@ -380,7 +469,7 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
-    * Hiện Dialog Khi Click
+    * Hiện Dialog Thông Tin Khi Click
     * */
     showDialogDetail() {
         $('.dialog input, .dialog textarea, .dialog select').val(null);
@@ -393,6 +482,11 @@ class BaseJS {
         })
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * Hiện Dialog Xác Nhận Khi Click
+    * */
     showDialogConfirm(checkValue) {
         self = this;
         $('.dialog-modal-announce').show();
@@ -415,7 +509,7 @@ class BaseJS {
         $('.dialog-modal-announce').show();
         if (checkValue == 'POST' && self.FormMode == 'add') {
             $('#txtTitleAnnounce').text('Thêm thành công!');
-        } else if (checkValue == 'POST' && self.FormMode != 'add'){
+        } else if (checkValue == 'POST' && self.FormMode != 'add') {
             $('#txtTitleAnnounce').text('Nhân bản thành công!');
         } else if (checkValue == 'PUT') {
             $('#txtTitleAnnounce').text('Sửa thành công!');
@@ -484,6 +578,11 @@ class BaseJS {
         validData.validateRequired(sender.currentTarget);
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 2/10/2020
+    * Check các thông tin theo từng dialog
+    * */
     validateCustom() {
         return true;
     };

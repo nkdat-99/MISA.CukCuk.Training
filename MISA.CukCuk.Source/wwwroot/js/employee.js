@@ -14,17 +14,39 @@ class EmployeeJS extends BaseJS {
 
     /**
     * Author: NKĐạt
-    * Date: 4/10/2020
+    * Date: 20/10/2020
     * Lấy data từ DATABASE
     * */
-    getData() {
+    getDataCount() {
         self = this;
         $.ajax({
-            url: "/api/employee", // Đường dẫn địa chỉ
+            url: "/api/employee/count", // Đường dẫn địa chỉ
             method: "GET", // Phương thức
             data: "", // Tham số sẽ truyền qua body request
             contentType: "application/json", // Kiểu dữ liệu trả về
             dataType: "", // Kiểu dữ liệu của tham số
+            async: false
+        }).done(function (response) {
+            self.DataCount = response;
+        }).fail(function (res) {
+            console.log(res);
+        })
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 4/10/2020
+    * Lấy data từ DATABASE theo paging
+    * */
+
+    getDataPaging(page, size) {
+        self = this;
+        $.ajax({
+            url: "/api/employee/paging?page=" + page + "&size=" + size, 
+            method: "GET", 
+            data: "", 
+            contentType: "application/json", 
+            dataType: "", 
             async: false
         }).done(function (response) {
             self.Data = response;
@@ -73,6 +95,36 @@ class EmployeeJS extends BaseJS {
         })
     }
 
+    getPosition() {
+        $.ajax({
+            url: "/api/position",
+            method: "GET",
+            contentType: "application/json",
+        }).done(function (res) {
+            $.each(res, function (index, data) {
+                var option = "<option value=" + data.positionId + ">" + data.positionName + "</option>"
+                $("#txtPositionId").append(option);
+            })
+        }).fail(function (res) {
+            console.log(res);
+        })
+    }
+
+    getDepartment() {
+        $.ajax({
+            url: "/api/department",
+            method: "GET",
+            contentType: "application/json",
+        }).done(function (res) {
+            $.each(res, function (index, data) {
+                var option = "<option value=" + data.departmentId + ">" + data.departmentName + "</option>"
+                $("#txtDepartmentId").append(option);
+            })
+        }).fail(function (res) {
+            console.log(res);
+        })
+    }
+
     /**
     * Author: NKĐạt
     * Date: 6/10/2020
@@ -88,8 +140,8 @@ class EmployeeJS extends BaseJS {
             data: JSON.stringify(employee),
             contentType: "application/json",
         }).done(function (res) {
-            //Load lại dữ liệu
-            self.getData();
+            self.getDataCount();
+            self.getDataPaging(self.offset, self.pageSize);
             self.loadData();
             self.hideDialogDetail();
             self.showDialogAnnounce(method);
@@ -116,6 +168,7 @@ class EmployeeJS extends BaseJS {
     * @param {string} employeeCode
     * */
     deleteData(employeeCode) {
+        var self = this;
         var check = false;
         $.ajax({
             url: "/api/employee/" + employeeCode,
@@ -125,8 +178,8 @@ class EmployeeJS extends BaseJS {
             if (res) {
                 check = true;
             }
-            //Load lại dữ liệu
-            self.getData();
+            self.getDataCount();
+            self.getDataPaging(self.offset, self.pageSize);
             self.loadData();
             self.checkDialogConfirm(check);
         }).fail(function (res) {

@@ -17,10 +17,19 @@ namespace MISA.DataAccess.Repository
         {
             return _databaseAccess.Delete(objId);
         }
-
         public IEnumerable<T> Get()
         {
             return _databaseAccess.Get();
+        }
+
+        public int GetCount()
+        {
+            return _databaseAccess.GetCount();
+        }
+
+        public IEnumerable<T> Get(int page, int size)
+        {
+            return _databaseAccess.Get(page, size);
         }
 
         public IEnumerable<T> Get(string storeName)

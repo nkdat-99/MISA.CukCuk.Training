@@ -76,19 +76,6 @@
         position: relative;
     }
 
-/*        .paging .pop:after {
-            position: absolute;
-            right: 1px;
-            top: 1px;
-            content: '\e801';
-            font-family: "Globe";
-            font-size: 14px;
-            color: #999999;
-            padding: 3px 7px;
-            background-color: #fff;
-            border-left: 1px solid #ccc;
-        }*/
-
         .paging .pop label {
             margin-right: 10px;
         }
@@ -117,7 +104,7 @@
         padding: 0px 4px;
         border-radius: 0;
         height: 21px;
-        width: 30px;
+        width: 50px;
         box-shadow: none;
         border: 1px solid #ccc;
         margin-right: 10px;

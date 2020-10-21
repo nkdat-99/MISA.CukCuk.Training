@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace MISA.CukCuk.Training.DatabaseAccess
 {
@@ -14,7 +15,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         #region DECLARE
         readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
         MySqlConnection _sqlConnection;
-        //MySqlCommand _sqlCommand;
         #endregion
 
         #region CONSTRUCTOR
@@ -25,9 +25,6 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             _sqlConnection = new MySqlConnection(_connectionString);
             // Mở kết nối
             _sqlConnection.Open();
-            // Đối tượng xử lý command
-            //_sqlCommand = _sqlConnection.CreateCommand();
-            //_sqlCommand.CommandType = CommandType.StoredProcedure;
         }
         #endregion
 
@@ -43,6 +40,45 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                     _sqlCommand.Parameters.Clear();
                     var className = typeof(T).Name;
                     _sqlCommand.CommandText = $"Proc_Get{className}s";
+                    // Thực hiện đọc dữ liệu
+                    using (MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader())
+                    {
+                        while (mySqlDataReader.Read())
+                        {
+                            var obj = Activator.CreateInstance<T>();
+                            for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                            {
+                                var columnName = mySqlDataReader.GetName(i);
+                                var value = mySqlDataReader.GetValue(i);
+                                var propertyInfo = obj.GetType().GetProperty(columnName);
+                                if (propertyInfo != null && value != DBNull.Value)
+                                    propertyInfo.SetValue(obj, value);
+                            }
+                            objectT.Add(obj);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return objectT;
+        }
+
+        public IEnumerable<T> Get(int page, int size)
+        {
+            var objectT = new List<T>();
+            try
+            {
+                using (var _sqlCommand = _sqlConnection.CreateCommand())
+                {
+                    _sqlCommand.CommandType = CommandType.StoredProcedure;
+                    _sqlCommand.Parameters.Clear();
+                    var className = typeof(T).Name;
+                    _sqlCommand.CommandText = $"Proc_Get{className}ByPageSize";
+                    _sqlCommand.Parameters.AddWithValue("@page", page);
+                    _sqlCommand.Parameters.AddWithValue("@size", size);
                     // Thực hiện đọc dữ liệu
                     using (MySqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader())
                     {
@@ -221,7 +257,8 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         }
 
         public object Get(string storeName, string code, object id)
-        {var objectT = new List<T>();
+        {
+            var objectT = new List<T>();
             try
             {
                 using (var _sqlCommand = _sqlConnection.CreateCommand())
@@ -260,6 +297,28 @@ namespace MISA.CukCuk.Training.DatabaseAccess
         public void Dispose()
         {
             _sqlConnection.Close();
+        }
+
+        public int GetCount()
+        {
+            try
+            {
+                using (var _sqlCommand = _sqlConnection.CreateCommand())
+                {
+                    _sqlCommand.CommandType = CommandType.StoredProcedure;
+                    var className = typeof(T).Name;
+                    _sqlCommand.CommandText = $"Proc_Count{className}";
+                    _sqlCommand.Parameters.Clear();
+                    var count = _sqlCommand.ExecuteScalar();
+                    int countSearch = Convert.ToInt32(count.ToString());
+                    return countSearch;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return 0;
         }
         #endregion
     }

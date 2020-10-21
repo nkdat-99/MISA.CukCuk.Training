@@ -12,10 +12,12 @@ namespace MISA.DataAccess.Interfaces
         /// <returns></returns>
         /// CreatedBy: NKDAT (16/10/2020)
         IEnumerable<T> Get();
+        IEnumerable<T> Get(int page, int size);
         IEnumerable<T> Get(string storeName);
         T GetById(object objId);
         int Insert(T obj);
         int Update(T obj);
         int Delete(object objId);
+        int GetCount();
     }
 }

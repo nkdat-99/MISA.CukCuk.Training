@@ -186,33 +186,42 @@
                 </div>
                 <div class="paging">
                     <div class="left">
-                        <button><div class="icon icon-first"></div></button>
-                        <button><div class="icon icon-prev"></div></button>
+                        <button id="btnFirst"><div class="icon icon-first"></div></button>
+                        <button id="btnPrev"><div class="icon icon-prev"></div></button>
                         <div class="seperate"></div>
                         <div class="input-paging">
                             <label>Trang</label>
-                            <input />
-                            <label>trên 5</label>
+                            <input type="number" id="numPage" value="1" />
+                            <label>trên <span id="numTotal"></span></label>
                         </div>
                         <div class="seperate"></div>
-                        <button><div class="icon icon-next"></div></button>
-                        <button><div class="icon icon-last"></div></button>
+                        <button id="btnNext"><div class="icon icon-next"></div></button>
+                        <button id="btnLast"><div class="icon icon-last"></div></button>
                         <div class="seperate"></div>
                         <button><div class="icon icon-refresh"></div></button>
                         <div class="seperate"></div>
+                        <!--<div class="triggerWrap">
+                            <div class="text-triggerWrap">100</div>
+                            <button class="btn btn-triggerWrap"></button>
+                            <div class="trigger-bountlist-box">
+                                <div class="trigger-bountlist-item">25</div>
+                                <div class="trigger-bountlist-item">50</div>
+                                <div class="trigger-bountlist-item-selected">100</div>
+                            </div>
+                        </div>-->
                         <div class="pop">
                             <label>Số bản ghi</label>
-                            <select class="select-paging">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                            <select id="pageSize" class="select-paging">
+                                <option>25</option>
+                                <option>50</option>
+                                <option>100</option>
                             </select>
                         </div>
                     </div>
                     <div class="right">
-                        Hiển thị 1 - 5 trên 5 kết quả
+                        <div>
+                            Hiển thị <span id="totalStart">1</span> - <span id="totalEnd">25</span> trên <span id="countTotal"></span> kết quả
+                        </div>
                     </div>
                 </div>
             </div>
@@ -289,25 +298,11 @@
                     <div class="row">
                         <label class="label-left">Phòng Ban</label>
                         <select fieldName="DepartmentId" id="txtDepartmentId" class="input-default flex-full">
-                            <option value="39446ba3-3071-7af6-a5a9-deaf32c96293">Phòng Nghiên Cứu Công Nghệ</option>
-                            <option value="48b51439-3625-6c0c-7532-03c92da59c43">Văn Phòng Tổng Công Ty</option>
-                            <option value="71952621-23c8-61d2-d0eb-e423f1575e00">Khối Sản Xuất</option>
-                            <option value="447816de-6069-15bf-de3d-c9e9e9038fe2">Văn Phòng TP Hồ Chí Minh</option>
-                            <option value="423d5b84-2191-6cce-df3d-c9e9e9038fe2">Phòng Đào Tạo</option>
-                            <option value="3541ff76-58f0-6d1a-e836-63d5d5eff719">Văn Phòng Hà Nội</option>
-                            <option value="79aca385-65e3-1ebe-f488-479bce9b28fc">Văn Phòng Đà Nẵng</option>
                         </select>
                     </div>
                     <div class="row">
                         <label class="label-left">Vị trí công việc</label>
                         <select fieldName="PositionId" id="txtPositionId" class="input-default flex-full">
-                            <option value="2d46bab3-4f6b-69a8-71b0-22cff29e2663">Nhân Viên</option>
-                            <option value="7b65a1d7-52df-5fb9-16cf-1ab46ebdb0f4">Quản Lý Dự Án</option>
-                            <option value="12b28924-2015-5d35-f1ff-0bf8e460a224">Quản Lý Nghiệp Vụ</option>
-                            <option value="28fac2a7-3b08-4b3b-d8b4-8d4600c9080b">Trưởng Phòng</option>
-                            <option value="1ddeb8b3-47c4-3566-f0ff-0bf8e460a224">Chánh Văn Phòng</option>
-                            <option value="4ac29d56-58aa-17b5-5865-a41d0e078d49">Phó Giám Đốc</option>
-                            <option value="6cb25a5f-3341-5f1d-d9b4-8d4600c9080b">Giám Đốc</option>
                         </select>
                     </div>
                     <div class="row">

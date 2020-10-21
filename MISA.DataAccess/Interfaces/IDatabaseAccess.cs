@@ -13,7 +13,10 @@ namespace MISA.CukCuk.Training.Interface
         /// </summary>
         /// <returns></returns>
         /// CreatedBy: NKDAT (16/10/2020)
+        /// 
         IEnumerable<T> Get();
+        int GetCount();
+        IEnumerable<T> Get(int page, int name);
         IEnumerable<T> Get(string storeName);
         object Get(string storeName, string code, object id);
         T GetById(object id);
