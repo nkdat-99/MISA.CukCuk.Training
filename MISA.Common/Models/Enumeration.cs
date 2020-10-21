@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Training.Models
 {
+    /// <summary>
+    /// Dữ liệu giới tính nhân viên
+    /// </summary>
+    /// <returns></returns>
+    /// CreatedBy: NKDAT (16/10/2020)
     public enum GenderEnum
     {
         Female = 0,
@@ -12,6 +17,11 @@ namespace MISA.CukCuk.Training.Models
         Other = 2
     }
 
+    /// <summary>
+    /// Dữ liệu loại thẻ thành viên
+    /// </summary>
+    /// <returns></returns>
+    /// CreatedBy: NKDAT (16/10/2020)
     public enum TypeEnum
     {
         Normal = 0,
@@ -20,6 +30,11 @@ namespace MISA.CukCuk.Training.Models
         Vip = 3
     }
 
+    /// <summary>
+    /// Dữ liệu trạng thái làm việc
+    /// </summary>
+    /// <returns></returns>
+    /// CreatedBy: NKDAT (16/10/2020)
     public enum StatusEnum
     {
         Working = 0,

@@ -17,6 +17,10 @@ namespace MISA.CukCuk.Training.Api
             _employeeService = employeeService;
         }
 
+        /// <summary>
+        /// Lấy dữ liệu mã nhân viên mới nhất từ DATABASE
+        /// </summary>
+        /// CreatedBy: NKDAT (16/10/2020)
         [HttpGet("NewEmployeeCode")]
         public string NewEmployeeCode()
         {

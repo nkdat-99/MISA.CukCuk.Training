@@ -16,11 +16,23 @@ namespace MISA.Bussiness.Service
             _employeeRepository = employeeRepository;
         }
 
+        /// <summary>
+        /// Kiểm tra trùng nhân viên
+        /// <param name="employeeCode">Số lượng bản ghi bỏ qua</param>
+        /// <param name="id">Số lượng bản ghi lấy về</param>
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (16/10/2020)
         public object CheckEmployeeByCode(string employeeCode, object id)
         {
             return _employeeRepository.CheckEmployeeByCode(employeeCode, id);
         }
 
+        /// <summary>
+        /// Kiểm tra các yêu cầu nhập dữ liệu
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (16/10/2020)
         protected override bool Validate(Employee entity, ref Employee outData)
         {
             var isValid = true;

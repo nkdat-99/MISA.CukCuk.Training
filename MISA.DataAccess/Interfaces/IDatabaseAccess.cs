@@ -9,11 +9,10 @@ namespace MISA.CukCuk.Training.Interface
     public interface IDatabaseAccess<T>
     {
         /// <summary>
-        /// Lấy dữ liệu
+        /// Các phương thức lấy dữ liệu
         /// </summary>
         /// <returns></returns>
         /// CreatedBy: NKDAT (16/10/2020)
-        /// 
         IEnumerable<T> Get();
         int GetCount();
         IEnumerable<T> Get(int page, int name);

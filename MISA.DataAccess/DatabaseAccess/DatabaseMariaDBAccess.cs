@@ -13,22 +13,34 @@ namespace MISA.CukCuk.Training.DatabaseAccess
     public class DatabaseMariaDBAccess<T> : IDisposable, IDatabaseAccess<T>
     {
         #region DECLARE
+        /// <summary>
+        /// Khởi tạo kết nối với MySQL
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         readonly string _connectionString = "server=35.194.166.58;port=3306;database=MISACukCuk_F09_NKDAT;user=nvmanh;password=12345678@Abc;CharSet=utf8";
         MySqlConnection _sqlConnection;
         #endregion
 
-        #region CONSTRUCTOR
+        #region CONSTRUCTOR-OPEN-CONNECTION
+        /// <summary>
+        /// Mở kết nối
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public DatabaseMariaDBAccess()
         {
-            // Lấy dữ liệu từ Database
-            // Khởi tạo kết nối
             _sqlConnection = new MySqlConnection(_connectionString);
-            // Mở kết nối
             _sqlConnection.Open();
         }
         #endregion
 
         #region METHOD
+        /// <summary>
+        /// Lấy tất cả bản ghi từ DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public IEnumerable<T> Get()
         {
             var objectT = new List<T>();
@@ -66,6 +78,13 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return objectT;
         }
 
+        /// <summary>
+        /// Lấy số lượng bản ghi DATABASE theo paging
+        /// </summary>
+        /// <param name="page">Số lượng bản ghi bỏ qua</param>
+        /// <param name="size">Số lượng bản ghi lấy về</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public IEnumerable<T> Get(int page, int size)
         {
             var objectT = new List<T>();
@@ -105,6 +124,12 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return objectT;
         }
 
+        /// <summary>
+        /// Lấy thông tin bản ghi trong DATABASE theo mã Id
+        /// </summary>
+        /// <param name="id">Mã Id nhân viên</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public T GetById(object id)
         {
             var obj = Activator.CreateInstance<T>();
@@ -139,6 +164,11 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return obj;
         }
 
+        /// <summary>
+        /// Thêm bản ghi mới vào DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public int Insert(T entity)
         {
             try
@@ -168,6 +198,11 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Sửa bản ghi mới vào DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public int Update(T entity)
         {
             try
@@ -197,6 +232,12 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Xóa bản ghi từ DATABASE
+        /// </summary>
+        /// /// <param name="code">Mã Code của nhân viên</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public int Delete(object code)
         {
             try
@@ -223,6 +264,12 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Lấy thông tin bản ghi cuối cùng
+        /// </summary>
+        /// <param name="storeName">Phương thức Proc</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public IEnumerable<T> Get(string storeName)
         {
             try
@@ -256,6 +303,14 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             }
         }
 
+        /// <summary>
+        /// Lấy thông tin mã code để kiểm tra trùng mã
+        /// </summary>
+        /// <param name="storeName">Số lượng bản ghi bỏ qua</param>
+        /// <param name="code">Mã code nhân viên</param>
+        /// <param name="id">Mã id nhân viên</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public object Get(string storeName, string code, object id)
         {
             var objectT = new List<T>();
@@ -294,11 +349,11 @@ namespace MISA.CukCuk.Training.DatabaseAccess
             return objectT.FirstOrDefault();
         }
 
-        public void Dispose()
-        {
-            _sqlConnection.Close();
-        }
-
+        /// <summary>
+        /// Lấy số lượng tổng số bản ghi DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         public int GetCount()
         {
             try
@@ -319,6 +374,18 @@ namespace MISA.CukCuk.Training.DatabaseAccess
                 Console.WriteLine(ex);
             }
             return 0;
+        }
+        #endregion
+
+        #region CONSTRUCTOR-CLOSE-CONNECTION
+        /// <summary>
+        /// Đóng kết nối
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
+        public void Dispose()
+        {
+            _sqlConnection.Close();
         }
         #endregion
     }

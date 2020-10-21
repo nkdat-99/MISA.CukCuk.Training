@@ -17,6 +17,11 @@ namespace MISA.CukCuk.Training.Api
             _baseService = baseService;
         }
 
+        /// <summary>
+        /// Lấy tất cả bản ghi từ DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpGet]
         public IActionResult Get()
         {
@@ -27,6 +32,11 @@ namespace MISA.CukCuk.Training.Api
                 return NoContent();
         }
 
+        /// <summary>
+        /// Lấy số lượng tổng số bản ghi DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpGet("count")]
         public IActionResult GetCount()
         {
@@ -37,6 +47,13 @@ namespace MISA.CukCuk.Training.Api
                 return NoContent();
         }
 
+        /// <summary>
+        /// Lấy số lượng bản ghi DATABASE theo paging
+        /// </summary>
+        /// <param name="page">Số lượng bản ghi bỏ qua</param>
+        /// <param name="size">Số lượng bản ghi lấy về</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpGet("paging")]
         public IActionResult Get([FromQuery] int page, int size)
         {
@@ -47,6 +64,12 @@ namespace MISA.CukCuk.Training.Api
                 return NoContent();
         }
 
+        /// <summary>
+        /// Lấy thông tin nhân viên theo Id
+        /// </summary>
+        /// <param name="id">Id của nhân viên</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpGet("{id}")]
         public IActionResult Get([FromRoute] Guid id)
         {
@@ -57,6 +80,11 @@ namespace MISA.CukCuk.Training.Api
                 return NoContent();
         }
 
+        /// <summary>
+        /// Thêm bản ghi mới vào DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpPost]
         public IActionResult Post([FromBody] T obj)
         {
@@ -67,6 +95,11 @@ namespace MISA.CukCuk.Training.Api
                 return BadRequest(serviceResponse);
         }
 
+        /// <summary>
+        /// Sửa bản ghi mới vào DATABASE
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpPut]
         public IActionResult Put([FromBody] T obj)
         {
@@ -77,6 +110,12 @@ namespace MISA.CukCuk.Training.Api
                 return BadRequest(serviceResponse);
         }
 
+        /// <summary>
+        /// Xóa bản ghi từ DATABASE
+        /// </summary>
+        /// /// <param name="code">Mã Code của nhân viên</param>
+        /// <returns></returns>
+        /// CreatedBy: NKDAT (19/10/2020)
         [HttpDelete("{code}")]
         public IActionResult Delete([FromRoute] string code)
         {

@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Training.Models
 {
+    /// <summary>
+    /// Khai báo các trường dữ liệu Employee
+    /// </summary>
+    /// <returns></returns>
+    /// CreatedBy: NKDAT (16/10/2020)
     public partial class Employee
     {
         // Id nhân viên

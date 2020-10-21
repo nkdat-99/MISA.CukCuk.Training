@@ -25,6 +25,8 @@ class BaseJS {
             this.FormMode = null;
             this.checkRequired = null;
             this.selectId = null;
+            this.SaveAdd = null;
+            this.Dialog = null;
         } catch (e) {
             console.log(e);
         }
@@ -44,6 +46,7 @@ class BaseJS {
         $('#btnDuplicate').click(this.btnDuplicateOnClick.bind(this));
         $('#btnClose').click(this.closeDialogOnClick.bind(this));
         $('#btnSave').click(this.btnSaveOnClick.bind(this));
+        $('#btnSaveAdd').click(this.btnSaveAddOnClick.bind(this));
         $('#btnCancel').click(this.closeDialogOnClick.bind(this));
         $('#btnHelpDialog').blur(this.returnFocus);
         //Validate yêu cầu
@@ -76,15 +79,21 @@ class BaseJS {
         $('#txtMoneyTax').on('blur, focus, keyup', this.formatMoneyKeyup);
         $('#txtSalary').on('blur, focus, keyup', this.formatMoneyKeyup);
         //Event phím tắt
-        $(document).keydown(this.keydownsave.bind(this));
         $(document).keydown(this.keydownclose.bind(this));
         $(document).keydown(this.keydowncancel.bind(this));
+        $(document).keydown(this.keydownsaveadd.bind(this));
+        $(document).keydown(this.keydownsave.bind(this));
     }
 
     getDataPaging() {
         this.Data = [];
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 21/10/2020
+    * Cập nhật thay đổi số lượng bản ghi hiện lên
+    * */
     pageSizeOnChange() {
         this.pageSize = $('#pageSize').val();
         this.getDataPaging(0, this.pageSize);
@@ -99,6 +108,11 @@ class BaseJS {
             $('#numTotal').text(parseInt(this.DataCount / this.pageSize) + 1);
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 21/10/2020
+    * Mở trang paging đầu tiên
+    * */
     btnFirstOnClick() {
         this.getDataPaging(0, this.pageSize);
         this.loadData();
@@ -108,6 +122,11 @@ class BaseJS {
         this.offset = 0;
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 21/10/2020
+    * Mở trang paging cuối cùng
+    * */
     btnLastOnClick() {
         var maxTotal = parseInt(this.DataCount / this.pageSize);
         if (parseInt(this.DataCount % this.pageSize) != 0)
@@ -121,6 +140,11 @@ class BaseJS {
         $('#numPage').val(maxTotal);
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 21/10/2020
+    * Mở trang paging tiếp theo
+    * */
     btnNextOnClick() {
         var currentPageNumber = $('#numPage').val();
         var total = parseInt(currentPageNumber);
@@ -132,7 +156,7 @@ class BaseJS {
             this.getDataPaging(total * this.pageSize, this.pageSize);
             this.loadData();
             $('#totalStart').text(total * this.pageSize);
-            if (currentPageNumber == maxTotal)
+            if (currentPageNumber == (maxTotal - 1))
                 $('#totalEnd').text(this.DataCount);
             else
                 $('#totalEnd').text((total + 1) * this.pageSize);
@@ -140,6 +164,11 @@ class BaseJS {
         }
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 21/10/2020
+    * Mở trang paging trước đó
+    * */
     btnPrevOnClick() {
         var currentPageNumber = $('#numPage').val();
         var total = parseInt(currentPageNumber);
@@ -166,13 +195,15 @@ class BaseJS {
             // Đọc thông tin các cột dữ liệu:
             var fields = $('#tblListData thead th');
             var self = this;
+            //#region THÔNG TIN BẢN GHI
             var maxTotal = parseInt(this.DataCount / this.pageSize);
             if (parseInt(this.DataCount % this.pageSize) != 0)
                 maxTotal += 1;
-            if ($('#numPage').val() == maxTotal) 
+            if ($('#numPage').val() == maxTotal)
                 $('#totalEnd').text(this.DataCount);
             $('#numTotal').text(maxTotal);
             $('#countTotal').text(self.DataCount);
+            //#endregion
             // Lấy dữ liệu:
             var data = self.Data;
             $('#tblListData tbody').empty();
@@ -185,11 +216,10 @@ class BaseJS {
                     var format = $(field).attr('format');
                     var value = item[fieldName];
                     if (format == "Date") {
-                        var checkDate = "";
-                        if (dateToDMY(new Date(value)) != "31/12/1699") //giá trị mặc định 
-                            checkDate = dateToDMY(new Date(value));
-                        value = checkDate;
-                        var td = $(`<td style="text-align: center;">` + value + `</td>`);
+                        if (value == null) 
+                            var td = $(`<td>` + "" + `</td>`);
+                        else
+                            var td = $(`<td style="text-align: center;">` + dateToDMY(new Date(value)) + `</td>`);
                     } else if (format == "Money") {
                         var td = $(`<td style="text-align: right;">` + value.formatMoney() + `</td>`);
                     } else {
@@ -231,6 +261,7 @@ class BaseJS {
         this.FormMode = "add";
         this.getNewCode(true);
         this.showDialogDetail();
+        this.SaveAdd = null;
     }
 
     /**
@@ -275,7 +306,7 @@ class BaseJS {
                         }
                     } else if (format == "Date") {
                         if (objInput[fieldName] == "") {
-                            objInput[fieldName] = new Date('1700/01/01');
+                            objInput[fieldName] = null;
                         } else {
                             objInput[fieldName] = $(field).val();
                         }
@@ -291,6 +322,16 @@ class BaseJS {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 3/10/2020
+    * Cất và thêm dữ liệu
+    * */
+    btnSaveAddOnClick() {
+        this.SaveAdd = "SaveAdd";
+        this.btnSaveOnClick();
     }
 
     /**
@@ -324,7 +365,10 @@ class BaseJS {
                         if (format == "Money") {
                             field.value = objDetail[fieldName].formatMoney();
                         } else if (format == "Date") {
-                            field.value = dateToYMD(new Date(objDetail[fieldName]));
+                            if (objDetail[fieldName] == null)
+                                field.value = "";
+                            else
+                                field.value = dateToYMD(new Date(objDetail[fieldName]));
                         } else {
                             field.value = objDetail[fieldName];
                         }
@@ -413,7 +457,7 @@ class BaseJS {
     * Reset dữ liệu
     * */
     btnResetOnClick() {
-        this.getData();
+        this.getDataPaging(this.offset, this.pageSize);
         this.loadData();
     }
 
@@ -445,23 +489,41 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
-    * Event Ẩn Dialog
+    * Event Ẩn Dialog FormMode
     * */
     closeDialogOnClick() {
         this.hideDialogDetail();
         this.FormMode = null;
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * Event Ẩn Dialog Thông Báo
+    * */
     closeDialogAnnounceOnClick() {
+        self = this;
         this.hideDialogAnnounce();
         this.hideDialogConfirm();
         this.hideDialogWarning();
+        if (self.SaveAdd == "SaveAdd")
+            self.btnAddOnClick();
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * Event Ẩn Dialog Xác Nhận
+    * */
     closeDialogConfirmOnClick() {
         this.hideDialogConfirm();
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 30/9/2020
+    * Event Ẩn Dialog Cảnh Báo
+    * */
     closeDialogWarningOnClick() {
         this.hideDialogWarning();
     }
@@ -485,7 +547,7 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 30/9/2020
-    * Hiện Dialog Xác Nhận Khi Click
+    * Hiện Dialog Xác Nhận Xóa Khi Click
     * */
     showDialogConfirm(checkValue) {
         self = this;
@@ -525,6 +587,7 @@ class BaseJS {
     * */
     showDialogWarning(checkValue) {
         self = this;
+        self.Dialog = "warning";
         $('.dialog-modal-announce').show();
         if (checkValue == 'none') {
             $('#txtTitleWarning').text('Không có nhân viên với mã tương ứng!');
@@ -561,6 +624,7 @@ class BaseJS {
     hideDialogWarning() {
         $('.dialog-modal-announce').hide();
         $('.dialog-warning').hide();
+        self.Dialog = null;
     }
 
     hideDialogAnnounce() {
@@ -656,28 +720,15 @@ class BaseJS {
     /**
     * Author: NKĐạt
     * Date: 19/10/2020
-    * Phím tắt Save dữ liệu: Ctrl + S
-    * */
-    keydownsave() {
-        self = this;
-        if (self.FormMode != null) {
-            if (!(event.which == 83 && event.ctrlKey) && !(event.which == 19)) return true;
-            event.preventDefault();
-            self.btnSaveOnClick();
-
-        }
-    }
-
-    /**
-    * Author: NKĐạt
-    * Date: 19/10/2020
     * Phím tắt Close (Button X): ESC
     * */
-    keydownclose() {
-        if (!(event.which == 27) && !(event.which == 19)) return true;
+    keydownclose(event) {
+        self = this;
+        if (!(event.keyCode == 27) && !(event.keyCode == 19)) return true;
         event.preventDefault();
-        this.closeDialogOnClick();
-        this.closeDialogAnnounceOnClick()
+        if (self.Dialog == null)
+            self.closeDialogOnClick();
+        self.closeDialogAnnounceOnClick()
     }
 
     /**
@@ -685,13 +736,44 @@ class BaseJS {
     * Date: 19/10/2020
     * Phím tắt Đóng: Ctrl + Q
     * */
-    keydowncancel() {
-        if (!(event.which == 81 && event.ctrlKey) && !(event.which == 19)) return true;
+    keydowncancel(event) {
+        self = this;
+        if (!(event.keyCode == 81 && event.ctrlKey) && !(event.keyCode == 19)) return true;
         event.preventDefault();
-        this.closeDialogOnClick();
-        this.closeDialogAnnounceOnClick()
+        if (self.Dialog == null)
+            self.closeDialogOnClick();
+        self.closeDialogAnnounceOnClick()
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 19/10/2020
+    * Phím tắt Cất và Thêm: Ctrl + Shilf + S
+    * */
+    keydownsaveadd(event) {
+        self = this;
+        if (self.FormMode != null) {
+            if (!(event.ctrlKey && event.shiftKey && event.keyCode == 83) && !(event.keyCode == 19)) return true;
+            event.preventDefault();
+            self.btnSaveAddOnClick();
+        }
+    }
+
+    /**
+    * Author: NKĐạt
+    * Date: 19/10/2020
+    * Phím tắt Save dữ liệu: Ctrl + S
+    * */
+    keydownsave(event) {
+        self = this;
+        if (self.FormMode != null) {
+            if (!(event.ctrlKey && event.keyCode == 83) && !(event.keyCode == 19)) return true;
+            event.preventDefault();
+            self.btnSaveOnClick();
+        }
     }
 }
+
 
 /**
 * Author: NKĐạt

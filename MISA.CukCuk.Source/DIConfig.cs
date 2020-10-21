@@ -18,9 +18,6 @@ namespace MISA.CukCuk.Training
         {
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<ICustomerService, CustomerService>();
-            //services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IDatabaseAccess<>), typeof(DatabaseMariaDBAccess<>));

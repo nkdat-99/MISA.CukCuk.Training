@@ -8,7 +8,7 @@ namespace MISA.Bussiness.Interfaces
     public interface IBaseService<T>
     {
         /// <summary>
-        /// Lấy dữ liệu
+        /// Các phương thức lấy dữ liệu
         /// </summary>
         /// <returns></returns>
         /// CreatedBy: NKDAT (15/10/2020)

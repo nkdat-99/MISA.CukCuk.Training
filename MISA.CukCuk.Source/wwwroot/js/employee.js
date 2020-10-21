@@ -9,7 +9,6 @@
 class EmployeeJS extends BaseJS {
     constructor() {
         super('employee');
-
     }
 
     /**
@@ -38,15 +37,14 @@ class EmployeeJS extends BaseJS {
     * Date: 4/10/2020
     * Lấy data từ DATABASE theo paging
     * */
-
     getDataPaging(page, size) {
         self = this;
         $.ajax({
-            url: "/api/employee/paging?page=" + page + "&size=" + size, 
-            method: "GET", 
-            data: "", 
-            contentType: "application/json", 
-            dataType: "", 
+            url: "/api/employee/paging?page=" + page + "&size=" + size,
+            method: "GET",
+            data: "",
+            contentType: "application/json",
+            dataType: "",
             async: false
         }).done(function (response) {
             self.Data = response;
@@ -95,6 +93,11 @@ class EmployeeJS extends BaseJS {
         })
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 5/10/2020
+    * Lấy data bảng Position từ DATABASE
+    * */
     getPosition() {
         $.ajax({
             url: "/api/position",
@@ -110,6 +113,11 @@ class EmployeeJS extends BaseJS {
         })
     }
 
+    /**
+    * Author: NKĐạt
+    * Date: 5/10/2020
+    * Lấy data bảng Department từ DATABASE
+    * */
     getDepartment() {
         $.ajax({
             url: "/api/department",
@@ -143,7 +151,7 @@ class EmployeeJS extends BaseJS {
             self.getDataCount();
             self.getDataPaging(self.offset, self.pageSize);
             self.loadData();
-            self.hideDialogDetail();
+            self.closeDialogOnClick();
             self.showDialogAnnounce(method);
         }).fail(function (res) {
             if (res.responseJSON.msg != "Sai email" && res.responseJSON.msg != "Mã bị trùng") {

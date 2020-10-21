@@ -7,7 +7,7 @@ namespace MISA.Bussiness.Interfaces
     public interface IBaseBussiness<T>
     {
         /// <summary>
-        /// Lấy danh sách
+        /// Các phương thức lấy dữ liệu
         /// </summary>
         /// <returns></returns>
         /// CreatedBy: NKDAT (16/10/2020)

@@ -6,6 +6,11 @@ using System.Text;
 
 namespace MISA.DataAccess.Repository
 {
+    /// <summary>
+    /// Các phương thức lấy dữ liệu
+    /// </summary>
+    /// <returns></returns>
+    /// CreatedBy: NKDAT (20/10/2020)
     public class BaseRepository<T> : IBaseRepository<T>
     {
         protected IDatabaseAccess<T> _databaseAccess;

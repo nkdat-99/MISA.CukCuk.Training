@@ -40,6 +40,11 @@ function lowerCaseFirstLetter(string) {
     return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
+/**
+* Author: NKĐạt
+* Date: 4/10/2020
+* Upper Case First Letter
+* */
 function upperCaseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

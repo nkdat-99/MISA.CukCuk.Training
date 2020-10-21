@@ -8,6 +8,10 @@ using MISA.Common.Models;
 
 namespace MISA.CukCuk.Training.Api
 {
+    /// <summary>
+    /// Lấy dữ liệu bảng Position
+    /// </summary>
+    /// CreatedBy: NKDAT (16/10/2020)
     [Route("api/position")]
     [ApiController]
     public class PositionApi : BaseApi<Position>

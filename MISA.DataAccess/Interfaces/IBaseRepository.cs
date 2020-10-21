@@ -7,7 +7,7 @@ namespace MISA.DataAccess.Interfaces
     public interface IBaseRepository<T>
     {
         /// <summary>
-        /// Lấy dữ liệu
+        /// Các phương thức lấy dữ liệu
         /// </summary>
         /// <returns></returns>
         /// CreatedBy: NKDAT (16/10/2020)
